@@ -90,7 +90,7 @@ queue. Return NULL if the process queue is empty. */
 pcb_ptr *headProcQ(pcb_t **tp){
 	pcb_ptr head = NULL;
 	if(tp != null) {
-		head = *tp->p_prev;
+		head = *tp->p_next;
 	}
 	return(head);
 }
@@ -102,9 +102,9 @@ pcb_t *removeProcQ(pcb_t **tp){
 	}else if(*tp->p_next == *tp){
 		*tp = makeEmptyProcQ();
 	}else{
-		*tp->p_prev->p_prev->p_next = *tp;
-		pcb_t old = *tp->p_next;
-		*tp->p_prev = *tp->p_prev->p_prev;
+		*tp->p_next->p_next->p_prev = *tp;
+		pcb_t old = *tp-prev;
+		*tp->p_next = *tp->p_next->p_next;
 	}
 	return 0;
 }
@@ -117,7 +117,7 @@ can point to any element of the process queue. */
 pcb_ptr *outProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
 		return(NULL);
-	}else if(*tp->p_next == *tp){
+	}else if(*tp->p_prev == *tp){
 		if(*tp == p){
 			pcb_t outproc = *tp;
 			*tp = makeEmptyProcQ();
@@ -128,12 +128,12 @@ pcb_ptr *outProcQ(pcb_t **tp, pcb_t *p){
 	}else{
 		if(*tp == p){
 			pcb_t outproc = *tp;
-			*tp->p_next->p_prev = *tp->p_prev;
 			*tp->p_prev->p_next = *tp->p_next;
-			*tp = *tp->p_next;
+			*tp->p_next->p_prev = *tp->p_prev;
+			*tp = *tp->p_prev;
 			return(outproc);
 		}else{
-			pcb_t index = *tp->p_prev;
+			pcb_t index = *tp->p_next;
 			while(index != *tp){
 		}
 
