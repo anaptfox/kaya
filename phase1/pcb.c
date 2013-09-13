@@ -24,6 +24,7 @@ pcb_ptr headProcQ(pcb_t tp){
 	if(tp != null) {
 		head = tp->next;
 	}
+	return(head);
 }
 pcb_ptr makeEmptyProcQ() {
 	return(null);
