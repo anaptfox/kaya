@@ -1,3 +1,4 @@
+#include "pcb.e"
 /* process control block type */
 typedef struct pcb_t {
 	/* process queue fields */
@@ -16,17 +17,22 @@ typedef struct pcb_t {
 	/* plus other entries to be added later */
 } pcb_t;
 
+pcb_t freePcb_tp;
+
 void initPcbs(){
-	static pcb_t foo[MAX];
+	static pcb_t pcbs[max];
+	pcb_t free = makeEmptyProcQ();
 	int i = 0;
-	while(i < max){
-		freePcb(&(foo[i]));
+	while( i < 0){
+		freePcb(&pcbs[i]);
+		i++; 
 	}
+	return 0;
 }
 
 /* Insert the element pointed to by p onto the pcbFree list. */
 void freePcb(pcb_t *p){
-
+	insertProcQ(&freePcb_tp, p)
 }
 
 /* Return NULL if the pcbFree list is empty. Otherwise, remove
@@ -36,13 +42,17 @@ pointer to the removed element. ProcBlk’s get reused, so it is
 important that no previous value persist in a ProcBlk when it
 gets reallocated. */
 pcb_t *allocPcb(){
+	pcb_t *temp;
+	temp = removeProcQ(&freePcb_tp);
+	//null evertying
+	return temp;
 
 }
 
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
-pcb_ptr makeEmptyProcQ() {
+pcb_t makeEmptyProcQ() {
 	return(null);
 }
 
@@ -57,11 +67,19 @@ tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ( pcb_t **tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
-		tp = p;
+		*tp = p;
+	}else if(*tp->p_next == *tp){
+		p->p_next = *tp;
+		p->p_prev = *tp;
+		*tp->p_prev = *tp;
+		*tp->p_next = *tp;
+		*tp = p;
 	}else{
-		pcb_t old_next = tp->p_next;
-		tp->p_next = p;
-		old_next->p_prev = p;
+		p->p_next = *tp->p_next;
+		p->p_next->p_prev = p;
+		p->p_prev = *tp;
+		*tp->p_next = p;
+		*tp = p;
 	}
 	return 0;
 }
@@ -69,37 +87,58 @@ void insertProcQ( pcb_t **tp, pcb_t *p){
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
-pcb_ptr *headProcQ(pcb_t *tp){
+pcb_ptr *headProcQ(pcb_t **tp){
 	pcb_ptr head = NULL;
 	if(tp != null) {
-		head = tp->p_next;
+		head = *tp->p_prev;
 	}
 	return(head);
 }
 
-/* Remove the ProcBlk pointed to bypfrom the process queue whose
-tail-pointer is pointed to by tp. Update the process queue’s tail
-pointer if necessary. If the desired entry is not in the indicated queue
-(an error condition), return NULL; otherwise, return p. Note that p
-can point to any element of the process queue. */
+
 pcb_t *removeProcQ(pcb_t **tp){
-	if(tp != NULL) {
-		reutrn(NULL)
+	if(emptyProcQ(*tp)){
+		return(NULL);
+	}else if(*tp->p_next == *tp){
+		*tp = makeEmptyProcQ();
+	}else{
+		*tp->p_prev->p_prev->p_next = *tp;
+		pcb_t old = *tp->p_next;
+		*tp->p_prev = *tp->p_prev->p_prev;
 	}
-	tp->p_next = NULL;
-	return(head);
+	return 0;
 }
 
-/* Remove the ProcBlk pointed to bypfrom the process queue whose
+/* Remove the ProcBlk pointed to by p from the process queue whose
 tail-pointer is pointed to by tp. Update the process queue’s tail
 pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
 pcb_ptr *outProcQ(pcb_t **tp, pcb_t *p){
-	pcb_Ptr head = NULL;
-	if(tp != null) {
-		head = tp->next;
+	if(emptyProcQ(*tp)){
+		return(NULL);
+	}else if(*tp->p_next == *tp){
+		if(*tp == p){
+			pcb_t outproc = *tp;
+			*tp = makeEmptyProcQ();
+			return(outproc);
+		}else{
+			return(NULL);
+		}
+	}else{
+		if(*tp == p){
+			pcb_t outproc = *tp;
+			*tp->p_next->p_prev = *tp->p_prev;
+			*tp->p_prev->p_next = *tp->p_next;
+			*tp = *tp->p_next;
+			return(outproc);
+		}else{
+			pcb_t index = *tp->p_prev;
+			while(index != *tp){
+		}
+
+		}
 	}
-	return(head);
+	
 }
 
