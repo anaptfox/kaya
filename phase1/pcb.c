@@ -1,4 +1,4 @@
-#include "pcb.e"
+#include "../e/pcb.e"
 /* process control block type */
 typedef struct pcb_t {
 	/* process queue fields */
@@ -19,40 +19,11 @@ typedef struct pcb_t {
 
 pcb_t freePcb_tp;
 
-void initPcbs(){
-	static pcb_t pcbs[max];
-	pcb_t free = makeEmptyProcQ();
-	int i = 0;
-	while( i < 0){
-		freePcb(&pcbs[i]);
-		i++; 
-	}
-	return 0;
-}
-
-/* Insert the element pointed to by p onto the pcbFree list. */
-void freePcb(pcb_t *p){
-	insertProcQ(&freePcb_tp, p)
-}
-
-/* Return NULL if the pcbFree list is empty. Otherwise, remove
-an element from the pcbFree list, provide initial values for ALL
-of the ProcBlk’s ﬁelds (i.e. NULL and/or 0) and then return a
-pointer to the removed element. ProcBlk’s get reused, so it is
-important that no previous value persist in a ProcBlk when it
-gets reallocated. */
-pcb_t *allocPcb(){
-	pcb_t *temp;
-	temp = removeProcQ(&freePcb_tp);
-	//null evertying
-	return temp;
-
-}
 
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
-pcb_t makeEmptyProcQ() {
+pcb_t mkEmptyProcQ() {
 	return(null);
 }
 
@@ -87,8 +58,8 @@ void insertProcQ( pcb_t **tp, pcb_t *p){
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
-pcb_ptr *headProcQ(pcb_t **tp){
-	pcb_ptr head = NULL;
+pcb_t *headProcQ(pcb_t *tp){
+	pcb_t head = NULL;
 	if(tp != null) {
 		head = *tp->p_next;
 	}
@@ -103,8 +74,9 @@ pcb_t *removeProcQ(pcb_t **tp){
 		*tp = makeEmptyProcQ();
 	}else{
 		*tp->p_next->p_next->p_prev = *tp;
-		pcb_t old = *tp-prev;
+		pcb_t old = *tp->p_next;
 		*tp->p_next = *tp->p_next->p_next;
+		return(old);
 	}
 	return 0;
 }
@@ -114,7 +86,7 @@ tail-pointer is pointed to by tp. Update the process queue’s tail
 pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
-pcb_ptr *outProcQ(pcb_t **tp, pcb_t *p){
+pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
 		return(NULL);
 	}else if(*tp->p_prev == *tp){
@@ -135,10 +107,87 @@ pcb_ptr *outProcQ(pcb_t **tp, pcb_t *p){
 		}else{
 			pcb_t index = *tp->p_next;
 			while(index != *tp){
-		}
-
+				if(p == index && index == *tp->p_next){
+					return removeProcQ(*tp);
+				}else if(p == index){
+					index->p_prev->p_next = index->p_next;
+					index->p_next->p_prev = index->p_prev;
+					return(index);
+				}else{
+					index = index->p_next;
+				}
+			}
+			return(NULL);
 		}
 	}
 	
 }
 
+
+void initPcbs(){
+	static pcb_t pcbs[max];
+	pcb_t free = makeEmptyProcQ();
+	int i = 0;
+	while( i < 0){
+		freePcb(&pcbs[i]);
+		i++; 
+	}
+	return 0;
+}
+
+/* Insert the element pointed to by p onto the pcbFree list. */
+void freePcb(pcb_t *p){
+	insertProcQ(&freePcb_tp, p);
+}
+
+/* Return NULL if the pcbFree list is empty. Otherwise, remove
+an element from the pcbFree list, provide initial values for ALL
+of the ProcBlk’s ﬁelds (i.e. NULL and/or 0) and then return a
+pointer to the removed element. ProcBlk’s get reused, so it is
+important that no previous value persist in a ProcBlk when it
+gets reallocated. */
+pcb_t *allocPcb(){
+	pcb_t *temp;
+	temp = removeProcQ(&freePcb_tp);
+	//null evertying
+	return temp;
+
+}
+
+int emptyChild (pcb_t *p){
+	return (p->p_child == null); 
+}
+void insertChild (pcb_t *prnt, pcb_t *p){
+	if(emptyChild(prnt)){
+		prnt->p_child = p;
+	}else{
+		prnt->p_child->p_prev_sib = p;
+		p->p_sib = prnt->p_child;
+		prnt->p_child = p;
+	}
+}
+pcb_t *removeChild (pcb_t *p){
+	if(emptyChild(p)){
+		return(NULL);
+	}else{
+		if(p->p_child->p_sib == NULL){
+			p->p_child = NULL:
+		}else{
+			p->p_child->p_sib->p_prev_sib = NULL;
+			p->p_child =  p->p_child->p_sib;
+		}
+	}
+}
+
+pcb_t outChild (pcb_t *p){
+	if(emptyChild(p)){
+		return(NULL);
+	}else{
+		if(p->p_child->p_sib == NULL){
+			p->p_child = NULL:
+		}else{
+			p->p_child->p_sib->p_prev_sib = NULL;
+			p->p_child =  p->p_child->p_sib;
+		}
+	}
+}
