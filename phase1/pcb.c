@@ -19,3 +19,13 @@ typedef struct pcb_t {
 int pcb_t *emptyProQ (pcb_t *tp){
 	return ( tp == null); 
 }
+pcb_ptr headProcQ(pcb_t tp){
+	pcb_Ptr head = NULL;
+	if(tp != null) {
+		head = tp->next;
+	}
+}
+pcb_ptr makeEmptyProcQ() {
+	return(null);
+}
+
