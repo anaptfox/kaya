@@ -125,16 +125,11 @@ void freePcb(pcb_t *p){
 	insertProcQ(&freePcb_tp, p);
 }
 
-/* Return NULL if the pcbFree list is empty. Otherwise, remove
-an element from the pcbFree list, provide initial values for ALL
-of the ProcBlk’s ﬁelds (i.e. NULL and/or 0) and then return a
-pointer to the removed element. ProcBlk’s get reused, so it is
-important that no previous value persist in a ProcBlk when it
-gets reallocated. */
+
 pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
-	return temp;
+	return *temp;
 }
 
 int emptyChild (pcb_t *p){
