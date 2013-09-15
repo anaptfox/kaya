@@ -1,14 +1,6 @@
 #ifndef PCB
 #define PCB
 
-/************************* PROCQ.E *****************************
-*
-*  The externals declaration file for the Process Control Block
-*    Module.
-*
-*  Written by Mikeyg
-*/
-
 #include "../h/types.h"
 
 extern void freePcb (pcb_t *p);

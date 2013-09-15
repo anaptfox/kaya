@@ -138,7 +138,7 @@ void initPcbs(){
 
 /* Insert the element pointed to by p onto the pcbFree list. */
 void freePcb(pcb_t *p){
-
+	insertProcQ(&freePcb_tp, p);
 }
 
 /* Return NULL if the pcbFree list is empty. Otherwise, remove
