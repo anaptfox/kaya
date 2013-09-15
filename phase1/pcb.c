@@ -8,7 +8,7 @@ pcb_t freePcb_tp;
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
-pcb_t mkEmptyProcQ() {
+struct pcb_t mkEmptyProcQ() {
 	return(null);
 }
 
@@ -43,7 +43,7 @@ void insertProcQ( pcb_t **tp, pcb_t *p){
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
-pcb_t *headProcQ(pcb_t *tp){
+struct pcb_t *headProcQ(struct pcb_t *tp){
 	pcb_t head = NULL;
 	if(tp != null) {
 		head = *tp->p_next;
@@ -71,7 +71,7 @@ tail-pointer is pointed to by tp. Update the process queue’s tail
 pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
-pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
+struct pcb_t *outProcQ(struct pcb_t **tp, struct pcb_t *p){
 	if(emptyProcQ(*tp)){
 		return(NULL);
 	}else if(*tp->p_prev == *tp){
@@ -84,13 +84,13 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 		}
 	}else{
 		if(*tp == p){
-			pcb_t outproc = *tp;
+			struct pcb_t outproc = *tp;
 			*tp->p_prev->p_next = *tp->p_next;
 			*tp->p_next->p_prev = *tp->p_prev;
 			*tp = *tp->p_prev;
 			return(outproc);
 		}else{
-			pcb_t index = *tp->p_next;
+			struct pcb_t index = *tp->p_next;
 			while(index != *tp){
 				if(p == index && index == *tp->p_next){
 					return removeProcQ(*tp);
@@ -110,8 +110,8 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 
 
 void initPcbs(){
-	static pcb_t pcbs[MAXPROC];
-	pcb_t free = makeEmptyProcQ();
+	static struct pcb_t pcbs[MAXPROC];
+	struct pcb_t free = makeEmptyProcQ();
 	int i = MAXPROC;
 	while( i > 0){
 		freePcb(&pcbs[i]);
@@ -121,7 +121,7 @@ void initPcbs(){
 }
 
 /* Insert the element pointed to by p onto the pcbFree list. */
-void freePcb(pcb_t *p){
+void freePcb(struct pcb_t *p){
 	insertProcQ(&freePcb_tp, p);
 }
 
@@ -132,11 +132,11 @@ struct pcb_t *allocPcb(){
 	return temp;
 }
 
-int emptyChild (pcb_t *p){
+int emptyChild ( struct pcb_t *p){
 	return (p->p_child == null); 
 }
 
-void insertChild (pcb_t *prnt, pcb_t *p){
+void insertChild (struct pcb_t *prnt, struct pcb_t *p){
 	if(emptyChild(prnt)){
 		prnt->p_child = p;
 	}else{
@@ -146,7 +146,7 @@ void insertChild (pcb_t *prnt, pcb_t *p){
 	}
 }
 
-pcb_t *removeChild (pcb_t *p){
+struct pcb_t *removeChild (struct pcb_t *p){
 	if(emptyChild(p)){
 		return(NULL);
 	}else{
@@ -159,9 +159,9 @@ pcb_t *removeChild (pcb_t *p){
 	}
 }
 
-pcb_t outChild (pcb_t *p){
+struct pcb_t outChild (struct pcb_t *p){
 	if(p->prnt == NULL){
-		reutrn(NULL);
+		return(NULL);
 	}else{
 		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
 			p->prnt->p_child = NULL;
