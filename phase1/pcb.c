@@ -127,9 +127,9 @@ void freePcb(pcb_t *p){
 
 
 pcb_t *allocPcb(){
-	pcb_t *temp;
+	pcb_t temp;
 	temp = removeProcQ(&freePcb_tp);
-	return *temp;
+	return temp;
 }
 
 int emptyChild (pcb_t *p){
