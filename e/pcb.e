@@ -1,14 +1,22 @@
 #ifndef PCB
 #define PCB
 
+/************************* PROCQ.E *****************************
+*
+*  The externals declaration file for the Process Control Block
+*    Module.
+*
+*  Written by Mikeyg
+*/
+
 #include "../h/types.h"
 
-extern void freePcb (pcb_t *p);
-extern pcb_t allocPcb ();
-extern void initPcbs ();
+extern void freePcb(pcb_t *p);
+extern pcb_t allocPcb();
+extern void initPcbs();
 
-extern pcb_t mkEmptyProcQ ();
-extern int emptyProcQ (pcb_t *tp);
+extern pcb_t mkEmptyProcQ();
+extern int emptyProcQ(pcb_t *tp);
 extern void insertProcQ (pcb_t **tp, pcb_t *p);
 extern pcb_t removeProcQ (pcb_t **tp);
 extern pcb_t outProcQ (pcb_t **tp, pcb_t *p);
