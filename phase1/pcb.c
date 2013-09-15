@@ -1,4 +1,5 @@
 #include "../e/pcb.e"
+#include "../h/const.h"
 /* process control block type */
 typedef struct pcb_t {
 	/* process queue fields */
@@ -125,12 +126,12 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 
 
 void initPcbs(){
-	static pcb_t pcbs[max];
+	static pcb_t pcbs[MAXPROC];
 	pcb_t free = makeEmptyProcQ();
-	int i = 0;
-	while( i < 0){
+	int i = MAXPROC;
+	while( i > 0){
 		freePcb(&pcbs[i]);
-		i++; 
+		i--; 
 	}
 	return 0;
 }
@@ -157,6 +158,7 @@ pcb_t *allocPcb(){
 int emptyChild (pcb_t *p){
 	return (p->p_child == null); 
 }
+
 void insertChild (pcb_t *prnt, pcb_t *p){
 	if(emptyChild(prnt)){
 		prnt->p_child = p;
@@ -166,6 +168,7 @@ void insertChild (pcb_t *prnt, pcb_t *p){
 		prnt->p_child = p;
 	}
 }
+
 pcb_t *removeChild (pcb_t *p){
 	if(emptyChild(p)){
 		return(NULL);
@@ -180,14 +183,33 @@ pcb_t *removeChild (pcb_t *p){
 }
 
 pcb_t outChild (pcb_t *p){
-	if(emptyChild(p)){
-		return(NULL);
+	if(p->prnt == NULL){
+		reutrn(NULL);
 	}else{
-		if(p->p_child->p_sib == NULL){
-			p->p_child = NULL:
+		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
+			p->prnt->p_child = NULL;
+			p->prnt = NULL;
+			return(p);
 		}else{
-			p->p_child->p_sib->p_prev_sib = NULL;
-			p->p_child =  p->p_child->p_sib;
+			if(p->p_prev_sib == NULL){
+				p->prnt->p_child = p->p_sib;
+				p->p_sib->p_prev_sib = NULL;
+				p->p_prnt = NULL;
+				p->p_sib = NULL;
+				return(p);
+			}else if(p->p_sib == NULL){
+				p->p_prev_sib->p_sib = NULL;
+				p->p_prnt = NULL;
+				p->p_prev_sib = NULL;
+				return(p);
+			}else{
+				p->p_prev_sib->p_sib = p->p_sib;
+				p->p_sib->p_prev_sib = p->p_prev_sib;
+				p->p_prnt = NULL;
+				p->p_sib = NULL;
+				p->p_prev_sib = NULL;
+				return(p);
+			}
 		}
-	}
+	
 }

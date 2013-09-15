@@ -12,7 +12,7 @@
 #define WORDLEN			4		/* word size in bytes */
 #define PTEMAGICNO		0x2A
 
-#define MAXPCB 20
+#define MAXPROC 20
 
 #define ROMPAGESTART	0x20000000	 /* ROM Reserved Page */
 
