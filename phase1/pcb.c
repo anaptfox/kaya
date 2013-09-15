@@ -52,7 +52,7 @@ pcb_t *headProcQ(pcb_t *tp){
 }
 
 
-pcb_t *removeProcQ(pcb_t **tp){
+struct pcb_t *removeProcQ(struct pcb_t **tp){
 	if(emptyProcQ(*tp)){
 		return(NULL);
 	}else if(*tp->p_next == *tp){
