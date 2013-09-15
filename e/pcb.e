@@ -11,7 +11,7 @@
 
 #include "../h/types.h"
 
-extern void freePcb (pcb_t *p);
+extern void freePcb (pcb_t p);
 extern pcb_t allocPcb ();
 extern void initPcbs ();
 
