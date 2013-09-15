@@ -57,13 +57,13 @@ pcb_t *removeProcQ(pcb_t **tp){
 		return(NULL);
 	}else if(*tp->p_next == *tp){
 		*tp = makeEmptyProcQ();
+		return(NULL);
 	}else{
 		*tp->p_next->p_next->p_prev = *tp;
 		pcb_t old = *tp->p_next;
 		*tp->p_next = *tp->p_next->p_next;
 		return(old);
 	}
-	return 0;
 }
 
 /* Remove the ProcBlk pointed to by p from the process queue whose
@@ -134,9 +134,7 @@ gets reallocated. */
 pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
-	//null evertying
 	return temp;
-
 }
 
 int emptyChild (pcb_t *p){
