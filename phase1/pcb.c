@@ -36,19 +36,17 @@ tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ((*tp))){
-		debugA(1);
 		(*tp) = p;
 		p->p_next = p;
 		p->p_prev = p;
 	}else if((*tp)->p_next == (*tp)){
-		debugB(1);
+
 		p->p_next = (*tp);
 		p->p_prev = (*tp);
 		(*tp)->p_prev = p;
 		(*tp)->p_next = p;
 		(*tp) = p;
 	}else{
-		debugC(1);
 		p->p_next = (*tp)->p_next;
 		p->p_next->p_prev = p;
 		p->p_prev = (*tp);
@@ -169,9 +167,12 @@ int emptyChild (pcb_t *p){
 
 void insertChild (pcb_t *prnt, pcb_t *p){
 	if(emptyChild(prnt)){
+		debugA(1);
 		prnt->p_child = p;
 	}else{
+		debugB(1);
 		prnt->p_child->p_prev_sib = p;
+		p->p_prev_sib = NULL;
 		p->p_sib = prnt->p_child;
 		prnt->p_child = p;
 	}
@@ -202,6 +203,7 @@ pcb_t *outChild(pcb_t *p){
 			return(p);
 		}else{
 			if(p->p_prev_sib == NULL){
+				debugC(1);
 				p->p_prnt->p_child = p->p_sib;
 				p->p_sib->p_prev_sib = NULL;
 				p->p_prnt = NULL;
