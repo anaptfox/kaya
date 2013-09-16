@@ -6,11 +6,11 @@ semd_t *semd_h;
 semd_t *semdFree_h;
 
 //Alloc new Sema and insert it in the right place in the list.
-semd_t *create(int *list, int *semAdd){
-	index = list;
+semd_t *create(semd_t *list, int *semAdd){
+	semd_t index = list;
 
 	semd_t *newSema;
-	newSema->s_next = NULL:
+	newSema->s_next = NULL;
 	newSema->s_semAdd = semAdd;
 	newSema->s_procQ = mkEmptyProcQ();
 
@@ -42,7 +42,7 @@ semd_t *create(int *list, int *semAdd){
 }
 
 //Looks through list for semAdd if not found allocNewASL
-semd_t *find(int *list, int *semAdd){
+semd_t *find(semd_t *list, int *semAdd){
 	if(list->s_semAdd == semAdd){
 		return(list);
 	}else{
@@ -69,7 +69,7 @@ semd_t *find(int *list, int *semAdd){
 
 //Looks through list for semAdd if not found allocNewASL
 
-semd_t *remove(int *list, int *semAdd){
+semd_t *remove(semd_t *list, int *semAdd){
 	if(list == NULL){
 		return(NULL);
 	}
