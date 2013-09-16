@@ -166,14 +166,14 @@ int emptyChild (pcb_t *p){
 
 void insertChild (pcb_t *prnt, pcb_t *p){
 	if(emptyChild(prnt)){
-		
 		prnt->p_child = p;
+		p->p_prnt = prnt;
 	}else{
-	
 		prnt->p_child->p_prev_sib = p;
 		p->p_prev_sib = NULL;
 		p->p_sib = prnt->p_child;
 		prnt->p_child = p;
+		p->p_prnt = prnt;
 	}
 }
 
