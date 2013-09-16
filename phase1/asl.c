@@ -40,7 +40,7 @@ semd_t *create(semd_t *list, int *semAdd){
 	return newSema;
 }
 
-//Looks through list for semAdd if not found allocNewASL
+/*Looks through list for semAdd if not found allocNewASL*/
 semd_t *find(semd_t *list, int *semAdd){
 	if(list->s_semAdd == semAdd){
 		return(list);
@@ -66,7 +66,7 @@ semd_t *find(semd_t *list, int *semAdd){
 }
 
 
-//Looks through list for semAdd if not found allocNewASL
+/*Looks through list for semAdd if not found allocNewASL*/
 
 semd_t *remove(semd_t *list, int *semAdd){
 	if(list == NULL){
@@ -112,12 +112,12 @@ semd_t *remove(semd_t *list, int *semAdd){
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t sema = find(semd_h, semAdd);
 	if(sema == NULL){
-		//remove from free list
+		/*remove from free list*/
 		sema = remove(semdFree_h, semAdd);
 		if(sema == NULL){
 			return 1;
 		}
-		// add to active list
+		/* add to active list*/
 		sema = create(semd_h, semAdd);
 	}
  	insertProcQ(sema->s_procQ, p);
