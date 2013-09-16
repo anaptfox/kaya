@@ -46,7 +46,7 @@ queue. Return NULL if the process queue is empty. */
 pcb_t *headProcQ(pcb_t *tp){
 	pcb_t *head = NULL;
 	if(tp != NULL) {
-		head = *tp->p_next;
+		head = tp->p_next;
 	}
 	return(head);
 }
@@ -76,7 +76,7 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 		return(NULL);
 	}else if(tp->p_prev == tp){
 		if(tp == p){
-			pcb_t outproc = tp;
+			pcb_t *outproc = tp;
 			tp = makeEmptyProcQ();
 			return(outproc);
 		}else{
@@ -84,13 +84,13 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 		}
 	}else{
 		if(tp == p){
-			pcb_t outproc = tp;
+			pcb_t *outproc = tp;
 			tp->p_prev->p_next = tp->p_next;
 			tp->p_next->p_prev = tp->p_prev;
 			tp = tp->p_prev;
 			return(outproc);
 		}else{
-			pcb_t index = tp->p_next;
+			pcb_t *index = tp->p_next;
 			while(index != tp){
 				if(p == index && index == tp->p_next){
 					return removeProcQ(tp);
@@ -110,8 +110,8 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 
 
 void initPcbs(){
-	static pcb_t pcbs[MAXPROC];
-	pcb_t free = makeEmptyProcQ();
+	static pcb_t *pcbs[MAXPROC];
+	pcb_t *free = makeEmptyProcQ();
 	int i = MAXPROC;
 	while( i > 0){
 		freePcb(&pcbs[i]);
