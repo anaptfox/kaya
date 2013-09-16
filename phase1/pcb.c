@@ -36,7 +36,7 @@ void insertProcQ(pcb_t *tp, pcb_t *p){
 		p->p_prev = tp;
 		tp->p_next = p;
 		tp = p;
-	}d
+	}
 }
 
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
