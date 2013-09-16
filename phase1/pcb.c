@@ -41,7 +41,7 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 		p->p_next = p;
 		p->p_prev = p;
 	}else if((*tp)->p_next == (*tp)){
-		debugA(1);
+		debugB(1);
 		(*tp)->p_prev = p;
 		(*tp)->p_next = p;
 		p->p_next = (*tp);
