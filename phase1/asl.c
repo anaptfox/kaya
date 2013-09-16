@@ -223,7 +223,7 @@ pcb_t *headBlocked(int *semAdd){
 
 void initASL(){
 	static semd_t semdTable[MAXPROC];
-	int i = MAXPROC;
+	int i = 0;
 	while(i < MAXPROC){
 		semdTable[i].s_semAdd = NULL;
 		create(&semdFree_h, semdTable[i].s_semAdd);
