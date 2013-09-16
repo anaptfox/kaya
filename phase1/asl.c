@@ -55,6 +55,40 @@ semd_t *create(semd_t **list, int *semAdd){
 	return newSema;
 }
 
+semd_t *addToASL(semd_t *newSema, int *semAdd){
+	int stop = 0;
+	semd_t *index = (*semd_h);
+
+	newSema->s_next = NULL;
+	newSema->s_semAdd = semAdd;
+	newSema->s_procQ = mkEmptyProcQ();
+
+	/*Check head first */
+	if(index->s_semAdd > semAdd){
+		(*list) = newSema;
+		newSema->s_next = index;
+		stop = 1;
+	}
+	/* Loop through everything but head.*/
+	while(!stop){
+		/* if semAdd is greater than the current semAdd*/
+		if(index->s_next->s_semAdd > semAdd){
+			newSema->s_next = index->s_next;
+			index->s_next = newSema;
+			stop = 1;
+		/* if it is the last in the list*/
+		}else if(index->s_next == NULL){
+			index->s_next = newSema;
+			stop = 1;
+		/* Reset the index to next. */
+		}else{
+			index = index->s_next;
+		}
+	}
+
+	return newSema;
+}
+
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *find(semd_t **list, int *semAdd){
 	if((*list)->s_semAdd == semAdd){
@@ -135,7 +169,7 @@ semd_t *remove(semd_t **list, int *semAdd){
 		debugA(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
-				
+
 				if (index->s_next->s_next != NULL){
 					deletedNode = index->s_next;
 					deletedNode->s_next = NULL;
@@ -164,20 +198,51 @@ semd_t *remove(semd_t **list, int *semAdd){
 	}
 }
 
+
+/* Return TRUE if the queue whose tail is pointed to by tp is empty.
+Return FALSE otherwise. */
+int emptyList(semd_t *list){
+	return (list == NULL); 
+}
+
+/*Removes the top of the Free list*/
+
+semd_t *removeFree(){
+	if(emptyList(*semdFree_h)){
+		return(NULL);
+	}else{
+		semd_t *old = (*semdFree_h);
+		if((*semdFree_h)->s_next == NULL ){
+			(*semdFree_h) = NULL:
+		}else{
+			(*semdFree_h) = (*semdFree_h)->s_next;
+		}
+		return(old);
+	}
+}
+
+/* Insert the ProcBlk pointed to by p at the tail of the process queue
+ associated with the semaphore whose physical address is semAdd and 
+ set the semaphore address of p to semAdd. If the semaphore is currently not 
+ active (i.e. there is no descriptor for it in the ASL), allo- cate a new descriptor
+  from the semdFree list, insert it in the ASL (atthe appropriate position), initialize 
+  all of the fields (i.e. set s semAdd to semAdd, and s procq to mkEmptyProcQ()), and proceed as above. If a new
+   semaphore descriptor needs to be allocated and the semdFree list is empty, 
+   return TRUE. In all other cases return FALSE. */
+
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
-	bool returnValue = 0;
 	if(sema == NULL){
 		/*remove from free (*list)*/
-		sema = remove(&semdFree_h, semAdd);
-		if(){
-			returnValue = 1;
+		sema = removeFree();
+		if(sema == NULL ){
+			return 1;
 		}
 		/* add to active list*/
-		sema = create(&semd_h, semAdd);
+		sema = addToASL(sema, semAdd);
 	}
  	insertProcQ(&(sema->s_procQ), p);
- 	return returnValue;
+ 	return 0;
 }
 
 pcb_t *removeBlocked(int *semAdd){
@@ -220,9 +285,11 @@ pcb_t *headBlocked(int *semAdd){
 
 void initASL(){
 	static semd_t semdTable[MAXPROC];
-	int i = MAXPROC;
+	int i = 0;
 	while(  i < MAXPROC){
-		create(&semdFree_h, &semdTable[i]);
+		semdTable[i].s_next = semdFree_h;	
 		i++; 
 	}
+	semdTable[(MAXPROC-1)].s_next = NULL;
+	semdFree_h = &semdTable;
 }
