@@ -60,7 +60,7 @@ pcb_t *removeProcQ(pcb_t **tp){
 		return(NULL);
 	}else{
 		*tp->p_next->p_next->p_prev = *tp;
-		pcb_t old = *tp->p_next;
+		pcb_t *old = *tp->p_next;
 		*tp->p_next = *tp->p_next->p_next;
 		return(old);
 	}
