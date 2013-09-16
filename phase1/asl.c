@@ -115,9 +115,9 @@ semd_t *find(semd_t **list, int *semAdd){
 			}
 			else{
 				return(NULL);
+				debugB(1);
 			}
 		}
-		debugB(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
