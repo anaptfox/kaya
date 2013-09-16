@@ -114,10 +114,6 @@ void initPcbs(){
 	freePcb_tp = NULL;
 	pcb_t *free = mkEmptyProcQ();
 	int i = MAXPROC;
-	while( i > 0){
-		freePcb(&pcbs[i]);
-		i--; 
-	}
 	return 0;
 }
 
