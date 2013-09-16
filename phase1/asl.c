@@ -124,7 +124,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
  	return 0;
 }
 
-pcb_t *removedBlocked(int *semAdd){
+pcb_t *removeBlocked(int *semAdd){
 	semd_t *sema = find(semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);

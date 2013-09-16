@@ -56,7 +56,7 @@ pcb_t *removeProcQ(pcb_t *tp){
 	if(emptyProcQ(tp)){
 		return(NULL);
 	}else if(tp->p_next == tp){
-		tp = makeEmptyProcQ();
+		tp = mkEmptyProcQ();
 		return(NULL);
 	}else{
 		tp->p_next->p_next->p_prev = tp;
@@ -77,7 +77,7 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 	}else if(tp->p_prev == tp){
 		if(tp == p){
 			pcb_t *outproc = tp;
-			tp = makeEmptyProcQ();
+			tp = mkEmptyProcQ();
 			return(outproc);
 		}else{
 			return(NULL);
@@ -111,7 +111,7 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 
 void initPcbs(){
 	static pcb_t *pcbs[MAXPROC];
-	pcb_t *free = makeEmptyProcQ();
+	pcb_t *free = mkEmptyProcQ();
 	int i = MAXPROC;
 	while( i > 0){
 		freePcb(&pcbs[i]);
