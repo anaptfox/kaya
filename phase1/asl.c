@@ -59,7 +59,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = 0;
 	semd_t *index = (semd_h);
 	debugD(1);
-	
+	newSema->s_next = NULL;
 	newSema->s_semAdd = semAdd;
 	newSema->s_procQ = mkEmptyProcQ();
 
