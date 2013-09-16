@@ -110,7 +110,7 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 
 void initPcbs(){
 	static pcb_t *pcbs[20];
-	freePcb_tp = mkEmptyProcQ();
+	*freePcb_tp = mkEmptyProcQ();
 	int i = 0;
 	while( i < 20){
 		freePcb(&pcbs[i]);
@@ -130,7 +130,7 @@ pointer to the removed element. ProcBlk’s get reused, so it is
 important that no previous value persist in a ProcBlk when it
 gets reallocated. */
 pcb_t *allocPcb(){
-	return removeProcQ(&freePcb_tp);
+	return removeProcQ(freePcb_tp);
 }
 
 int emptyChild (pcb_t *p){
