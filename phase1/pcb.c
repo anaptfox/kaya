@@ -13,6 +13,9 @@ void debugB(int i){
 void debugC(int i){
 	return i;
 }
+void debugD(int i){
+	return i;
+}
 
 
 /* This method is used to initialize a variable to be tail pointer to a
@@ -33,16 +36,19 @@ tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ((*tp))){
+		debugA(1);
 		(*tp) = p;
 		p->p_next = p;
 		p->p_prev = p;
 	}else if((*tp)->p_next == (*tp)){
+		debugA(1);
 		(*tp)->p_prev = p;
 		(*tp)->p_next = p;
 		p->p_next = (*tp);
 		p->p_prev = (*tp);
 		(*tp) = p;
 	}else{
+		debugC(1);
 		p->p_next = (*tp)->p_next;
 		p->p_next->p_prev = p;
 		p->p_prev = (*tp);
@@ -57,6 +63,7 @@ queue. Return NULL if the process queue is empty. */
 pcb_t *headProcQ(pcb_t **tp){
 	pcb_t *head = NULL;
 	if((*tp) != NULL) {
+		debugD(1);
 		head = (*tp)->p_next;
 	}
 	return(head);
@@ -65,15 +72,12 @@ pcb_t *headProcQ(pcb_t **tp){
 
 pcb_t *removeProcQ(pcb_t **tp){
 	if(emptyProcQ(*tp)){
-		debugA(1);
 		return(NULL);
 	}else if((*tp)->p_next == *tp){
-		debugB(1);
 		pcb_t *old = (*tp);
 		*tp = mkEmptyProcQ();
 		return(old);
 	}else{
-		debugC(1);
 		pcb_t *old = (*tp)->p_next;
 		(*tp)->p_next->p_next->p_prev = *tp;
 		(*tp)->p_next = (*tp)->p_next->p_next;
