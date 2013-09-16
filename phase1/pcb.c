@@ -23,7 +23,7 @@ int emptyProcQ (pcb_t *tp){
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
-	if(emptyProcQ(*tp)){
+	if(emptyProcQ(&tp)){
 		*tp = p;
 	}else if(*tp->p_next == *tp){
 		p->p_next = *tp;
