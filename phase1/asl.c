@@ -36,6 +36,7 @@ semd_t *create(semd_t **list, int *semAdd){
 		newSema->s_next = index;
 		stop = 1;
 	}
+	debugA(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
