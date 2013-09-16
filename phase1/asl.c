@@ -107,8 +107,6 @@ semd_t *remove(semd_t *list, int *semAdd){
 	}
 }
 
-
-
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(semd_h, semAdd);
 	if(sema == NULL){

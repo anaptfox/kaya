@@ -4,6 +4,17 @@
 
 static pcb_t *freePcb_tp;
 
+void debugA(int i){
+	return i;
+}
+void debugB(int i){
+	return i;
+}
+void debugC(int i){
+	return i;
+}
+
+
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
@@ -54,12 +65,15 @@ pcb_t *headProcQ(pcb_t **tp){
 
 pcb_t *removeProcQ(pcb_t **tp){
 	if(emptyProcQ(*tp)){
+		debugA();
 		return(NULL);
 	}else if((*tp)->p_next == *tp){
+		debugB();
 		pcb_t *old = (*tp);
 		*tp = mkEmptyProcQ();
 		return(old);
 	}else{
+		debugC();
 		pcb_t *old = (*tp)->p_next;
 		(*tp)->p_next->p_next->p_prev = *tp;
 		(*tp)->p_next = (*tp)->p_next->p_next;
