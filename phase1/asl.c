@@ -225,7 +225,7 @@ void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
 	while(i < MAXPROC){
-		semdTable[i].s_semAdd = NULL;
+		semdTable[i].s_semAdd = &semdTable[i];
 		create(&semdFree_h, semdTable[i].s_semAdd);
 		i++; 
 	}
