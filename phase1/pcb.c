@@ -9,7 +9,7 @@ static pcb_t **freePcb_tp;
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
 pcb_t *mkEmptyProcQ() {
-	return(NULL);
+	return NULL;
 }
 
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
@@ -115,7 +115,7 @@ void freePcb(pcb_t *p){
 void initPcbs(){
 	static pcb_t *pcbs[MAXPROC];
 	int i = 0;
-	*freePcb_tp = mkEmptyProcQ();
+	(*freePcb_tp) = mkEmptyProcQ();
 	
 }
 
