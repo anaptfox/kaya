@@ -56,8 +56,9 @@ pcb_t *removeProcQ(pcb_t **tp){
 	if(emptyProcQ(*tp)){
 		return(NULL);
 	}else if((*tp)->p_next == *tp){
+		pcb_t *old = (*tp);
 		*tp = mkEmptyProcQ();
-		return(NULL);
+		return(old);
 	}else{
 		pcb_t *old = (*tp)->p_next;
 		(*tp)->p_next->p_next->p_prev = *tp;
