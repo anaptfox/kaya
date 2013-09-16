@@ -2,7 +2,7 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-static pcb_t freePcb_tp;
+static pcb_t *freePcb_tp;
 
 
 /* This method is used to initialize a variable to be tail pointer to a
@@ -36,8 +36,7 @@ void insertProcQ(pcb_t *tp, pcb_t *p){
 		p->p_prev = tp;
 		tp->p_next = p;
 		tp = p;
-	}
-	return 0;
+	}d
 }
 
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
