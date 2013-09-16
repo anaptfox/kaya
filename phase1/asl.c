@@ -65,7 +65,9 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	if(semd_h == NULL){
 		semd_h = newSema;
+		debugA(1);
 		return newSema;
+
 	}
 
 	/*Check head first */
@@ -102,6 +104,7 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list)->s_semAdd == semAdd){
 		return((*list));
 	}else{
+		debugA();
 
 		semd_t *index = (*list)->s_next;
 		if(index->s_semAdd == semAdd){
@@ -114,7 +117,7 @@ semd_t *find(semd_t **list, int *semAdd){
 				return(NULL);
 			}
 		}
-
+		debugB();
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
