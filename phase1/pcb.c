@@ -43,25 +43,25 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
-pcb_t *headProcQ(pcb_t *tp){
+pcb_t *headProcQ(pcb_t **tp){
 	pcb_t *head = NULL;
-	if(tp != NULL) {
-		head = tp->p_next;
+	if(*tp != NULL) {
+		head = *tp->p_next;
 	}
 	return(head);
 }
 
 
-pcb_t *removeProcQ(pcb_t *tp){
-	if(emptyProcQ(tp)){
+pcb_t *removeProcQ(pcb_t **tp){
+	if(emptyProcQ(*tp)){
 		return(NULL);
-	}else if(tp->p_next == tp){
-		tp = mkEmptyProcQ();
+	}else if(*tp->p_next == *tp){
+		*tp = mkEmptyProcQ();
 		return(NULL);
 	}else{
-		tp->p_next->p_next->p_prev = tp;
-		pcb_t *old = tp->p_next;
-		tp->p_next = tp->p_next->p_next;
+		*tp->p_next->p_next->p_prev = *tp;
+		pcb_t *old = *tp->p_next;
+		*tp->p_next = *tp->p_next->p_next;
 		return(old);
 	}
 }
@@ -71,29 +71,29 @@ tail-pointer is pointed to by tp. Update the process queue’s tail
 pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
-pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
-	if(emptyProcQ(tp)){
+pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
+	if(emptyProcQ(*tp)){
 		return(NULL);
-	}else if(tp->p_prev == tp){
-		if(tp == p){
-			pcb_t *outproc = tp;
-			tp = mkEmptyProcQ();
-			return(outproc);
+	}else if(*tp->p_prev == *tp){
+		if(*tp == p){
+			pcb_t *ou*tproc = *tp;
+			*tp = mkEmptyProcQ();
+			return(ou*tproc);
 		}else{
 			return(NULL);
 		}
 	}else{
-		if(tp == p){
-			pcb_t *outproc = tp;
-			tp->p_prev->p_next = tp->p_next;
-			tp->p_next->p_prev = tp->p_prev;
-			tp = tp->p_prev;
-			return(outproc);
+		if(*tp == p){
+			pcb_t *ou*tproc = *tp;
+			*tp->p_prev->p_next = *tp->p_next;
+			*tp->p_next->p_prev = *tp->p_prev;
+			*tp = *tp->p_prev;
+			return(ou*tproc);
 		}else{
-			pcb_t *index = tp->p_next;
-			while(index != tp){
-				if(p == index && index == tp->p_next){
-					return removeProcQ(tp);
+			pcb_t *index = *tp->p_next;
+			while(index != *tp){
+				if(p == index && index == *tp->p_next){
+					return removeProcQ(*tp);
 				}else if(p == index){
 					index->p_prev->p_next = index->p_next;
 					index->p_next->p_prev = index->p_prev;
