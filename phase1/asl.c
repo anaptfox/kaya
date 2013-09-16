@@ -223,10 +223,12 @@ semd_t *removeFree(){
 	if(emptyList(semdFree_h)){
 		return(NULL);
 	}else{
+		debugB(1);
 		semd_t *old = (semdFree_h);
 		if((semdFree_h)->s_next == NULL ){
 			(semdFree_h) = NULL;
 		}else{
+			debugB(1);
 			(semdFree_h) = (semdFree_h)->s_next;
 		}
 		return(old);
