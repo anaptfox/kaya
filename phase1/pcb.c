@@ -148,12 +148,14 @@ gets reallocated. */
 pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
-	temp->p_next = NULL;
-	temp->p_prev = NULL;
-	temp->p_prnt = NULL;
-	temp->p_child = NULL;
-	temp->p_sib = NULL;
-	temp->p_prev_sib = NULL;
+	if(temp != NULL){
+		temp->p_next = NULL;
+		temp->p_prev = NULL;
+		temp->p_prnt = NULL;
+		temp->p_child = NULL;
+		temp->p_sib = NULL;
+		temp->p_prev_sib = NULL;
+	}
 	return(temp);
 }
 
