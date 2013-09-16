@@ -9,13 +9,13 @@ static pcb_t freePcb_tp;
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
 pcb_t mkEmptyProcQ() {
-	return(null);
+	return(NULL);
 }
 
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
 Return FALSE otherwise. */
 int emptyProcQ (pcb_t *tp){
-	return (tp == null); 
+	return (tp == NULL); 
 }
 
 /* Insert the ProcBlk pointed to by p into the process queue whose
@@ -45,7 +45,7 @@ tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
 pcb_t *headProcQ(pcb_t *tp){
 	pcb_t head = NULL;
-	if(tp != null) {
+	if(tp != NULL) {
 		head = *tp->p_next;
 	}
 	return(head);
@@ -136,7 +136,7 @@ pcb_t *allocPcb(){
 }
 
 int emptyChild (pcb_t *p){
-	return (p->p_child == null); 
+	return (p->p_child == NULL); 
 }
 
 void insertChild (pcb_t *prnt, pcb_t *p){
