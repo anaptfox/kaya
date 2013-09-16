@@ -107,21 +107,21 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 	
 }
 
+/* Insert the element pointed to by p onto the pcbFree list. */
+void freePcb(pcb_t *p){
+	insertProcQ(freePcb_tp, p);
+}
 
 void initPcbs(){
-	static pcb_t *pcbs[20];
+	static pcb_t *pcbs[MAXPROC];
 	int i = 0;
 	*freePcb_tp = mkEmptyProcQ();
-	while( i < 20){
+	while( i < MAXPROC){
 		freePcb(pcbs[i]);
 		i++; 
 	}
 }
 
-/* Insert the element pointed to by p onto the pcbFree list. */
-void freePcb(pcb_t *p){
-	insertProcQ(freePcb_tp, p);
-}
 
 /* Return NULL if the pcbFree list is empty. Otherwise, remove
 an element from the pcbFree list, provide initial values for ALL
