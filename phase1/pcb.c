@@ -129,7 +129,10 @@ pointer to the removed element. ProcBlk’s get reused, so it is
 important that no previous value persist in a ProcBlk when it
 gets reallocated. */
 pcb_t *allocPcb(){
-	return removeProcQ(&freePcb_tp);
+	pcb_t *temp;
+	temp = removeProcQ(&freePcb_tp);
+	return(temp);
+	
 }
 
 int emptyChild (pcb_t *p){
