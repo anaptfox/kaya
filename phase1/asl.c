@@ -108,7 +108,7 @@ semd_t *remove(semd_t **list, int *semAdd){
 		}else{
 			(*list) = (*list)->s_next;
 		}
-		deletedNode->s_next= NULL:
+		deletedNode->s_next= NULL;
 		return deletedNode;
 	}else{
 
