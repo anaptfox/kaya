@@ -57,7 +57,7 @@ semd_t *create(semd_t **list, int *semAdd){
 
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = 0;
-	semd_t *index = (*semd_h);
+	semd_t *index = (semd_h);
 
 	newSema->s_next = NULL;
 	newSema->s_semAdd = semAdd;
@@ -65,7 +65,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
-		(*list) = newSema;
+		(semd_h) = newSema;
 		newSema->s_next = index;
 		stop = 1;
 	}
@@ -142,7 +142,7 @@ semd_t *remove(semd_t **list, int *semAdd){
 		}else{
 			(*list) = (*list)->s_next;
 		}
-		deletedNode->s_next= NULL:
+		deletedNode->s_next= NULL;
 		return deletedNode;
 	}else{
 
@@ -208,14 +208,14 @@ int emptyList(semd_t *list){
 /*Removes the top of the Free list*/
 
 semd_t *removeFree(){
-	if(emptyList(*semdFree_h)){
+	if(emptyList(semdFree_h)){
 		return(NULL);
 	}else{
 		semd_t *old = (*semdFree_h);
-		if((*semdFree_h)->s_next == NULL ){
-			(*semdFree_h) = NULL:
+		if((semdFree_h)->s_next == NULL ){
+			(semdFree_h) = NULL:
 		}else{
-			(*semdFree_h) = (*semdFree_h)->s_next;
+			(semdFree_h) = (semdFree_h)->s_next;
 		}
 		return(old);
 	}
