@@ -150,7 +150,6 @@ pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
 	if(temp != NULL){
-		debugD(1);
 		temp->p_next = NULL;
 		temp->p_prev = NULL;
 		temp->p_prnt = NULL;
@@ -167,10 +166,10 @@ int emptyChild (pcb_t *p){
 
 void insertChild (pcb_t *prnt, pcb_t *p){
 	if(emptyChild(prnt)){
-		debugA(1);
+		
 		prnt->p_child = p;
 	}else{
-		debugB(1);
+	
 		prnt->p_child->p_prev_sib = p;
 		p->p_prev_sib = NULL;
 		p->p_sib = prnt->p_child;
@@ -195,6 +194,7 @@ pcb_t *removeChild (pcb_t *p){
 
 pcb_t *outChild(pcb_t *p){
 	if(p->p_prnt == NULL){
+		debugD(1);
 		return(NULL);
 	}else{
 		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
@@ -210,11 +210,13 @@ pcb_t *outChild(pcb_t *p){
 				p->p_sib = NULL;
 				return(p);
 			}else if(p->p_sib == NULL){
+				debugB(1);
 				p->p_prev_sib->p_sib = NULL;
 				p->p_prnt = NULL;
 				p->p_prev_sib = NULL;
 				return(p);
 			}else{
+				debugA(1);
 				p->p_prev_sib->p_sib = p->p_sib;
 				p->p_sib->p_prev_sib = p->p_prev_sib;
 				p->p_prnt = NULL;
