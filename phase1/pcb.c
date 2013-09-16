@@ -26,10 +26,10 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 		p->p_next = p;
 		p->p_prev = p;
 	}else if((*tp)->p_next == (*tp)){
+		(*tp)->p_prev = p;
+		(*tp)->p_next = p;
 		p->p_next = (*tp);
 		p->p_prev = (*tp);
-		(*tp)->p_prev = (*tp);
-		(*tp)->p_next = (*tp);
 		(*tp) = p;
 	}else{
 		p->p_next = (*tp)->p_next;
@@ -134,8 +134,13 @@ gets reallocated. */
 pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
+	temp->p_next = NULL;
+	temp->p_prev = NULL;
+	temp->p_prnt = NULL;
+	temp->p_child = NULL:
+	temp->p_sib = NULL;
+	temp->p_prev_sib = NULL;
 	return(temp);
-
 }
 
 int emptyChild (pcb_t *p){
