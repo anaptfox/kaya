@@ -104,19 +104,19 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list)->s_semAdd == semAdd){
 		return((*list));
 	}else{
-
-		semd_t *index = (*list)->s_next;
-		if(index->s_semAdd == semAdd){
-				return(index);
-		}else if(index->s_next == NULL){
+		if((*list)->s_next == NULL){
 			debugD(1);
-			if(index->s_semAdd == semAdd){
+			if((*list)->s_next->s_semAdd == semAdd){
 				return(index);
 			}
 			else{
 				return(NULL);
 				debugB(1);
 			}
+		}
+		semd_t *index = (*list)->s_next;
+		if(index->s_semAdd == semAdd){
+				return(index);
 		}
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
