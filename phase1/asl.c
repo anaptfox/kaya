@@ -161,7 +161,7 @@ pcb_t *headBlocked(int *semAdd){
 
 
 
-void initASL{
+void initASL(){
 	static semd_t *semdTable[MAXPROC];
 	int i = MAXPROC;
 	while( i > 0){
