@@ -120,7 +120,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 		/* add to active list*/
 		sema = create(semd_h, semAdd);
 	}
- 	insertProcQ(sema->s_procQ, p);
+ 	insertProcQ(&(sema->s_procQ), p);
  	return 0;
 }
 
@@ -129,11 +129,12 @@ pcb_t *removeBlocked(int *semAdd){
 	if(sema == NULL){
 		return(NULL);
 	}else{
-		removeProcQ(sema->s_procQ);
+		sema = removeProcQ((&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			sema = remove(semd_h, semAdd);
 			sema = create(semdFree_h, semAdd );
 		}
+		return(sema);
 	}
 }
 
@@ -146,7 +147,7 @@ pcb_t *outBlocked(pcb_t *p){
 			return(NULL);
 		}
 	}
-	return outProcQ(sema->s_procQ, p);
+	return outProcQ(&(sema->s_procQ), p);
 }
 
 
