@@ -2,10 +2,9 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-semd_t *semd_h;
-semd_t *semdFree_h;
+static semd_t *semd_h;
+static semd_t *semdFree_h;
 
-//Alloc new Sema and insert it in the right place in the list.
 semd_t *create(semd_t *list, int *semAdd){
 	semd_t index = list;
 
