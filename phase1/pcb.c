@@ -58,8 +58,8 @@ pcb_t *removeProcQ(pcb_t **tp){
 		*tp = mkEmptyProcQ();
 		return(NULL);
 	}else{
-		(*tp)->p_next->p_next->p_prev = *tp;
 		pcb_t *old = (*tp)->p_next;
+		(*tp)->p_next->p_next->p_prev = *tp;
 		(*tp)->p_next = (*tp)->p_next->p_next;
 		return(old);
 	}
@@ -110,10 +110,10 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 
 void initPcbs(){
 	static pcb_t *pcbs[20];
-	*freePcb_tp = mkEmptyProcQ();
 	int i = 0;
+	*freePcb_tp = mkEmptyProcQ();
 	while( i < 20){
-		freePcb(&pcbs[i]);
+		freePcb(pcbs[i]);
 		i++; 
 	}
 }
@@ -151,12 +151,14 @@ pcb_t *removeChild (pcb_t *p){
 	if(emptyChild(p)){
 		return(NULL);
 	}else{
+		pcb_t *removedChild = p->p_child;
 		if(p->p_child->p_sib == NULL){
 			p->p_child = NULL;
 		}else{
 			p->p_child->p_sib->p_prev_sib = NULL;
 			p->p_child =  p->p_child->p_sib;
 		}
+		return(removedChild);
 	}
 }
 
