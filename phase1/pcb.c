@@ -65,15 +65,15 @@ pcb_t *headProcQ(pcb_t **tp){
 
 pcb_t *removeProcQ(pcb_t **tp){
 	if(emptyProcQ(*tp)){
-		debugA();
+		debugA(1);
 		return(NULL);
 	}else if((*tp)->p_next == *tp){
-		debugB();
+		debugB(1);
 		pcb_t *old = (*tp);
 		*tp = mkEmptyProcQ();
 		return(old);
 	}else{
-		debugC();
+		debugC(1);
 		pcb_t *old = (*tp)->p_next;
 		(*tp)->p_next->p_next->p_prev = *tp;
 		(*tp)->p_next = (*tp)->p_next->p_next;
