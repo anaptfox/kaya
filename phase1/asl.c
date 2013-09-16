@@ -96,6 +96,9 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *find(semd_t **list, int *semAdd){
+	if((*list) == NULL){
+		return(NULL);
+	}
 	if((*list)->s_semAdd == semAdd){
 		return((*list));
 	}else{
@@ -236,16 +239,20 @@ semd_t *removeFree(){
    return TRUE. In all other cases return FALSE. */
 
 int insertBlocked(int *semAdd, pcb_t *p){
+	debugD(1);
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
+		debugC(1);
 		/*remove from free (*list)*/
 		sema = removeFree();
 		if(sema == NULL ){
 			return 1;
 		}
 		/* add to active list*/
+		debugB(1);
 		sema = addToASL(sema, semAdd);
 	}
+	debugA(1);
  	insertProcQ(&(sema->s_procQ), p);
  	return 0;
 }
@@ -291,7 +298,6 @@ pcb_t *headBlocked(int *semAdd){
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
-	debugD(1);
 	while(  i < MAXPROC){
 		semdTable[i].s_next = semdFree_h;	
 		i++; 
@@ -299,5 +305,4 @@ void initASL(){
 	semdTable[(MAXPROC-1)].s_next = NULL;
 	semdFree_h = &semdTable[0];
 	semd_h = NULL;
-	debugC(1);
 }
