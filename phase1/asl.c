@@ -45,7 +45,7 @@ semd_t *find(semd_t *list, int *semAdd){
 	if(list->s_semAdd == semAdd){
 		return(list);
 	}else{
-		index = list->s_next;
+		semd_t *index = list->s_next;
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
@@ -75,8 +75,8 @@ semd_t *remove(semd_t *list, int *semAdd){
 	if(list->s_semAdd == semAdd){
 		list = list->s_next;
 	}else{
-		index = list;
-		semd_t deletedNode;
+		semd_t *index = list;
+		semd_t *deletedNode;
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				if (index->s_next->s_next != NULL){
@@ -110,7 +110,7 @@ semd_t *remove(semd_t *list, int *semAdd){
 
 
 int insertBlocked(int *semAdd, pcb_t *p){
-	semd_t sema = find(semd_h, semAdd);
+	semd_t *sema = find(semd_h, semAdd);
 	if(sema == NULL){
 		/*remove from free list*/
 		sema = remove(semdFree_h, semAdd);
@@ -125,7 +125,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 }
 
 pcb_t *removedBlocked(int *semAdd){
-	semd_t sema = find(semd_h, semAdd);
+	semd_t *sema = find(semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}else{
@@ -138,7 +138,7 @@ pcb_t *removedBlocked(int *semAdd){
 }
 
 pcb_t *outBlocked(pct_t *p){
-	semd_t sema = find(semd_h ,p->p_semAdd);
+	semd_t *sema = find(semd_h ,p->p_semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}else{
@@ -151,7 +151,7 @@ pcb_t *outBlocked(pct_t *p){
 
 
 pcb_t *headBlocked(int *semAdd){
-	semd_t sema = find(semd_h, semAdd);
+	semd_t *sema = find(semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}
@@ -162,7 +162,7 @@ pcb_t *headBlocked(int *semAdd){
 
 
 void initASL{
-	static semd_t semdTable[MAXPROC];
+	static semd_t *semdTable[MAXPROC];
 	int i = MAXPROC;
 	while( i > 0){
 		create(semdFree_h, &semdTable[i]);
