@@ -7,7 +7,6 @@ typedef struct semd_t {
 	pcb_t *s_procQ; /* tail pointer to a process queue */
 } semd_t;
 
-#include "asl.h"
 
 semd_t semd_h;
 semd_t semdFree_h;

@@ -18,7 +18,6 @@ typedef struct pcb_t {
 	/* plus other entries to be added later */
 } pcb_t;
 
-#include "../e/pcb.e"
 
 pcb_t freePcb_tp;
 
