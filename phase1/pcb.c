@@ -23,6 +23,8 @@ tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ((*tp))){
 		(*tp) = p;
+		p->p_next = p;
+		p->p_prev = p;
 	}else if((*tp)->p_next == (*tp)){
 		p->p_next = (*tp);
 		p->p_prev = (*tp);
@@ -132,7 +134,7 @@ pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
 	return(temp);
-	
+
 }
 
 int emptyChild (pcb_t *p){
