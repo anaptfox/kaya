@@ -26,13 +26,16 @@ semd_t *create(semd_t **list, int *semAdd){
 
 	debugA(1);
 	semd_t *newSema;
+	debugB(1);
 	newSema->s_next = NULL;
+	debugB(1);
 	newSema->s_semAdd = semAdd;
+	debugB(1);
 	newSema->s_procQ = mkEmptyProcQ();
+	debugB(1);
 
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
-		debugB(1);
 		(*list) = newSema;
 		newSema->s_next = index;
 		stop = 1;
