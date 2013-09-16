@@ -32,7 +32,7 @@ semd_t *create(semd_t **list, int *semAdd){
 
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
-		debugD(1);
+		debugB(1);
 		(*list) = newSema;
 		newSema->s_next = index;
 		stop = 1;
@@ -44,6 +44,7 @@ semd_t *create(semd_t **list, int *semAdd){
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
+			debugC(1);
 		/* if it is the last in the list*/
 		}else if(index->s_next == NULL){
 			index->s_next = newSema;
@@ -53,7 +54,7 @@ semd_t *create(semd_t **list, int *semAdd){
 			index = index->s_next;
 		}
 	}
-
+	debugD(1);
 	return newSema;
 }
 
