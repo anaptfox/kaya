@@ -9,6 +9,7 @@
 *  Written by Mikeyg
 */
 
+#include "../h/const.h"
 #include "../h/types.h"
 
 extern void freePcb (pcb_t *p);
