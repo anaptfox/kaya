@@ -115,7 +115,7 @@ void freePcb(pcb_t *p){
 void initPcbs(){
 	static pcb_t *pcbs[MAXPROC];
 	int i = 0;
-	freePcb(pcbs[1]);
+	
 	
 }
 
