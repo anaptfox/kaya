@@ -2,7 +2,7 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-static pcb_t *freePcb_tp;
+static pcb_t **freePcb_tp;
 static pcb_t *pcbs[MAXPROC];
 
 
@@ -22,21 +22,21 @@ int emptyProcQ (pcb_t *tp){
 /* Insert the ProcBlk pointed to by p into the process queue whose
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
-void insertProcQ(pcb_t *tp, pcb_t *p){
-	if(emptyProcQ(tp)){
-		tp = p;
-	}else if(tp->p_next == tp){
-		p->p_next = tp;
-		p->p_prev = tp;
-		tp->p_prev = tp;
-		tp->p_next = tp;
-		tp = p;
+void insertProcQ(pcb_t **tp, pcb_t *p){
+	if(emptyProcQ(*tp)){
+		*tp = p;
+	}else if(*tp->p_next == *tp){
+		p->p_next = *tp;
+		p->p_prev = *tp;
+		*tp->p_prev = *tp;
+		*tp->p_next = *tp;
+		*tp = p;
 	}else{
-		p->p_next = tp->p_next;
+		p->p_next = *tp->p_next;
 		p->p_next->p_prev = p;
-		p->p_prev = tp;
-		tp->p_next = p;
-		tp = p;
+		p->p_prev = *tp;
+		*tp->p_next = p;
+		*tp = p;
 	}
 }
 
@@ -121,7 +121,7 @@ void initPcbs(){
 
 /* Insert the element pointed to by p onto the pcbFree list. */
 void freePcb(pcb_t *p){
-	insertProcQ(&freePcb_tp, p);
+	insertProcQ(&freePcb_tp, &p);
 }
 
 /* Return NULL if the pcbFree list is empty. Otherwise, remove
