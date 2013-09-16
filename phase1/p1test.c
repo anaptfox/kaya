@@ -149,7 +149,8 @@ void main() {
 	if (!emptyProcQ(qa)) adderrbuf("emptyProcQ: unexpected FALSE   ");
 	addokbuf("Inserting...   \n");
 	for (i = 0; i < 10; i++) {
-		if ((q = allocPcb()) == NULL)
+		if ((q = allo
+			cPcb()) == NULL)
 			adderrbuf("allocPcb: unexpected NULL while insert   ");
 		switch (i) {
 		case 0:
@@ -165,6 +166,8 @@ void main() {
 			break;
 		}
 		insertProcQ(&qa, q);
+		if (headProcQ(qa) != firstproc)
+			adderrbuf("First headProcQ failed   ");
 	}
 	addokbuf("inserted 10 elements   \n");
 

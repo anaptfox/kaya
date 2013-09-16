@@ -63,7 +63,6 @@ queue. Return NULL if the process queue is empty. */
 pcb_t *headProcQ(pcb_t **tp){
 	pcb_t *head = NULL;
 	if((*tp) != NULL) {
-		debugD(1);
 		head = (*tp)->p_next;
 	}
 	return(head);
@@ -153,6 +152,7 @@ pcb_t *allocPcb(){
 	pcb_t *temp;
 	temp = removeProcQ(&freePcb_tp);
 	if(temp != NULL){
+		debugD(1);
 		temp->p_next = NULL;
 		temp->p_prev = NULL;
 		temp->p_prnt = NULL;
