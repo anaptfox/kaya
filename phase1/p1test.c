@@ -149,8 +149,7 @@ void main() {
 	if (!emptyProcQ(qa)) adderrbuf("emptyProcQ: unexpected FALSE   ");
 	addokbuf("Inserting...   \n");
 	for (i = 0; i < 10; i++) {
-		if ((q = allo
-			cPcb()) == NULL)
+		if ((q = allocPcb()) == NULL)
 			adderrbuf("allocPcb: unexpected NULL while insert   ");
 		switch (i) {
 		case 0:
