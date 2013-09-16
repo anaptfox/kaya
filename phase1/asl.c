@@ -63,6 +63,11 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	newSema->s_semAdd = semAdd;
 	newSema->s_procQ = mkEmptyProcQ();
 
+	if(semd_h == NULL){
+		semd_h = newSema;
+		return newSema;
+	}
+
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
