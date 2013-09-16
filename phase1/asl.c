@@ -160,11 +160,10 @@ pcb_t *headBlocked(int *semAdd){
 
 
 void initASL(){
-	static semd_t *semdTable[MAXPROC];
+	static semd_t semdTable[MAXPROC];
 	int i = MAXPROC;
-	while( i > 0){
+	while(  i < MAXPROC){
 		create(semdFree_h, &semdTable[i]);
-		i--; 
+		i++; 
 	}
-	return 0;
 }
