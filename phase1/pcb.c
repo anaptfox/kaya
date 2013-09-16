@@ -60,10 +60,10 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
-pcb_t *headProcQ(pcb_t **tp){
+pcb_t *headProcQ(pcb_t *tp){
 	pcb_t *head = NULL;
-	if((*tp) != NULL) {
-		head = (*tp)->p_next;
+	if((tp) != NULL) {
+		head = (tp)->p_next;
 	}
 	return(head);
 }
