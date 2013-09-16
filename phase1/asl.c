@@ -242,20 +242,16 @@ semd_t *removeFree(){
    return TRUE. In all other cases return FALSE. */
 
 int insertBlocked(int *semAdd, pcb_t *p){
-	debugD(1);
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
-		debugC(1);
 		/*remove from free (*list)*/
 		sema = removeFree();
 		if(sema == NULL ){
 			return 1;
 		}
 		/* add to active list*/
-		debugB(1);
 		sema = addToASL(sema, semAdd);
 	}
-	debugA(1);
  	insertProcQ(&(sema->s_procQ), p);
  	return 0;
 }
