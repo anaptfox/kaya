@@ -111,6 +111,7 @@ pcb_t *outProcQ(pcb_t *tp, pcb_t *p){
 
 void initPcbs(){
 	static pcb_t *pcbs[MAXPROC];
+	freePcb_tp = NULL;
 	pcb_t *free = mkEmptyProcQ();
 	int i = MAXPROC;
 	while( i > 0){
