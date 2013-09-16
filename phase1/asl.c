@@ -187,12 +187,12 @@ pcb_t *removeBlocked(int *semAdd){
 	if(sema == NULL){
 		return(NULL);
 	}else{
-		removeProcQ(&(sema->s_procQ));
+		pct_t *removedProc = removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			sema = remove(&semd_h, semAdd);
 			sema = create(&semdFree_h, semAdd );
 		}
-		return(sema);
+		return(removedProc);
 	}
 }
 
