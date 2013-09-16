@@ -27,11 +27,11 @@ semd_t *create(semd_t **list, int *semAdd){
 	debugA(1);
 	semd_t *newSema;
 	debugB(1);
-	newSema->s_next = &newSema;
-	debugB(1);
 	newSema->s_semAdd = semAdd;
 	debugB(1);
 	newSema->s_procQ = mkEmptyProcQ();
+	debugB(1);
+	newSema->s_next = NULL;
 	debugB(1);
 
 	/*Check head first */
