@@ -5,6 +5,21 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
+void debugA(int i){
+	return i;
+}
+void debugB(int i){
+	return i;
+}
+void debugC(int i){
+	return i;
+}
+void debugD(int i){
+	return i;
+}
+
+
+
 semd_t *create(semd_t *list, int *semAdd){
 	int stop = 0;
 	semd_t *index = list;
@@ -46,6 +61,18 @@ semd_t *find(semd_t *list, int *semAdd){
 		return(list);
 	}else{
 		semd_t *index = list->s_next;
+		if(index->s_semAdd == semAdd){
+				return(index);
+		}else if(index->s_next == NULL){
+			if(index->s_semAdd == semAdd){
+				return(index);
+			}
+			else{
+				return(NULL);
+			}
+		}else{
+			return(NULL);
+		}
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);

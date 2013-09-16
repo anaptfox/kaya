@@ -4,20 +4,6 @@
 
 static pcb_t *freePcb_tp;
 
-void debugA(int i){
-	return i;
-}
-void debugB(int i){
-	return i;
-}
-void debugC(int i){
-	return i;
-}
-void debugD(int i){
-	return i;
-}
-
-
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
@@ -194,7 +180,6 @@ pcb_t *removeChild (pcb_t *p){
 
 pcb_t *outChild(pcb_t *p){
 	if(p->p_prnt == NULL){
-		debugD(1);
 		return(NULL);
 	}else{
 		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
@@ -203,20 +188,17 @@ pcb_t *outChild(pcb_t *p){
 			return(p);
 		}else{
 			if(p->p_prev_sib == NULL){
-				debugC(1);
 				p->p_prnt->p_child = p->p_sib;
 				p->p_sib->p_prev_sib = NULL;
 				p->p_prnt = NULL;
 				p->p_sib = NULL;
 				return(p);
 			}else if(p->p_sib == NULL){
-				debugB(1);
 				p->p_prev_sib->p_sib = NULL;
 				p->p_prnt = NULL;
 				p->p_prev_sib = NULL;
 				return(p);
 			}else{
-				debugA(1);
 				p->p_prev_sib->p_sib = p->p_sib;
 				p->p_sib->p_prev_sib = p->p_prev_sib;
 				p->p_prnt = NULL;
