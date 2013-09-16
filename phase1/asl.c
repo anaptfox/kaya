@@ -183,7 +183,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 }
 
 pcb_t *removeBlocked(int *semAdd){
-	pct_t *removedProc;
+	pcb_t *removedProc;
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
