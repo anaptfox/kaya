@@ -6,6 +6,7 @@ static semd_t *semd_h;
 static semd_t *semdFree_h;
 
 semd_t *create(semd_t *list, int *semAdd){
+	int stop = 0;
 	semd_t *index = list;
 
 	semd_t *newSema;
@@ -13,7 +14,6 @@ semd_t *create(semd_t *list, int *semAdd){
 	newSema->s_semAdd = semAdd;
 	newSema->s_procQ = mkEmptyProcQ();
 
-	int stop = 0;
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		list = newSema;
@@ -55,12 +55,14 @@ semd_t *find(semd_t *list, int *semAdd){
 			}
 		}
 		if(index->s_next == NULL){
-			if(index == semAdd){
+			if(index->s_semAdd == semAdd){
 				return(index);
 			}
 			else{
 				return(NULL);
 			}
+		}else{
+			return(NULL);
 		}
 	}
 }
@@ -96,7 +98,7 @@ semd_t *remove(semd_t *list, int *semAdd){
 			}
 		}
 		if(index->s_next == NULL){
-			if(index == semAdd){
+			if(index->s_semAdd == semAdd){
 				deletedNode = index;
 				index = NULL;
 				return deletedNode;
