@@ -2,24 +2,24 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-semd_t semd_h;
-semd_t semdFree_h;
+semd_t *semd_h;
+semd_t *semdFree_h;
 
 //Alloc new Sema and insert it in the right place in the list.
 semd_t *create(int *list, int *semAdd){
 	index = list;
 
-	semd_t newSema;
+	semd_t *newSema;
 	newSema->s_next = NULL:
 	newSema->s_semAdd = semAdd;
 	newSema->s_procQ = mkEmptyProcQ();
 
-	bool stop = false;
+	int stop = 0;
 	//Check head first
 	if(index->s_semAdd > semAdd){
 		list = newSema;
 		newSema->s_next = index;
-		stop = true;
+		stop = 1;
 	}
 	//Loop through everything but head.
 	while(!stop){
@@ -27,11 +27,11 @@ semd_t *create(int *list, int *semAdd){
 		if(index->s_next->s_semAdd > semAdd){
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
-			stop = true;
+			stop = 1;
 		//if it is the last in the list
 		}else if(index->s_next == NULL){
 			index->s_next = newSema;
-			stop = true;
+			stop = 1;
 		//Reset the index to next. 
 		}else{
 			index = index->s_next;
