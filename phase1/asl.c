@@ -102,7 +102,14 @@ semd_t *remove(semd_t **list, int *semAdd){
 		return(NULL);
 	}
 	if((*list)->s_semAdd == semAdd){
-		(*list) = (*list)->s_next;
+		semd_t *deletedNode = (*list);
+		if((*list)->s_next == NULL){
+			(*list) = NULL;
+		}else{
+			(*list) = (*list)->s_next;
+		}
+		deletedNode->s_next= NULL:
+		return deletedNode;
 	}else{
 
 		semd_t *index = (*list);
@@ -125,13 +132,10 @@ semd_t *remove(semd_t **list, int *semAdd){
 				return deletedNode;
 			}
 		}
-
-		if (index->s_next->s_next == NULL){
-			return(NULL);
-		}
-	
+		debugA(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
+				debugB(1);
 				if (index->s_next->s_next != NULL){
 					deletedNode = index->s_next;
 					deletedNode->s_next = NULL;
@@ -145,9 +149,11 @@ semd_t *remove(semd_t **list, int *semAdd){
 				}
 			}
 			else{
+				debugC(1);
 				index = index->s_next;
 			}
 		}
+		debugD(1);
 		if(index->s_next == NULL){
 			if(index->s_semAdd == semAdd){
 				deletedNode = index;
@@ -162,17 +168,18 @@ semd_t *remove(semd_t **list, int *semAdd){
 
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
+	bool returnValue = 0;
 	if(sema == NULL){
 		/*remove from free (*list)*/
 		sema = remove(&semdFree_h, semAdd);
-		if(sema == NULL){
-			return 1;
+		if(){
+			returnValue = 1;
 		}
 		/* add to active list*/
 		sema = create(&semd_h, semAdd);
 	}
  	insertProcQ(&(sema->s_procQ), p);
- 	return 0;
+ 	return returnValue;
 }
 
 pcb_t *removeBlocked(int *semAdd){
