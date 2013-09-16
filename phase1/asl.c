@@ -69,13 +69,15 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		return newSema;
 
 	}
-
+	debugA(1);
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
 		newSema->s_next = index;
 		stop = 1;
+		debugC(1);
 	}
+	debugA(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
