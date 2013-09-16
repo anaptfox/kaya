@@ -87,9 +87,6 @@ typedef struct state_t {
 #define s_LO	s_reg[30]
 
 
-
-
-
 /* process control block type */
 typedef struct pcb_t {
 	/* process queue fields */

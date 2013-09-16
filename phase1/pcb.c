@@ -1,4 +1,5 @@
 #include "../h/const.h"
+#include "../h/types.h"
 
 pcb_t freePcb_tp;
 

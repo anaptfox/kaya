@@ -1,3 +1,4 @@
+#include "../h/types.h"
 
 semd_t semd_h;
 semd_t semdFree_h;
