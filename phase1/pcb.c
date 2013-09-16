@@ -92,7 +92,7 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 			pcb_t *index = (*tp)->p_next;
 			while(index != *tp){
 				if(p == index && index == (*tp)->p_next){
-					return removeProcQ(*tp);
+					return removeProcQ(tp);
 				}else if(p == index){
 					index->p_prev->p_next = index->p_next;
 					index->p_next->p_prev = index->p_prev;
