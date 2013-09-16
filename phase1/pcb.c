@@ -3,7 +3,6 @@
 #include "../e/pcb.e"
 
 static pcb_t **freePcb_tp;
-static pcb_t *pcbs[MAXPROC];
 
 
 /* This method is used to initialize a variable to be tail pointer to a
@@ -110,9 +109,10 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 
 
 void initPcbs(){
+	static pcb_t *pcbs[20];
 	freePcb_tp = mkEmptyProcQ();
 	int i = 0;
-	while( i < MAXPROC){
+	while( i < 20){
 		freePcb(&pcbs[i]);
 		i++; 
 	}
@@ -121,7 +121,7 @@ void initPcbs(){
 
 /* Insert the element pointed to by p onto the pcbFree list. */
 void freePcb(pcb_t *p){
-	insertProcQ(&freePcb_tp, &p);
+	insertProcQ(&freePcb_tp, p);
 }
 
 /* Return NULL if the pcbFree list is empty. Otherwise, remove
