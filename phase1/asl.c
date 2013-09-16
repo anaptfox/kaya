@@ -1,6 +1,6 @@
 #include "asl.h"
 #include "pcb.c"
-
+#include "../h/types.h"
 
 semd_t semd_h;
 semd_t semdFree_h;
