@@ -297,5 +297,7 @@ void initASL(){
 	}
 	semdTable[(MAXPROC-1)].s_next = NULL;
 	semdFree_h = &semdTable[0];
+	debugD(1);
 	semd_h = NULL;
+	debugC(1);
 }
