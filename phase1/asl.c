@@ -106,6 +106,29 @@ semd_t *remove(semd_t *list, int *semAdd){
 	}else{
 		semd_t *index = list;
 		semd_t *deletedNode;
+		if(index->s_next->s_semAdd == semAdd){
+			if (index->s_next->s_next != NULL){
+				deletedNode = index->s_next;
+				deletedNode->s_next = NULL;
+				index->s_next = index->s_next->s_next;
+				return deletedNode;
+			}else{
+				deletedNode = index->s_next;
+				deletedNode->s_next = NULL;
+				index->s_next = NULL;
+				return deletedNode;
+			}
+		}else if(index->s_next == NULL){
+			if(index->s_semAdd == semAdd){
+				deletedNode = index;
+				index = NULL;
+				return deletedNode;
+			}else{
+				return(NULL);
+			}
+	
+		}
+	
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				if (index->s_next->s_next != NULL){
