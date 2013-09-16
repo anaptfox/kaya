@@ -137,7 +137,7 @@ pcb_t *allocPcb(){
 	temp->p_next = NULL;
 	temp->p_prev = NULL;
 	temp->p_prnt = NULL;
-	temp->p_child = NULL:
+	temp->p_child = NULL;
 	temp->p_sib = NULL;
 	temp->p_prev_sib = NULL;
 	return(temp);
