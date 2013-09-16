@@ -104,12 +104,12 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list)->s_semAdd == semAdd){
 		return((*list));
 	}else{
-		debugA(1);
 
 		semd_t *index = (*list)->s_next;
 		if(index->s_semAdd == semAdd){
 				return(index);
 		}else if(index->s_next == NULL){
+			debugD(1);
 			if(index->s_semAdd == semAdd){
 				return(index);
 			}
