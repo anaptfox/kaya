@@ -24,17 +24,17 @@ tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
 		*tp = p;
-	}else if(tp->p_next == *tp){
+	}else if(*tp->p_next == *tp){
 		p->p_next = *tp;
 		p->p_prev = *tp;
-		tp->p_prev = *tp;
-		tp->p_next = *tp;
+		*tp->p_prev = *tp;
+		*tp->p_next = *tp;
 		*tp = p;
 	}else{
-		p->p_next = tp->p_next;
+		p->p_next = *tp->p_next;
 		p->p_next->p_prev = p;
 		p->p_prev = *tp;
-		tp->p_next = p;
+		*tp->p_next = p;
 		*tp = p;
 	}
 	return 0;
