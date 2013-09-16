@@ -4,7 +4,6 @@
 
 static pcb_t **freePcb_tp;
 
-
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
@@ -113,10 +112,13 @@ void freePcb(pcb_t *p){
 }
 
 void initPcbs(){
-	static pcb_t *pcbs[MAXPROC];
+	static pcb_t pcbs[MAXPROC];
 	int i = 0;
-	
-	
+	*freePcb_tp = mkEmptyProcQ();
+	while( i < MAXPROC){
+		freePcb(&pcbs[i]);
+		i++; 
+	}
 }
 
 
