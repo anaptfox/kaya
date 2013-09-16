@@ -126,7 +126,7 @@ semd_t *remove(semd_t **list, int *semAdd){
 			}
 		}
 
-		if (index->s_next->s_next != NULL){
+		if (index->s_next->s_next == NULL){
 			return(NULL);
 		}
 	
