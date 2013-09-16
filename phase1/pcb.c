@@ -164,7 +164,7 @@ pcb_t *removeChild (pcb_t *p){
 
 pcb_t *outChild(pcb_t *p){
 	if(p->p_prnt == NULL){
-		reutrn(NULL);
+		return(NULL);
 	}else{
 		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
 			p->p_prnt->p_child = NULL;
@@ -192,4 +192,5 @@ pcb_t *outChild(pcb_t *p){
 			}
 		}
 	
+	}
 }
