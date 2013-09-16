@@ -137,7 +137,7 @@ pcb_t *removedBlocked(int *semAdd){
 	}
 }
 
-pcb_t *outBlocked(pct_t *p){
+pcb_t *outBlocked(pcb_t *p){
 	semd_t *sema = find(semd_h ,p->p_semAdd);
 	if(sema == NULL){
 		return(NULL);
