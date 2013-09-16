@@ -21,13 +21,13 @@ int emptyProcQ (pcb_t *tp){
 /* Insert the ProcBlk pointed to by p into the process queue whose
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
-void insertProcQ(pcb_t **tp, pcb_t *p){
+void insertProcQ(pcb_t *tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
 		*tp = p;
 	}else if(*tp->p_next == *tp){
 		p->p_next = *tp;
 		p->p_prev = *tp;
-		tp->p_prev = tp;
+		*tp->p_prev = *tp;
 		*tp->p_next = *tp;
 		*tp = p;
 	}else{
@@ -44,7 +44,7 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 tail is pointed to by tp. Do not remove this ProcBlkfrom the process
 queue. Return NULL if the process queue is empty. */
 pcb_t *headProcQ(pcb_t *tp){
-	pcb_t head = NULL;
+	pcb_t *head = NULL;
 	if(tp != NULL) {
 		head = *tp->p_next;
 	}
