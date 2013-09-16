@@ -87,5 +87,17 @@ typedef struct state_t {
 #define s_LO	s_reg[30]
 
 
+/* process control block type */
+typedef struct pcb_t {
+	
+} pcb_t;
+
+
+/* semaphore descriptor type */
+typedef struct semd_t {
+	
+} semd_t;
+
+
 
 #endif
