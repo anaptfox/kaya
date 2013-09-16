@@ -6,7 +6,7 @@ static semd_t *semd_h;
 static semd_t *semdFree_h;
 
 semd_t *create(semd_t *list, int *semAdd){
-	semd_t index = list;
+	semd_t *index = list;
 
 	semd_t *newSema;
 	newSema->s_next = NULL;
