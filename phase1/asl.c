@@ -22,9 +22,9 @@ void debugD(int i){
 
 semd_t *create(semd_t **list, int *semAdd){
 	int stop = 0;
-	debugA(1);
 	semd_t *index = (*list);
 
+	debugA(1);
 	semd_t *newSema;
 	newSema->s_next = NULL;
 	newSema->s_semAdd = semAdd;
