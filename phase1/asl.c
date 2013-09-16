@@ -14,24 +14,24 @@ semd_t *create(semd_t *list, int *semAdd){
 	newSema->s_procQ = mkEmptyProcQ();
 
 	int stop = 0;
-	//Check head first
+	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		list = newSema;
 		newSema->s_next = index;
 		stop = 1;
 	}
-	//Loop through everything but head.
+	/* Loop through everything but head.*/
 	while(!stop){
-		//if semAdd is greater than the current semAdd
+		/* if semAdd is greater than the current semAdd*/
 		if(index->s_next->s_semAdd > semAdd){
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
-		//if it is the last in the list
+		/* if it is the last in the list*/
 		}else if(index->s_next == NULL){
 			index->s_next = newSema;
 			stop = 1;
-		//Reset the index to next. 
+		/* Reset the index to next. */
 		}else{
 			index = index->s_next;
 		}
