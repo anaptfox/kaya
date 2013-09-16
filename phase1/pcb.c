@@ -8,7 +8,7 @@ static pcb_t freePcb_tp;
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
-pcb_t mkEmptyProcQ() {
+pcb_t *mkEmptyProcQ() {
 	return(NULL);
 }
 
@@ -21,7 +21,7 @@ int emptyProcQ (pcb_t *tp){
 /* Insert the ProcBlk pointed to by p into the process queue whose
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
-void insertProcQ( pcb_t **tp, pcb_t *p){
+void insertProcQ(pcb_t **tp, pcb_t *p){
 	if(emptyProcQ(*tp)){
 		*tp = p;
 	}else if(*tp->p_next == *tp){
@@ -162,7 +162,7 @@ pcb_t *removeChild (pcb_t *p){
 	}
 }
 
-pcb_t outChild (pcb_t *p){
+pcb_t *outChild(pcb_t *p){
 	if(p->prnt == NULL){
 		reutrn(NULL);
 	}else{
