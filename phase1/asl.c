@@ -24,15 +24,10 @@ semd_t *create(semd_t **list, int *semAdd){
 	int stop = 0;
 	semd_t *index = (*list);
 
-	debugA(1);
 	semd_t *newSema;
-	debugB(1);
-	newSema->s_semAdd = semAdd;
-	debugB(1);
-	newSema->s_procQ = mkEmptyProcQ();
-	debugB(1);
 	newSema->s_next = NULL;
-	debugB(1);
+	newSema->s_semAdd = semAdd;
+	newSema->s_procQ = mkEmptyProcQ();
 
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
@@ -47,7 +42,6 @@ semd_t *create(semd_t **list, int *semAdd){
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
-			debugC(1);
 		/* if it is the last in the list*/
 		}else if(index->s_next == NULL){
 			index->s_next = newSema;
@@ -57,7 +51,7 @@ semd_t *create(semd_t **list, int *semAdd){
 			index = index->s_next;
 		}
 	}
-	debugD(1);
+
 	return newSema;
 }
 
@@ -114,18 +108,18 @@ semd_t *remove(semd_t **list, int *semAdd){
 		}else{
 			(*list) = (*list)->s_next;
 		}
-		deletedNode->s_next= NULL;
+		deletedNode->s_next= NULL:
 		return deletedNode;
 	}else{
 
-		semd_t *index = (*list)->s_next;
+		semd_t *index = (*list);
 		semd_t *deletedNode;
 
 		if(index->s_next == NULL){		
 			return(NULL);
 		}
 
-		if(index->s_semAdd == semAdd){
+		if(index->s_next->s_semAdd == semAdd){
 			if (index->s_next->s_next != NULL){
 				deletedNode = index->s_next;
 				index->s_next = index->s_next->s_next;
@@ -138,11 +132,10 @@ semd_t *remove(semd_t **list, int *semAdd){
 				return deletedNode;
 			}
 		}
-
 		debugA(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
-				debugB(1);
+				
 				if (index->s_next->s_next != NULL){
 					deletedNode = index->s_next;
 					deletedNode->s_next = NULL;
@@ -156,11 +149,9 @@ semd_t *remove(semd_t **list, int *semAdd){
 				}
 			}
 			else{
-				debugC(1);
 				index = index->s_next;
 			}
 		}
-		debugD(1);
 		if(index->s_next == NULL){
 			if(index->s_semAdd == semAdd){
 				deletedNode = index;
@@ -175,30 +166,31 @@ semd_t *remove(semd_t **list, int *semAdd){
 
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
-	int returnValue = 0;
+	bool returnValue = 0;
 	if(sema == NULL){
 		/*remove from free (*list)*/
 		sema = remove(&semdFree_h, semAdd);
-
+		if(){
+			returnValue = 1;
+		}
 		/* add to active list*/
-		sema = create(&semd_h, sema->s_semAdd);
+		sema = create(&semd_h, semAdd);
 	}
  	insertProcQ(&(sema->s_procQ), p);
  	return returnValue;
 }
 
 pcb_t *removeBlocked(int *semAdd){
-	pcb_t *removedProc;
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}else{
-		removedProc = removeProcQ(&(sema->s_procQ));
+		removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			sema = remove(&semd_h, semAdd);
 			sema = create(&semdFree_h, semAdd );
 		}
-		return(removedProc);
+		return(sema);
 	}
 }
 
@@ -220,6 +212,7 @@ pcb_t *headBlocked(int *semAdd){
 	if(sema == NULL){
 		return(NULL);
 	}
+
 	return(headProcQ(sema->s_procQ));
 }
 
@@ -227,10 +220,9 @@ pcb_t *headBlocked(int *semAdd){
 
 void initASL(){
 	static semd_t semdTable[MAXPROC];
-	int i = 0;
-	while(i < MAXPROC){
-		semdTable[i].s_semAdd = &semdTable[i];
-		create(&semdFree_h, semdTable[i].s_semAdd);
+	int i = MAXPROC;
+	while(  i < MAXPROC){
+		create(&semdFree_h, &semdTable[i]);
 		i++; 
 	}
 }
