@@ -173,9 +173,9 @@ int insertBlocked(int *semAdd, pcb_t *p){
 	if(sema == NULL){
 		/*remove from free (*list)*/
 		sema = remove(&semdFree_h, semAdd);
-	
+
 		/* add to active list*/
-		sema = create(&semd_h, sema->semAdd);
+		sema = create(&semd_h, sema->s_semAdd);
 	}
  	insertProcQ(&(sema->s_procQ), p);
  	return returnValue;
