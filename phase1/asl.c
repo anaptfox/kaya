@@ -168,11 +168,11 @@ semd_t *remove(semd_t **list, int *semAdd){
 
 int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
-	bool returnValue = 0;
+	int returnValue = 0;
 	if(sema == NULL){
 		/*remove from free (*list)*/
 		sema = remove(&semdFree_h, semAdd);
-		if(){
+		if(sema == NULL){
 			returnValue = 1;
 		}
 		/* add to active list*/
