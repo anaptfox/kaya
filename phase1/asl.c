@@ -211,9 +211,9 @@ semd_t *removeFree(){
 	if(emptyList(semdFree_h)){
 		return(NULL);
 	}else{
-		semd_t *old = (*semdFree_h);
+		semd_t *old = (semdFree_h);
 		if((semdFree_h)->s_next == NULL ){
-			(semdFree_h) = NULL:
+			(semdFree_h) = NULL;
 		}else{
 			(semdFree_h) = (semdFree_h)->s_next;
 		}
@@ -291,5 +291,5 @@ void initASL(){
 		i++; 
 	}
 	semdTable[(MAXPROC-1)].s_next = NULL;
-	semdFree_h = &semdTable;
+	semdFree_h = &semdTable[0];
 }
