@@ -1,4 +1,6 @@
+#include "../h/const.h"
 #include "../h/types.h"
+#include "../e/pcb.e"
 
 semd_t semd_h;
 semd_t semdFree_h;

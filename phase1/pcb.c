@@ -1,7 +1,8 @@
 #include "../h/const.h"
 #include "../h/types.h"
+#include "../e/pcb.e"
 
-pcb_t freePcb_tp;
+static pcb_t freePcb_tp;
 
 
 /* This method is used to initialize a variable to be tail pointer to a
