@@ -165,8 +165,9 @@ void main() {
 			break;
 		}
 		insertProcQ(&qa, q);
-		if (headProcQ(qa) != firstproc)
+		if (headProcQ(qa) != firstproc){
 			adderrbuf("First headProcQ failed   ");
+		}
 	}
 	addokbuf("inserted 10 elements   \n");
 
