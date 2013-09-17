@@ -5,26 +5,6 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
-void debugA(int i){
-	return i;
-}
-void debugB(int i){
-	return i;
-}
-void debugC(int i){
-	return i;
-}
-void debugD(int i){
-	return i;
-}
-
-void debugE(int i){
-	return i;
-}
-void debugF(int i){
-	return i;
-}
-
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = 0;
 	semd_t *index = (semd_h);
