@@ -112,7 +112,7 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list) == NULL){
 		return(NULL);
 	}
-	debugB(1);
+	debugD(1);
 	if((*list)->s_semAdd == semAdd){
 		debugA(1);
 		return((*list));
