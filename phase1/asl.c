@@ -87,17 +87,17 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
 		debugB(1);
-		if(index->s_next->s_semAdd > semAdd){
+		if(index->s_next == NULL){
+			debugB(1);
+			index->s_next = newSema;
+			stop = 1;
+		/* Reset the index to next. */
+		}else if(index->s_next->s_semAdd > semAdd){
 			debugA(1);
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
 		/* if it is the last in the list*/
-		}else if(index->s_next == NULL){
-			debugB(1);
-			index->s_next = newSema;
-			stop = 1;
-		/* Reset the index to next. */
 		}else{
 			debugC(1);
 			index = index->s_next;
