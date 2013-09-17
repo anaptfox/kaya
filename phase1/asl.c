@@ -23,42 +23,6 @@ void debugE(int i){
 }
 
 
-
-semd_t *create(semd_t **list, int *semAdd){
-	int stop = 0;
-	semd_t *index = (*list);
-
-	semd_t *newSema;
-	newSema->s_next = NULL;
-	newSema->s_semAdd = semAdd;
-	newSema->s_procQ = mkEmptyProcQ();
-
-	/*Check head first */
-	if(index->s_semAdd > semAdd){
-		(*list) = newSema;
-		newSema->s_next = index;
-		stop = 1;
-	}
-	/* Loop through everything but head.*/
-	while(!stop){
-		/* if semAdd is greater than the current semAdd*/
-		if(index->s_next->s_semAdd > semAdd){
-			newSema->s_next = index->s_next;
-			index->s_next = newSema;
-			stop = 1;
-		/* if it is the last in the list*/
-		}else if(index->s_next == NULL){
-			index->s_next = newSema;
-			stop = 1;
-		/* Reset the index to next. */
-		}else{
-			index = index->s_next;
-		}
-	}
-
-	return newSema;
-}
-
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = 0;
 	semd_t *index = (semd_h);
@@ -104,17 +68,19 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 }
 
 /*Looks through list for semAdd if not found allocNewASL*/
-semd_t *find(semd_t **list, int *semAdd){
-	if((*list) == NULL){
+semd_t *findActive(int *semAdd){
+	if(semd_h == NULL){
+		debugE(1);
 		return(NULL);
 	}
-	if((*list)->s_semAdd == semAdd){
-		return((*list));
+	if(semd_h->s_semAdd == semAdd){
+		return(semd_h);
 	}else{
-		if((*list)->s_next == NULL){
+		if(semd_h->s_next == NULL){
+			debugD(1);
 			return(NULL);
 		}
-		semd_t *index = (*list)->s_next;
+		semd_t *index = semd_h->s_next;
 		if(index->s_semAdd == semAdd){
 				return(index);
 		}
@@ -131,9 +97,11 @@ semd_t *find(semd_t **list, int *semAdd){
 				return(index);
 			}
 			else{
+				debugC(1);
 				return(NULL);
 			}
 		}else{
+			debugB(1);
 			return(NULL);
 		}
 	}
@@ -235,9 +203,9 @@ void addFree(semd_t *newSema){
    return TRUE. In all other cases return FALSE. */
 
 int insertBlocked(int *semAdd, pcb_t *p){
-	semd_t *sema = find(&semd_h, semAdd);
+	semd_t *sema = findActive(semAdd);
 	if(sema == NULL){
-		/*remove from free (*list)*/
+		/*remove from free semd_h*/
 		sema = removeFree();
 		if(sema == NULL ){
 			return 1;
@@ -256,7 +224,7 @@ empty (emptyProcQ(s procq) is TRUE), remove the semaphore
 descriptor from the ASL and return it to the semdFree list. */
 
 pcb_t *removeBlocked(int *semAdd){
-	semd_t *sema = find(&semd_h, semAdd);
+	semd_t *sema = findActive(semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}else{
@@ -275,7 +243,7 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
-	semd_t *sema = find(&semd_h ,p->p_semAdd);
+	semd_t *sema = findActive(p->p_semAdd);
 	if(sema == NULL){
 		debugA(1);
 		return(NULL);
@@ -289,6 +257,8 @@ pcb_t *outBlocked(pcb_t *p){
 	return outProcQ(&(sema->s_procQ), p);
 }
 
+/* Return a pointer to the ProcBlk that is at the head of the process queue associated with the semaphore semAdd. Return NULL
+if semAdd is not found on the ASL or if the process queue associated with semAdd is empty. */
 
 pcb_t *headBlocked(int *semAdd){
 	semd_t *sema = find(&semd_h, semAdd);
