@@ -64,13 +64,11 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
 
-	debugC(1);
 	if(semd_h == NULL){
 		semd_h = newSema;
 		return newSema;
 
 	}
-	debugC(1);
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
@@ -80,6 +78,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	debugC(1);
 	/*Check head first */
 	if(index->s_next == NULL){
+		debugA(1);
 		index->s_next = newSema;
 		stop = 1;
 	}
@@ -87,16 +86,17 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
+		debugB(1);
 		if(index->s_next->s_semAdd > semAdd){
+			debugA(1);
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
-			debugA(1);
 		/* if it is the last in the list*/
 		}else if(index->s_next == NULL){
+			debugB(1);
 			index->s_next = newSema;
 			stop = 1;
-			debugB(1);
 		/* Reset the index to next. */
 		}else{
 			debugC(1);
@@ -112,7 +112,6 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list) == NULL){
 		return(NULL);
 	}
-	debugD(1);
 	if((*list)->s_semAdd == semAdd){
 		debugA(1);
 		return((*list));
@@ -120,12 +119,10 @@ semd_t *find(semd_t **list, int *semAdd){
 		if((*list)->s_next == NULL){
 			return(NULL);
 		}
-		debugB(1);
 		semd_t *index = (*list)->s_next;
 		if(index->s_semAdd == semAdd){
 				return(index);
 		}
-		debugB(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
