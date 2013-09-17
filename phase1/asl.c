@@ -261,7 +261,7 @@ pcb_t *outBlocked(pcb_t *p){
 if semAdd is not found on the ASL or if the process queue associated with semAdd is empty. */
 
 pcb_t *headBlocked(int *semAdd){
-	semd_t *sema = find(&semd_h, semAdd);
+	semd_t *sema = findActive(semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}
