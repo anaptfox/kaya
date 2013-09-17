@@ -247,6 +247,9 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
+	if(p->p_semAdd == NULL){
+		debugE(1)
+	}
 	semd_t *sema = findActive(p->p_semAdd);
 	if(sema == NULL){
 		debugA(1);
