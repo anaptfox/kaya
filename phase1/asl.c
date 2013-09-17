@@ -52,14 +52,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
 	if(semd_h == NULL){
-		debugE(1);
 		return(NULL);
 	}
 	if(semd_h->s_semAdd == semAdd){
 		return(semd_h);
 	}else{
 		if(semd_h->s_next == NULL){
-			debugD(1);
 			return(NULL);
 		}
 		semd_t *index = semd_h->s_next;
@@ -67,9 +65,7 @@ semd_t *findActive(int *semAdd){
 				return(index);
 		}
 		while(index->s_next != NULL){
-			debugA(1);
 			if(index->s_next->s_semAdd == semAdd){
-				debugF(1);
 				return(index->s_next);
 			}
 			else{
@@ -81,11 +77,9 @@ semd_t *findActive(int *semAdd){
 				return(index);
 			}
 			else{
-				debugC(1);
 				return(NULL);
 			}
 		}else{
-			debugB(1);
 			return(NULL);
 		}
 	}
@@ -229,19 +223,15 @@ return p. */
 
 pcb_t *outBlocked(pcb_t *p){
 	if(p->p_semAdd == NULL){
-		debugE(1);
 	}
 	semd_t *sema = findActive(p->p_semAdd);
 	if(sema == NULL){
-		debugA(1);
 		return(NULL);
 	}else{
-		debugB(1);
 		if(emptyProcQ(sema->s_procQ)){
 			return(NULL);
 		}
 	}
-		debugC(1);
 	return outProcQ(&(sema->s_procQ), p);
 }
 
