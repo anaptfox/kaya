@@ -87,9 +87,15 @@ typedef struct state_t {
 #define s_LO	s_reg[30]
 
 
-
+/*pcb descriptor type*/
 typedef struct pcb_t {
 	struct pcb_t *p_next, *p_prev, *p_prnt, *p_child, *p_sib, *p_prev_sib;
+	/*p_next: next element in the ProcQ*/
+	/*p_prev: previous element in the ProcQ*/
+	/*p_prnt: pointer to parent node*/
+	/*p_child: pointer to child node*/
+	/*p_sib: pointer to next sibling*/
+	/*p_prev_sib: pointer to previous sibling*/
 	struct state_t p_s; 
 	int *p_semAdd; 
 } pcb_t;
