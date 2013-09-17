@@ -63,19 +63,16 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	if(semd_h == NULL){
 		semd_h = newSema;
-		debugA(1);
 		return newSema;
 
 	}
-	debugA(1);
+	
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
 		newSema->s_next = index;
 		stop = 1;
-		debugC(1);
 	}
-	debugA(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
@@ -105,7 +102,6 @@ semd_t *find(semd_t **list, int *semAdd){
 		return((*list));
 	}else{
 		if((*list)->s_next == NULL){
-			debugC(1);
 			return(NULL);
 		}
 		semd_t *index = (*list)->s_next;
@@ -171,7 +167,6 @@ semd_t *remove(semd_t **list, int *semAdd){
 				return deletedNode;
 			}
 		}
-		debugA(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 
@@ -216,18 +211,15 @@ semd_t *removeFree(){
 	if(emptyList(semdFree_h)){
 		return(NULL);
 	}else{
-		debugC(1);
 		semd_t old = (*semdFree_h);
 		if((semdFree_h)->s_next == NULL ){
 			(semdFree_h) = NULL;
 		}else{
 			(semdFree_h) = (semdFree_h)->s_next;
 		}
-		debugC(1);
+		debugD(1);
 		old.s_next = NULL;
-		debugC(1);
 		old.s_procQ = mkEmptyProcQ();
-		debugC(1);
 		return(&old);
 	}
 }
@@ -297,8 +289,8 @@ pcb_t *headBlocked(int *semAdd){
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
-	while(  i < MAXPROC){
-		semdTable[i].s_next = semdFree_h;	
+	while(  i < (MAXPROC-1){
+		semdTable[i].s_next = &semdTable[i+1];	
 		i++; 
 	}
 	semdTable[(MAXPROC-1)].s_next = NULL;
