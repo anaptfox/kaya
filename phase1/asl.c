@@ -11,6 +11,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
 
+	/* Empty List Case */
 	if(semd_h == NULL){
 		semd_h = newSema;
 		return newSema;
@@ -52,19 +53,26 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
+	/*Case 1: semd_h is empty*/
 	if(semd_h == NULL){
 		return(NULL);
 	}
+	/*Case 2: Found semAdd in the head*/
 	if(semd_h->s_semAdd == semAdd){
 		return(semd_h);
-	}else{
+	}/*Case 3: semAdd is not in head*/
+	else{ 
+		/*Subcase 1: There is no element after head*/
 		if(semd_h->s_next == NULL){
 			return(NULL);
 		}
 		semd_t *index = semd_h->s_next;
+		/*Subcase 2: The element after the head has semAdd*/
 		if(index->s_semAdd == semAdd){
 				return(index);
 		}
+		/*Loops through list until either semAdd is found,
+		 or hits the end */
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
@@ -73,6 +81,7 @@ semd_t *findActive(int *semAdd){
 				index = index->s_next;
 			}
 		}
+		/*Subcase 3: We are on the last element*/
 		if(index->s_next == NULL){
 			if(index->s_semAdd == semAdd){
 				return(index);
@@ -92,9 +101,10 @@ semd_t *findActive(int *semAdd){
 semd_t *removeActive(int *semAdd){
 	semd_t *index = semd_h;
 	semd_t *deletedNode;
-
+	/*Case 1: semAdd is in head*/
 	if(semd_h->s_semAdd == semAdd){
 		deletedNode = semd_h;
+		/*Subcase 1: There is no element after head*/
 		if(semd_h->s_next == NULL){
 			semd_h = NULL;
 		}else{
@@ -103,9 +113,12 @@ semd_t *removeActive(int *semAdd){
 		deletedNode->s_next= NULL;
 		return deletedNode;
 	}
-
+	/*Case 2: semAdd is in element after head*/
 	if(semd_h->s_next->s_semAdd == semAdd){
 		deletedNode = semd_h->s_next;
+		/*Look before you leap approach; since semd_h is not
+		double linked, we check to see if we are two elements
+		from the end.*/
 		if(semd_h->s_next->s_next == NULL){
 			semd_h->s_next = NULL;
 		}else{
@@ -114,8 +127,10 @@ semd_t *removeActive(int *semAdd){
 		deletedNode->s_next= NULL;
 		return deletedNode;
 	}
-
+	/*Iterate until we aren't on the last element*/
 	while(index->s_next != NULL){
+		/*Iterate through the list; if we find the element,
+		remove it, else go to the next element*/
 			if(index->s_next->s_semAdd == semAdd){
 				if (index->s_next->s_next != NULL){
 					deletedNode = index->s_next;
@@ -248,7 +263,7 @@ pcb_t *headBlocked(int *semAdd){
 }
 
 
-
+/*Initialize the ASL*/
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
