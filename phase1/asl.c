@@ -142,53 +142,43 @@ semd_t *find(semd_t **list, int *semAdd){
 
 /*Looks through list for semAdd if not found allocNewASL*/
 
-semd_t *remove(semd_t **list, int *semAdd){
-	if((*list) == NULL){
-		return(NULL);
-	}
-	if((*list)->s_semAdd == semAdd){
-		semd_t *deletedNode = (*list);
-		if((*list)->s_next == NULL){
-			(*list) = NULL;
+semd_t *removeActive(int *semAdd){
+	semd_t *index = semd_h;
+	semd_t *deletedNode;
+
+	if(semd_h->s_semAdd == semAdd){
+		deletedNode = semd_h;
+		if(semd_h->s_next == NULL){
+			semd_h = NULL;
 		}else{
-			(*list) = (*list)->s_next;
+			semd_h = semd_h->s_next;
 		}
 		deletedNode->s_next= NULL;
 		return deletedNode;
-	}else{
+	}
 
-		semd_t *index = (*list);
-		semd_t *deletedNode;
-
-		if(index->s_next == NULL){		
-			return(NULL);
+	if(semd_h->s_next->s_semAdd == semAdd){
+		deletedNode = semd_h->s_next;
+		if(semd_h->s_next->s_next == NULL){
+			semd_h->s_next = NULL;
+		}else{
+			semd_h->s_next = semd_h->s_next->s_next;
 		}
+		deletedNode->s_next= NULL;
+		return deletedNode;
+	}
 
-		if(index->s_next->s_semAdd == semAdd){
-			if (index->s_next->s_next != NULL){
-				deletedNode = index->s_next;
-				index->s_next = index->s_next->s_next;
-				deletedNode->s_next = NULL;
-				return deletedNode;
-			}else{
-				deletedNode = index->s_next;
-				deletedNode->s_next = NULL;
-				index->s_next = NULL;
-				return deletedNode;
-			}
-		}
-		while(index->s_next != NULL){
+	while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
-
 				if (index->s_next->s_next != NULL){
 					deletedNode = index->s_next;
-					deletedNode->s_next = NULL;
 					index->s_next = index->s_next->s_next;
+					deletedNode->s_next = NULL;
 					return deletedNode;
 				}else{
 					deletedNode = index->s_next;
-					deletedNode->s_next = NULL;
 					index->s_next = NULL;
+					deletedNode->s_next = NULL;
 					return deletedNode;
 				}
 			}
@@ -196,17 +186,7 @@ semd_t *remove(semd_t **list, int *semAdd){
 				index = index->s_next;
 			}
 		}
-		if(index->s_next == NULL){
-			if(index->s_semAdd == semAdd){
-				deletedNode = index;
-				index = NULL;
-				return deletedNode;
-			}
-		}else{
-			return(NULL);
-		}
 	}
-}
 
 
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
@@ -232,6 +212,18 @@ semd_t *removeFree(){
 		return(old);
 	}
 }
+
+/*Add the top of the Free list*/
+
+void addFree(semd_t *newSema){
+	if(emptyList(semdFree_h)){
+		semdFree_h = newSema;
+	}else{
+		newSema->s_next = semdFree_h;
+		semdFree_h = newSema;
+	}
+}
+
 
 /* Insert the ProcBlk pointed to by p at the tail of the process queue
  associated with the semaphore whose physical address is semAdd and 
@@ -268,14 +260,14 @@ pcb_t *removeBlocked(int *semAdd){
 	if(sema == NULL){
 		return(NULL);
 	}else{
-		removeProcQ(&(sema->s_procQ));
+		pcb_t *proc = removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			debugD(1);
-			sema = remove(&semd_h, semAdd);
+			sema = removeActive(semAdd);
 			debugA(1);
-			sema = create(&semdFree_h, semAdd );
+			addFree(sema);
 		}
-		return(sema);
+		return(proc);
 	}
 }
 
