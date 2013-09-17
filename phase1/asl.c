@@ -75,31 +75,27 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		newSema->s_next = index;
 		stop = 1;
 	}
-	debugC(1);
 	/*Check head first */
 	if(index->s_next == NULL){
-		debugA(1);
 		index->s_next = newSema;
 		stop = 1;
 	}
-	debugC(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
-		debugB(1);
 		if(index->s_next == NULL){
-			debugB(1);
+
 			index->s_next = newSema;
 			stop = 1;
 		/* Reset the index to next. */
 		}else if(index->s_next->s_semAdd > semAdd){
-			debugA(1);
+
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
 		/* if it is the last in the list*/
 		}else{
-			debugC(1);
+	
 			index = index->s_next;
 		}
 	}
@@ -113,7 +109,6 @@ semd_t *find(semd_t **list, int *semAdd){
 		return(NULL);
 	}
 	if((*list)->s_semAdd == semAdd){
-		debugA(1);
 		return((*list));
 	}else{
 		if((*list)->s_next == NULL){
@@ -263,6 +258,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 }
 
 pcb_t *removeBlocked(int *semAdd){
+	debugD(1);
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
