@@ -220,7 +220,8 @@ semd_t *removeFree(){
 		debugD(1);
 		old->s_next = NULL;
 		old->s_procQ = mkEmptyProcQ();
-		return(&old);
+		debugD(1);
+		return(old);
 	}
 }
 
