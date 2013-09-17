@@ -5,8 +5,9 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
+/* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
-	int stop = 0;
+	int stop = FALSE;
 	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
 
@@ -19,12 +20,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
 		newSema->s_next = index;
-		stop = 1;
+		stop = TRUE;
 	}
-	/*Check head first */
+	/*Check Second first */
 	if(index->s_next == NULL){
 		index->s_next = newSema;
-		stop = 1;
+		stop = TRUE;
 	}
 	/* Loop through everything but head.*/
 	while(!stop){
@@ -32,13 +33,13 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		if(index->s_next == NULL){
 
 			index->s_next = newSema;
-			stop = 1;
+			stop = TRUE;
 		/* Reset the index to next. */
 		}else if(index->s_next->s_semAdd > semAdd){
 
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
-			stop = 1;
+			stop = TRUE;
 		/* if it is the last in the list*/
 		}else{
 	
@@ -186,14 +187,14 @@ int insertBlocked(int *semAdd, pcb_t *p){
 		/*remove from free semd_h*/
 		sema = removeFree();
 		if(sema == NULL ){
-			return 1;
+			return TRUE;
 		}
 		/* add to active list*/
 		sema = addToASL(sema, semAdd);
 	}
  	p->p_semAdd = semAdd;
  	insertProcQ(&(sema->s_procQ), p);
- 	return 0;
+ 	return FALSE;
 }
 
 /* Search the ASL for a descriptor of this semaphore. If none is
