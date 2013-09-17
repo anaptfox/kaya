@@ -277,15 +277,15 @@ return p. */
 pcb_t *outBlocked(pcb_t *p){
 	semd_t *sema = find(&semd_h ,p->p_semAdd);
 	if(sema == NULL){
-		debugD(1);
+		debugA(1);
 		return(NULL);
 	}else{
-		debugD(1);
+		debugB(1);
 		if(emptyProcQ(sema->s_procQ)){
 			return(NULL);
 		}
 	}
-		debugD(1);
+		debugC(1);
 	return outProcQ(&(sema->s_procQ), p);
 }
 
