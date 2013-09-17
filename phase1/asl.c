@@ -235,10 +235,8 @@ semd_t *removeFree(){
 		}else{
 			(semdFree_h) = (semdFree_h)->s_next;
 		}
-		debugD(1);
 		old->s_next = NULL;
 		old->s_procQ = mkEmptyProcQ();
-		debugD(1);
 		return(old);
 	}
 }
@@ -256,17 +254,13 @@ int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		/*remove from free (*list)*/
-		debugA(1);
 		sema = removeFree();
-		debugA(1);
 		if(sema == NULL ){
 			return 1;
 		}
 		/* add to active list*/
-		debugA(1);
 		sema = addToASL(sema, semAdd);
 	}
-	debugA(1);
  	insertProcQ(&(sema->s_procQ), p);
  	return 0;
 }
