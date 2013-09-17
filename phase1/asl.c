@@ -66,7 +66,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		return newSema;
 
 	}
-	
+
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
@@ -289,7 +289,7 @@ pcb_t *headBlocked(int *semAdd){
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
-	while(  i < (MAXPROC-1){
+	while(  i < (MAXPROC-1)){
 		semdTable[i].s_next = &semdTable[i+1];	
 		i++; 
 	}
