@@ -21,18 +21,21 @@ int emptyProcQ (pcb_t *tp){
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
+	/*Case 1: ProcQ is empty*/
 	if(emptyProcQ((*tp))){
 		(*tp) = p;
 		p->p_next = p;
 		p->p_prev = p;
-	}else if((*tp)->p_next == (*tp)){
+	}/*Case 2: ProcQ has only one Procblk*/
+	else if((*tp)->p_next == (*tp)){
 
 		p->p_next = (*tp);
 		p->p_prev = (*tp);
 		(*tp)->p_prev = p;
 		(*tp)->p_next = p;
 		(*tp) = p;
-	}else{
+	}/*Case 3: ProcQ has more than one ProcBlk*/
+	else{
 		p->p_next = (*tp)->p_next;
 		p->p_next->p_prev = p;
 		p->p_prev = (*tp);
@@ -52,15 +55,20 @@ pcb_t *headProcQ(pcb_t *tp){
 	return(head);
 }
 
-
+/* removeProcQ takes the pointer to the tail pointer and removes the 
+ProcBlk associated with it, then reassigns pointers around the removed ProcBlk*/
 pcb_t *removeProcQ(pcb_t **tp){
+	/* Case 1: ProcQ is empty*/
 	if(emptyProcQ(*tp)){
 		return(NULL);
-	}else if((*tp)->p_next == *tp){
+		
+	}/* Case 2: Only one ProcBlk in ProcQ*/
+	else if((*tp)->p_next == *tp){
 		pcb_t *old = (*tp);
 		*tp = mkEmptyProcQ();
 		return(old);
-	}else{
+	}/* Case 3: More than 1 ProcBlk in ProcQ*/
+	else{
 		pcb_t *old = (*tp)->p_next;
 		(*tp)->p_next->p_next->p_prev = *tp;
 		(*tp)->p_next = (*tp)->p_next->p_next;
@@ -74,9 +82,11 @@ pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
 pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
+	/* Case 1: ProcQ is empty.*/
 	if(emptyProcQ(*tp)){
 		return(NULL);
-	}else if((*tp)->p_prev == *tp){
+	} /* Case 2: ProcQ has only 1 ProcBlk*/
+	else if((*tp)->p_prev == *tp){
 		if(*tp == p){
 			pcb_t *outproc = *tp;
 			*tp = mkEmptyProcQ();
@@ -84,7 +94,8 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 		}else{
 			return(NULL);
 		}
-	}else{
+	}/* Case 3: ProcQ has more than one ProcBlk*/
+	else{/*Subcase 1: Removing the ProcBlk pointed to by the tail pointer*/
 		if(*tp == p){
 			pcb_t *outproc = *tp;
 			(*tp)->p_prev->p_next = (*tp)->p_next;
@@ -93,10 +104,11 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 			return(outproc);
 		}else{
 			pcb_t *index = (*tp)->p_next;
-			while(index != *tp){
+			while(index != *tp){/*Subcase 2: Removing the head*/
 				if(p == index && index == (*tp)->p_next){
 					return removeProcQ(tp);
-				}else if(p == index){
+				}/*Subcas3: Removing a middle ProcBlk*/
+				else if(p == index){
 					index->p_prev->p_next = index->p_next;
 					index->p_next->p_prev = index->p_prev;
 					return(index);
@@ -114,7 +126,7 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 void freePcb(pcb_t *p){
 	insertProcQ(&freePcb_tp, p);
 }
-
+/*Initializes the pcbs*/
 void initPcbs(){
 	static pcb_t pcbs[MAXPROC];
 	int i = 0;
@@ -145,16 +157,18 @@ pcb_t *allocPcb(){
 	}
 	return(temp);
 }
-
+/*Set the child parent p points to to null*/
 int emptyChild (pcb_t *p){
 	return (p->p_child == NULL); 
 }
-
+/* Adds a child to the parent node p*/
 void insertChild (pcb_t *prnt, pcb_t *p){
+	/* Case 1: parent p has no children*/
 	if(emptyChild(prnt)){
 		prnt->p_child = p;
 		p->p_prnt = prnt;
-	}else{
+	}/*Case 2: parent p has other children*/
+	else{
 		prnt->p_child->p_prev_sib = p;
 		p->p_prev_sib = NULL;
 		p->p_sib = prnt->p_child;
@@ -162,43 +176,53 @@ void insertChild (pcb_t *prnt, pcb_t *p){
 		p->p_prnt = prnt;
 	}
 }
-
+/*Removes the child pointed to by parent node p*/
 pcb_t *removeChild (pcb_t *p){
+	/*Case 1: Parent p has no children*/
 	if(emptyChild(p)){
 		return(NULL);
-	}else{
+	}/*Case 2: Parent p has only one child*/
+	else{
 		pcb_t *removedChild = p->p_child;
 		if(p->p_child->p_sib == NULL){
 			p->p_child = NULL;
-		}else{
+		}/*Case 3: Parent p has more than one child*/
+		else{
 			p->p_child->p_sib->p_prev_sib = NULL;
 			p->p_child =  p->p_child->p_sib;
 		}
 		return(removedChild);
 	}
 }
-
+/*outChild removes the child pointed to by p*/
 pcb_t *outChild(pcb_t *p){
+	/*Case 1: Child p has no parent*/
 	if(p->p_prnt == NULL){
 		return(NULL);
-	}else{
+	}/*Case 2: CChild p has a parent, but no siblings*/
+	else{
 		if((p->p_sib == NULL) && (p->p_prev_sib == NULL)){
 			p->p_prnt->p_child = NULL;
 			p->p_prnt = NULL;
 			return(p);
-		}else{
+		}
+		/* Case 3: Child p has both a parent and sibling(s)*/
+	else{
+		/* Subcase 1: Child p is the first child*/
 			if(p->p_prev_sib == NULL){
 				p->p_prnt->p_child = p->p_sib;
 				p->p_sib->p_prev_sib = NULL;
 				p->p_prnt = NULL;
 				p->p_sib = NULL;
 				return(p);
-			}else if(p->p_sib == NULL){
+			}/*Subcase 2: Child p is the last child*/
+			else if(p->p_sib == NULL){
 				p->p_prev_sib->p_sib = NULL;
 				p->p_prnt = NULL;
 				p->p_prev_sib = NULL;
 				return(p);
-			}else{
+			}/*Subcase 3: Child p is neither the first nor last child*/
+			else{
 				p->p_prev_sib->p_sib = p->p_sib;
 				p->p_sib->p_prev_sib = p->p_prev_sib;
 				p->p_prnt = NULL;
