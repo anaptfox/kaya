@@ -18,6 +18,10 @@ void debugD(int i){
 	return i;
 }
 
+void debugE(int i){
+	return i;
+}
+
 
 
 semd_t *create(semd_t **list, int *semAdd){
@@ -87,12 +91,15 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			newSema->s_next = index->s_next;
 			index->s_next = newSema;
 			stop = 1;
+			debugA(1);
 		/* if it is the last in the list*/
 		}else if(index->s_next == NULL){
 			index->s_next = newSema;
 			stop = 1;
+			debugB(1);
 		/* Reset the index to next. */
 		}else{
+			debugC(1);
 			index = index->s_next;
 		}
 	}
