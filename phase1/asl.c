@@ -60,19 +60,20 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
 
-
+	debugC(1);
 	if(semd_h == NULL){
 		semd_h = newSema;
 		return newSema;
 
 	}
-
+	debugC(1);
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 		(semd_h) = newSema;
 		newSema->s_next = index;
 		stop = 1;
 	}
+	debugC(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
@@ -98,16 +99,19 @@ semd_t *find(semd_t **list, int *semAdd){
 	if((*list) == NULL){
 		return(NULL);
 	}
+	debugB(1);
 	if((*list)->s_semAdd == semAdd){
 		return((*list));
 	}else{
 		if((*list)->s_next == NULL){
 			return(NULL);
 		}
+		debugB(1);
 		semd_t *index = (*list)->s_next;
 		if(index->s_semAdd == semAdd){
 				return(index);
 		}
+		debugB(1);
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
@@ -238,13 +242,17 @@ int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		/*remove from free (*list)*/
+		debugA(1);
 		sema = removeFree();
+		debugA(1);
 		if(sema == NULL ){
 			return 1;
 		}
 		/* add to active list*/
+		debugA(1);
 		sema = addToASL(sema, semAdd);
 	}
+	debugA(1);
  	insertProcQ(&(sema->s_procQ), p);
  	return 0;
 }
