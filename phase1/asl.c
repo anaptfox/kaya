@@ -211,7 +211,7 @@ semd_t *removeFree(){
 	if(emptyList(semdFree_h)){
 		return(NULL);
 	}else{
-		semd_t *old = (*semdFree_h);
+		semd_t *old = (semdFree_h);
 		if((semdFree_h)->s_next == NULL ){
 			(semdFree_h) = NULL;
 		}else{
