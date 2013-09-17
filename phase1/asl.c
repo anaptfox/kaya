@@ -257,15 +257,22 @@ int insertBlocked(int *semAdd, pcb_t *p){
  	return 0;
 }
 
+/* Search the ASL for a descriptor of this semaphore. If none is
+found, return NULL; otherwise, remove the ﬁrst (i.e. head) ProcBlk
+from the process queue of the found semaphore descriptor and return a pointer to it. If the process queue for this semaphore becomes
+empty (emptyProcQ(s procq) is TRUE), remove the semaphore
+descriptor from the ASL and return it to the semdFree list. */
+
 pcb_t *removeBlocked(int *semAdd){
-	debugD(1);
 	semd_t *sema = find(&semd_h, semAdd);
 	if(sema == NULL){
 		return(NULL);
 	}else{
 		removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
+			debugD(1);
 			sema = remove(&semd_h, semAdd);
+			debugA(1);
 			sema = create(&semdFree_h, semAdd );
 		}
 		return(sema);
