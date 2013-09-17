@@ -74,6 +74,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		stop = 1;
 	}
 	debugC(1);
+	/*Check head first */
+	if(index->s_next == NULL){
+		index->s_next = newSema;
+		stop = 1;
+	}
+	debugC(1);
 	/* Loop through everything but head.*/
 	while(!stop){
 		/* if semAdd is greater than the current semAdd*/
@@ -101,6 +107,7 @@ semd_t *find(semd_t **list, int *semAdd){
 	}
 	debugB(1);
 	if((*list)->s_semAdd == semAdd){
+		debugA(1);
 		return((*list));
 	}else{
 		if((*list)->s_next == NULL){
