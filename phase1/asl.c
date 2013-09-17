@@ -262,24 +262,30 @@ pcb_t *removeBlocked(int *semAdd){
 	}else{
 		pcb_t *proc = removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
-			debugD(1);
 			sema = removeActive(semAdd);
-			debugA(1);
 			addFree(sema);
 		}
 		return(proc);
 	}
 }
 
+/* Remove the ProcBlk pointed to by p from the process queue associated with p’s semaphore (p→ p semAdd) on the ASL. If ProcBlk
+pointed to by p does not appear in the process queue associated with
+p’s semaphore, which is an error condition, return NULL; otherwise,
+return p. */
+
 pcb_t *outBlocked(pcb_t *p){
 	semd_t *sema = find(&semd_h ,p->p_semAdd);
 	if(sema == NULL){
+		debugD(1);
 		return(NULL);
 	}else{
+		debugD(1);
 		if(emptyProcQ(sema->s_procQ)){
 			return(NULL);
 		}
 	}
+		debugD(1);
 	return outProcQ(&(sema->s_procQ), p);
 }
 
