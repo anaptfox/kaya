@@ -21,7 +21,9 @@ void debugD(int i){
 void debugE(int i){
 	return i;
 }
-
+void debugF(int i){
+	return i;
+}
 
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = 0;
@@ -87,6 +89,7 @@ semd_t *findActive(int *semAdd){
 		while(index->s_next != NULL){
 			debugA(1);
 			if(index->s_next->s_semAdd == semAdd){
+				debugF(1);
 				return(index->s_next);
 			}
 			else{
