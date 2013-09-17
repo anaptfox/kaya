@@ -85,6 +85,7 @@ semd_t *findActive(int *semAdd){
 				return(index);
 		}
 		while(index->s_next != NULL){
+			debugA(1);
 			if(index->s_next->s_semAdd == semAdd){
 				return(index->s_next);
 			}
@@ -265,7 +266,6 @@ pcb_t *headBlocked(int *semAdd){
 	if(sema == NULL){
 		return(NULL);
 	}
-
 	return(headProcQ(sema->s_procQ));
 }
 
