@@ -2,23 +2,23 @@
 
 // Global var
 
-	semd_t *semd_h[] = semaQue;
-	
-	pct_t* readyQue;
-	
-	pcb_t* currentProc = removeProc(&readyque);
-	
-	int processCnt = 0;
+semd_t *semd_h[] = semaQue;
 
-	int deviceSemas[deviceCnts];
-	
+pct_t* readyQue;
 
+pcb_t* currentProc;
+
+int processCnt = 0;
+
+int deviceSemas[deviceCnts];
 
 
-void int main(int argc, char const *argv[])
+
+
+int main(void)
 {
 	
-	
+	pcb_t* currentProc = removeProc(&readyque);
 	//inilize the four new area
 	// Set the PC to the address of your nucleus function that is to handle exceptions of that type
 		
@@ -27,6 +27,8 @@ void int main(int argc, char const *argv[])
 	initASLs()
 
 	//inilize semaphores to 0
+
+
 
 	//get a pcb
 	pct_t p = allocPcb();

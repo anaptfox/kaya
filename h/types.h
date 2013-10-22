@@ -87,6 +87,15 @@ typedef struct state_t {
 #define s_LO	s_reg[30]
 
 
+#define INT_NEW 0x2000008c
+#define INT_OLD 0x20000000
+#define TLB_NEW 0x200001a4
+#define TLB_OLD 0x20000118
+#define PGMTRAP_NEW 0x200002bc
+#define PGMTRAP_OLD 0x20000230
+#define SYS_NEW 0x200003d4
+#define SYS_OLD 0x20000348
+
 /*pcb descriptor type*/
 typedef struct pcb_t {
 	struct pcb_t *p_next, *p_prev, *p_prnt, *p_child, *p_sib, *p_prev_sib;

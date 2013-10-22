@@ -3,12 +3,31 @@
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
-#include "libumps.e"
+#include "../e/initial.e"
+#include <libumps.e>
 
 
 void scheduler(){
 
-	
+	if(readyQue == NULL){
+		if(processCnt == 0){
+			HALT();
+		}
+
+		if(processcnt > 0 && softBlkCnt = 0){
+			PANIC();
+		}
+
+		if(processcnt > 0 && softBlkCnt > 0){
+			WAIT();
+		}
+
+	}
+
+	currentProc = removeProc( &readyque)
+	//put time on the clock 5000 micros.
+	LDIT(5000);
+	LDST(&currentProc->p_s); 
 
 }
 
