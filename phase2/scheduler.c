@@ -39,17 +39,28 @@ void createNewJob(){
 	//LDST(&oldsys)
 }
 
-void terminateJob(){
-	/*if(currentProc == empty) {
-		return(NULL);
-		}
-	if(currentProc->currentProc_child == NULL) {
-	freePcb currentProc;
-	outProcQ(currentProc);
-	}
-	if(currentProc_child != NULL) {
-		terminateJob(currentProc->child);*/
-		//This is incomplete code, unsure on terminateJob parameters
+void terminateJob(p){
+                while(!emptychild(p)){
+                       terminateJob(removeChild(p))
+                }
+                if( p == currentProc)
+                        outChild(p);
+                        currentProc = NULL; // can be done out side of kill em all. 
+                if (p->p_semAdd == null){
+                        // on the ready que
+                        outProcQ();
+                }
+                else
+                        // on a sema4
+                        outBlocked();
+                        increment the sema4 by 1 
+                                if it is not on an I/O sema4
+                        decrement softBlkCnt
+                                if it is an I/O sema4
+
+
+                freePcb(p)
+                procCnt -= 1;
 	}
 	
 	// kill current job and all its progeny
