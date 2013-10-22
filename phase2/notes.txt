@@ -8,9 +8,9 @@ Job #1
 
 		if 1 is in there, then it means create process
 
-		switch statment from 1 through 8
+		switch statement from 1 through 8
 
-		syscalls 1-8 are privlaged
+		syscalls 1-8 are privileged
 
 
 
@@ -24,15 +24,15 @@ Job #1
 	WAIT
 
 
-	You try 1-8 and there running in user mode
+	You try 1-8 and they're running in user mode
 		copy the 35 words from oldsys to oldprogram
-		in the cause register your going to set it to 10
+		in the cause register you're going to set it to 10
 
 	Sys 5
-		Adding new feilds to the pcb
+		Adding new fields to the pcb
 
 
-	prisioner
+	prisoner
 		wait
 		//smoke
 		signal vendor
@@ -48,12 +48,12 @@ Job #1
 	vendor 
 		while(do)
 			x = random(3);
-			v(prisioner [x])
+			v(prisoner [x])
 			p(vendor)
 
 	prisoner[i]{
 		while(T)
-			p(prisioner[i])
+			p(prisoner[i])
 			//smoke
 			V(vendor)
 	}
@@ -69,7 +69,7 @@ Job #1
 
 
 	Monitors
-		Seperate synch from mutual exclusion. Build the m.e. into the language to only worry about synch
+		Separate synch from mutual exclusion. Build the m.e. into the language to only worry about synch
 		and incorporate O.O. concepts
 
 		Wait & signal
@@ -78,10 +78,10 @@ Job #1
 
 	Signal & exit
 
-	Interupts
+	Interrupts
 	Device Drivers
 	Upper Half and Lower half
-	What happens when a I.O. interupt happens?
+	What happens when a I.O. interrupt happens?
 
 	sema4 = array of 48 and div and mod
 
@@ -99,15 +99,15 @@ Job #1
 		Someone else has actually begun the I/O operation => you just need to wait for the I/O
 
 		What you do in this 
-			determine the same4 for that device
+			determine the sema4 for that device
 			and perform a p - operation
-				decermint the sema4 if less that 0 insertblocked, call scheduler for someone else.
+				decerement the sema4 if less than 0 insertblocked, call scheduler for someone else.
 
 	TlB
-	prmTrap 
-	interupt
+	prgmTrap 
+	interrupt
 
-	Interupt Handler ( look in function in scheduler.c)
+	Interrupt Handler ( look in function in scheduler.c)
 
 	0 
 	1 
@@ -121,10 +121,10 @@ Job #1
 
 	Associated w/ each install device
 		sema4
-		device regiters
-			every instance of every deive have a set of device registers and they are all 4 words longs
+		device registers
+			every instance of every device has a set of device registers and they are all 4 words long
 			memory mapped
-				the registers are on the deivce, but the hardwired that the memery is mapped into the registers. 
+				the registers are on the device, but the hardwired that the memory is mapped into the registers. 
 			1 - status
 			2 - data 0
 			3 - command
@@ -141,13 +141,13 @@ Job #1
 
 	killAllofEm(p)
 		while(!emptychild(p)){
-			kilallofem(removeChild(p))
+			killallofem(removeChild(p))
 		}
 		if( p == currentProc)
 			outChild(p);
 			currentProc = NULL; // can be done out side of kill em all. 
 		if (p->p_semAdd == null){
-			// on the ready qu
+			// on the ready que
 			outProcQ();
 		}
 		else
@@ -185,16 +185,16 @@ Job #1
 			urgent que
 
 		discipline
-			siignal and exit
+			signal and exit
 			signal and exit
 			signal and wait
 
 		What to do when a signal is called and no one is waiting
-		is there a signall all
+		is there a signal all
 		nested monitor calls
-		are all quees fifo's
+		are all queues fifo's
 		crowd monitors
-			not all of the methods garuenteee mutual exclsion. 
+			not all of the methods guarantee mutual exclusion. 
 
 		
 
