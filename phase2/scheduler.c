@@ -1,4 +1,3 @@
-
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
@@ -41,6 +40,18 @@ void createNewJob(){
 }
 
 void terminateJob(){
+	/*if(currentProc == empty) {
+		return(NULL);
+		}
+	if(currentProc->currentProc_child == NULL) {
+	freePcb currentProc;
+	outProcQ(currentProc);
+	}
+	if(currentProc_child != NULL) {
+		terminateJob(currentProc->child);*/
+		//This is incomplete code, unsure on terminateJob parameters
+	}
+	
 	// kill current job and all its progeny
 	//recursively travel tree and kill everything (freepcb)
 	//everytime you call freepcb call procCnt--
