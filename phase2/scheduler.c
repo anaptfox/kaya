@@ -1,5 +1,4 @@
 
-
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
@@ -14,11 +13,11 @@ void scheduler(){
 			HALT();
 		}
 
-		if(processcnt > 0 && softBlkCnt = 0){
+		if(processCnt > 0 && softBlkCnt = 0){
 			PANIC();
 		}
 
-		if(processcnt > 0 && softBlkCnt > 0){
+		if(processCnt > 0 && softBlkCnt > 0){
 			WAIT();
 		}
 
@@ -35,14 +34,14 @@ void createNewJob(){
 	// get a pcb, processcnt++
 	// Copy the state pointed by a1 into the p_s of the new pct
 	 	
-	// mae the newpcb a child of current
+	// make the newpcb a child of current
 	 	
-	// put the new pcb  on the readyQUe
-	//LDSt(&oldsys)
+	// put the new pcb  on the readyQue
+	//LDST(&oldsys)
 }
 
 void terminateJob(){
 	// kill current job and all its progeny
-	//recursivly travel tree and kill everything (freepcb)
+	//recursively travel tree and kill everything (freepcb)
 	//everytime you call freepcb call procCnt--
 }
