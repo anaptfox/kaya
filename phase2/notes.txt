@@ -1,0 +1,200 @@
+Job #1 
+	"What the hell happened"
+
+	Look in the cause Register
+		if its not a syscall => panic 
+			panic()
+	Look in register a0-a3 in particular a0 in the sysold area
+
+		if 1 is in there, then it means create process
+
+		switch statment from 1 through 8
+
+		syscalls 1-8 are privlaged
+
+
+
+	If you read chapter 6 of the yellow book. 
+
+	Rom Services libumps
+	LDST
+	LDIT
+	PANIC
+	HALT
+	WAIT
+
+
+	You try 1-8 and there running in user mode
+		copy the 35 words from oldsys to oldprogram
+		in the cause register your going to set it to 10
+
+	Sys 5
+		Adding new feilds to the pcb
+
+
+	prisioner
+		wait
+		//smoke
+		signal vendor
+	vendor
+		random
+		case x
+			wake p1 (signal)
+			wait
+
+	semaphore
+		prisoner[3] = 0
+		vendor = 1
+	vendor 
+		while(do)
+			x = random(3);
+			v(prisioner [x])
+			p(vendor)
+
+	prisoner[i]{
+		while(T)
+			p(prisioner[i])
+			//smoke
+			V(vendor)
+	}
+	
+	// Sync http://web.cs.wpi.edu/~cs3013/c07/lectures/Section06-Sync.pdf	
+
+	A semaphore by the name of mutex is for the purpose of a shared variable. I.e. synchronization or mutual exclusion
+	P means wait
+	V means signal
+
+	V
+		if it is less than one wake somebody up and call remove blocked.
+
+
+	Monitors
+		Seperate synch from mutual exclusion. Build the m.e. into the language to only worry about synch
+		and incorporate O.O. concepts
+
+		Wait & signal
+
+		The shared resouce or thing is a instance of a class.
+
+	Signal & exit
+
+	Interupts
+	Device Drivers
+	Upper Half and Lower half
+	What happens when a I.O. interupt happens?
+
+	sema4 = array of 48 and div and mod
+
+	Sys 8 
+		- wait for I.O.
+		a0 - 8 
+		a1 - line #
+		a2 - device #
+		a3 - r/w if terminal
+
+		They load up the registers with the values and call sys8
+
+		Your job is to start the I.O.
+
+		Someone else has actually begun the I/O operation => you just need to wait for the I/O
+
+		What you do in this 
+			determine the same4 for that device
+			and perform a p - operation
+				decermint the sema4 if less that 0 insertblocked, call scheduler for someone else.
+
+	TlB
+	prmTrap 
+	interupt
+
+	Interupt Handler ( look in function in scheduler.c)
+
+	0 
+	1 
+	2
+	3 disks
+	4 type
+	5 network
+	6 printer
+	7 terminals r/w
+
+
+	Associated w/ each install device
+		sema4
+		device regiters
+			every instance of every deive have a set of device registers and they are all 4 words longs
+			memory mapped
+				the registers are on the deivce, but the hardwired that the memery is mapped into the registers. 
+			1 - status
+			2 - data 0
+			3 - command
+			4 - status
+
+	Terminals can do 2 things at a time
+		2 sema4s for every terminal - one for read and one for write
+		2 words
+			2 from transmit( terminal write)
+			2 receive (terminal read)
+
+		They could both be ringing , priority receive over transmit. 
+
+
+	killAllofEm(p)
+		while(!emptychild(p)){
+			kilallofem(removeChild(p))
+		}
+		if( p == currentProc)
+			outChild(p);
+			currentProc = NULL; // can be done out side of kill em all. 
+		if (p->p_semAdd == null){
+			// on the ready qu
+			outProcQ();
+		}
+		else
+			// on a sema4
+			outBlocked();
+			increment the sema4 by 1 
+				if it is not on an I/O sema4
+			decrement softBlkCnt
+				if it is an I/O sema4
+
+
+		freePcb(p)
+		procCnt -= 1;
+
+		// see if pcb is a process sema.
+		if(p->p_semAdd >= &(deviceSema4s[0]) and p->semAdd <= &(deviceSema4s[deviceCnts]) )
+
+	Where can processes be?
+		readyQue ( Ready )
+		blocked on a sema4 ( waiting)
+		running( currentProc)
+
+
+	Monitors
+
+	sync and mutual exclusion
+		(build into the lang)
+		object oriented
+			the shared thingy therefore becomes an object
+
+		signal-and-exit
+
+		signal-and-continue
+			when you exit the one you signaled wakes up
+			urgent que
+
+		discipline
+			siignal and exit
+			signal and exit
+			signal and wait
+
+		What to do when a signal is called and no one is waiting
+		is there a signall all
+		nested monitor calls
+		are all quees fifo's
+		crowd monitors
+			not all of the methods garuenteee mutual exclsion. 
+
+		
+

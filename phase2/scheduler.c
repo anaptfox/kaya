@@ -1,22 +1,14 @@
 
 
-void syshandler(){
+#include "../h/const.h"
+#include "../h/types.h"
+#include "../e/pcb.e"
+#include "libumps.e"
 
-}
 
-void inthandler(){
+void scheduler(){
 
-}
-
-void pgmTrapHandler(){
-
-	//did the current job perform a sys 5 for pgmtraps?
-	//if no, nuke it
-	// if yes, 
-
-}
-
-void TLSHandler(){
+	
 
 }
 
