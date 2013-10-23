@@ -34,3 +34,16 @@ void inthandler(){
 				// put contents of status in the v0 and put them into the readyQue
 
 }
+//Syscall 1 basic idea, I believe
+void createProcess(){
+	if(free ProcBlk == 0) {
+		$v0 = -1;
+		return $v0;
+	}
+	else{
+		insertProcQ(pcb_t newProcBlk $a1);
+		$v0 = 0;
+		return $v0;
+	}
+}
+
