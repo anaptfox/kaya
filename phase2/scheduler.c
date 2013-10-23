@@ -30,13 +30,14 @@ void scheduler(){
 }
 
 void createNewJob(){
-	// get a pcb, processcnt++
-	// Copy the state pointed by a1 into the p_s of the new pct
+	newPcb = allocPcb();
+	processCnt++; // get a pcb, processcnt++)alloc
+	newPcb->p_s = *a1;// Copy the state pointed by a1 into the p_s of the new pct
 	 	
-	// make the newpcb a child of current
+	currentProc->currentProc_child = newPcb;// make the newpcb a child of current
 	 	
-	// put the new pcb  on the readyQue
-	//LDST(&oldsys)
+	insertProcQ(readyQue->tp newPcb->p_s);// put the new pcb  on the readyQue
+	LDST(&oldsys)
 }
 
 void terminateJob(p){
