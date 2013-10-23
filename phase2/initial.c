@@ -10,6 +10,8 @@ pcb_t* currentProc;
 
 int processCnt = 0;
 
+int softBlkCnt = 0;
+
 int deviceSemas[deviceCnts];
 
 
