@@ -1,5 +1,5 @@
 void inthandler(){
-	//Interupt Handler
+	//Interrupt Handler
 	//In order to occur two things have to happen
 		// Ints enable bit needs to be on
 			// two tiered bit, IE bit and Int mask
@@ -26,7 +26,7 @@ void inthandler(){
 		// ack the int
 			//write the ack command in the command felid
 			// define an ack constant
-			// someting-> d_comand = 1
+			// something-> d_command = 1
 		// the bitmap of the degivice word -1
 
 		// V(device's sema4)
@@ -46,4 +46,19 @@ void createProcess(){
 		return $v0;
 	}
 }
+//Syscall 2. killemAll should probably either go in terminateJob and is called here,
+//or goes here and is called in terminateJob().
+void terminateProcess(){
+	terminateJob(currentProc);
+}
 
+//When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
+//perform a V operation on a semaphore. (What is a V operation?)
+void Verhogen(){
+	
+}
+//When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
+//perform a P operation on a semaphore. (What is a P operation?)
+void Passeren(){
+	
+}
