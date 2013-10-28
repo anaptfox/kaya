@@ -15,7 +15,9 @@ int softBlkCnt = 0;
 int deviceSemas[deviceCnts];
 
 
-
+void moveState(state_t *before, state_t* after){
+	
+}
 
 int main(void)
 {
