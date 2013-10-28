@@ -1,6 +1,47 @@
 void syshandler(){
+	state_t *sys_old = (state_t *) SYS_OLD;
 
+	// get the cause from the SYS old
 
+	switch(sys_old->reg_a0){
+        case CREATEPROCESS:
+   			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
+            currentProcess->p_state.reg_v0 = createProcess((state_t *) arg1);
+        break;
+                                
+        case TERMINATEPROCESS:        
+            currentProcess->p_state.reg_v0 = terminateProcess((int) arg1);
+        break;
+        
+        case VERHOGEN:
+            Verhogen((int *) arg1);
+        break;
+        
+        case PASSEREN:
+            Passeren((int *)  arg1);
+        break;
+        
+        case EXCEPTION:
+        	//SYS5 
+        break;
+        
+        case GETCPUTIME:
+            currentProcess->p_state.reg_v0 = getCpuTime();
+        break;
+        
+        case WAITFORCLOCK:
+            waitforclock();
+        break;
+        
+        case WAITFORIODEVICE:
+            currentProcess->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
+        break;
+        
+        default:
+               //something
+    }
+                        
+    scheduler();
 
 }
 
@@ -26,6 +67,7 @@ void createProcess( state_t *state){
 		state->s_v0 = -1;
 		
 		return -1;
+
 	}else{
 		
 		processCnt++; // get a pcb, processcnt++)alloc
@@ -81,6 +123,14 @@ void Passeren(){
 	}
 }
 
-void getCPUTime(){
+void getCpuTime(){
+
+}
+
+void waitforclock(){
+
+}
+
+void waitForIO(){
 
 }

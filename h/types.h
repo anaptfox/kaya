@@ -86,15 +86,10 @@ typedef struct state_t {
 #define s_HI	s_reg[29]
 #define s_LO	s_reg[30]
 
-
-#define INT_NEW 0x2000008c
-#define INT_OLD 0x20000000
-#define TLB_NEW 0x200001a4
-#define TLB_OLD 0x20000118
-#define PGMTRAP_NEW 0x200002bc
-#define PGMTRAP_OLD 0x20000230
-#define SYS_NEW 0x200003d4
-#define SYS_OLD 0x20000348
+typedef struct pcb_vect {
+	int oldState;
+	int newState 
+} pcb_vect;
 
 /*pcb descriptor type*/
 typedef struct pcb_t {
@@ -106,7 +101,9 @@ typedef struct pcb_t {
 	/*p_sib: pointer to next sibling*/
 	/*p_prev_sib: pointer to previous sibling*/
 	struct state_t p_s; 
-	int *p_semAdd; 
+	int *p_semAdd;
+	cpu_t p_time;
+	pcb_vect p_states[TRAPTYPES];
 } pcb_t;
 
 

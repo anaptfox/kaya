@@ -83,5 +83,38 @@
 /* Useful operations */
 #define STCK(T) ((T) = ((* ((cpu_t *) TODLOADDR)) / (* ((cpu_t *) TIMESCALEADDR))))
 
+#define INT_NEW 0x2000008c
+#define INT_OLD 0x20000000
+#define TLB_NEW 0x200001a4
+#define TLB_OLD 0x20000118
+#define PGMTRAP_NEW 0x200002bc
+#define PGMTRAP_OLD 0x20000230
+#define SYS_NEW 0x200003d4
+#define SYS_OLD 0x20000348
+
+#define DEVICE_CNT 6
+#define DEVICE_LINE 8
+
+
+
+#define ALLOFF 0x00000000
+#define IEc 
+#define KUc 
+#define IEp 
+#define KUp 
+#define IEo 
+#define KUo 
+#define VMc 
+#define VMp 
+#define VMo 
+
+#define CREATEPROCESS 1
+#define TERMINATEPROCESS 2
+#define VERHOGEN 3
+#define PASSEREN 4
+#define EXCEPTION 5
+#define GETCPUTIME 6
+#define WAITFORCLOCK 7
+#define WAITFORIODEVICE 8
 
 #endif
