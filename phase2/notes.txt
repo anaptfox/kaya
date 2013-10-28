@@ -196,5 +196,25 @@ Job #1
 		crowd monitors
 			not all of the methods guarantee mutual exclusion. 
 
+
+		rambase + ramsize something
+
+		pcb_t
+			cpu_t AccTime
+				should be initialized to 0 in allocPcb
+				used to store the accumelated CPU time for that process
+
+				STCK( startTOD)
+				immediately before the LDST for that process
+				STCK(endTOD)
+				whenever the current process is done with the CPU
+					its turn might be done becuase it used off 5 milliseconds 
+
+		clockSem = 0
+		This semaphore should have a V-operation performed on it every 100ms
+		use the interval timer
+			LDIT(value)
+			
+
 		
 
