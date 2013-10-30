@@ -44,27 +44,27 @@ int main(void)
 		area = SYS_NEW;
 		STST(area);
 
-		area->s_pc = (memaddr) sysHandler;
+		area->s_pc = p->s_t9 = (memaddr) sysHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		//PRogramTrp
 		moveState(area, (state_t *) PGMTRAP_NEW)
-		area->s_pc = (memaddr) pgmTrapHandler;
+		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		//TLB Management
 
 		moveState(area, (state_t *) TLB_NEW)
-		area->s_pc = (memaddr) pgmTrapHandler;
+		area->s_pc = p->s_t9= (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		//Interrupt
 
 		moveState(area, (state_t *) INT_NEW)
-		area->s_pc = (memaddr) pgmTrapHandler;
+		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 	
@@ -87,9 +87,9 @@ int main(void)
 	if(p == NULL){
 		PANIC();
 	}
-	p->s_pc = (memaddr) test;
-	p->s_sp = FRAMESIZE - RAMBASEADDR - RAMTOP;
-	p->status = ALLOFF;
+	p->s_pc = p->s_t9 = (memaddr) test;
+	p->s_sp = RAMTOP - FRAMESIZE;
+	p->status = ALLOFF; //interrupts enabled, virtual memory off, processor local timer enables, kernel mode on
 	mkEmptyProcQ(&readyQue);
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;

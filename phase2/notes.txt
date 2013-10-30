@@ -197,7 +197,7 @@ Job #1
 			not all of the methods guarantee mutual exclusion. 
 
 
-		rambase + ramsize something
+		rambase + ramsize something	
 
 		pcb_t
 			cpu_t AccTime
@@ -214,6 +214,31 @@ Job #1
 		This semaphore should have a V-operation performed on it every 100ms
 		use the interval timer
 			LDIT(value)
+
+
+
+	Issues to consider - before increment
+		int happens for a dead job, but it already issued its SYS8
+			sema4 is -1 but no jobs is blocked on it. 
+		int happens for a job which has yet to issue its SYS8
+			sema4 is 0 which implies that sys8 has not happened
+				store status
+
+	40 de
+
+		int happens for a job which has already issued it SYS8 
+			normal
+			sema4 is -1 and there is a job blocked on it.
+
+	
+	SYS 8 
+		sema4 goes from 1->0
+
+
+	Put me to sleep until the io happen. 
+
+	devreg * foo
+	foo - ( devregares_t 0x1)
 			
 
 		

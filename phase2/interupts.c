@@ -1,3 +1,9 @@
+#include "../h/const.h"
+#include "../h/types.h"
+#include "../e/pcb.e"
+#include "../e/exceptions.e"
+#include "../e/scheduler.e"
+
 void inthandler(){
 	//Interrupt Handler
 	//In order to occur two things have to happen

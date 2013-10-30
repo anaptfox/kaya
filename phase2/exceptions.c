@@ -1,16 +1,25 @@
 void syshandler(){
+
+	int cause;
+
+	int kernal_mode;
+
 	state_t *sys_old = (state_t *) SYS_OLD;
 
 	// get the cause from the SYS old
 
-	switch(sys_old->reg_a0){
+	// ,, 2
+	
+
+	if (kernal_mode){
+		switch(sys_old->reg_a0){
         case CREATEPROCESS:
    			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
-            currentProcess->p_state.reg_v0 = createProcess((state_t *) arg1);
+            currentProc->p_state.reg_v0 = createProcess((state_t *) arg1);
         break;
                                 
         case TERMINATEPROCESS:        
-            currentProcess->p_state.reg_v0 = terminateProcess((int) arg1);
+            currentProc->p_state.reg_v0 = terminateProcess((int) arg1);
         break;
         
         case VERHOGEN:
@@ -22,11 +31,11 @@ void syshandler(){
         break;
         
         case EXCEPTION:
-        	//SYS5 
+        	handleSys5(int) arg1, (int) arg2, (int) arg3);
         break;
         
         case GETCPUTIME:
-            currentProcess->p_state.reg_v0 = getCpuTime();
+            currentProc->p_state.reg_v0 = getCpuTime();
         break;
         
         case WAITFORCLOCK:
@@ -34,12 +43,13 @@ void syshandler(){
         break;
         
         case WAITFORIODEVICE:
-            currentProcess->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
+            currentProc->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
         break;
         
         default:
                //something
     }
+	}
                         
     scheduler();
 
@@ -89,6 +99,23 @@ void createProcess( state_t *state){
 //Syscall 2. killemAll should probably either go in terminateJob and is called here,
 //or goes here and is called in terminateJob().
 void terminateProcess(){
+	// while(!emptychild(p)){
+	// 		killallofem(removeChild(p))
+	// 	}
+	// 	if( p == currentProc)
+	// 		outChild(p);
+	// 		currentProc = NULL; // can be done out side of kill em all. 
+	// 	if (p->p_semAdd == null){
+	// 		// on the ready que
+	// 		outProcQ();
+	// 	}
+	// 	else
+	// 		// on a sema4
+	// 		outBlocked();
+	// 		increment the sema4 by 1 
+	// 			if it is not on an I/O sema4
+	// 		decrement softBlkCnt
+	// 			if it is an I/O sema4
     while(!emptychild(currentProc)){
         terminateProcess(removeChild(currentProc));     
     }
@@ -119,12 +146,12 @@ void Passeren(){
 	semaddr--;
 
 	if(semaddr <= -1){
-		insertBlocked (semaddr , currentProcess);
+		insertBlocked (semaddr , currentProc);
 	}
 }
 
 void getCpuTime(){
-
+	return currentProc->p_time;
 }
 
 void waitforclock(){
@@ -134,3 +161,9 @@ void waitforclock(){
 void waitForIO(){
 
 }
+
+void handleSys5(){
+
+}
+
+continueCurrentProcess()

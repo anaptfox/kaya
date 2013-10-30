@@ -98,8 +98,8 @@
 
 
 #define ALLOFF 0x00000000
-#define IEc 
-#define KUc 
+#define IEc 0x00000001
+#define KUc 0x00000002
 #define IEp 
 #define KUp 
 #define IEo 

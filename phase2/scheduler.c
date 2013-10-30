@@ -7,12 +7,7 @@
 
 void scheduler(){
 
-	if(currentProc != NULL){
-		// DO TIMEING STUFF
-		LDIT(5000);
-		LDST(&currentProc->p_s); 
-		
-	}else if(currentProc == NULL){
+	if(currentProc == NULL){
 
 		currentProc = removeProc(&readyque);
 
