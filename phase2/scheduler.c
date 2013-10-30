@@ -32,7 +32,7 @@ void scheduler(){
 		}
 
 		// DO TIMEING STUFF
-
+		LDIT(5000);
 		LDST(&currentProc->p_s); 
 	}
 
