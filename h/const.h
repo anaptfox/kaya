@@ -104,9 +104,13 @@
 #define KUp 0x00000008
 #define IEo 0x00000010
 #define KUo 0x00000020
+#define IM  0x0000ff00
+#define BEV 0x00400000
 #define VMc 0x01000000
 #define VMp 0x02000000
-#define VMo 0x40000000
+#define VMo 0x04000000
+#define TE  0x08000000
+#define CU  0x10000000
 
 #define CREATEPROCESS 1
 #define TERMINATEPROCESS 2

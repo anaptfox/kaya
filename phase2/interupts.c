@@ -15,29 +15,32 @@ void inthandler(){
 	// which device signaled the inter. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 	//determine lowest number
 		// Pending int line
-	// go to the cause register
-		// while
-			// look for the next bit that is on for the lowest bit
-
-	// find out which device number it is given the line number
-		// in device register area, interupt device bitmap
-		// @ 0x1000.003C pg. 36 of yellow book
-		// 0x1000.0040
-		// 0x1000.0044
+				if(IEc && IM){ // 0x0000ff01
+				// go to the cause register
+				// while
+				// look for the next bit that is on for the lowest bit
+					
+			// find out which device number it is given the line number
+			// in device register area, interrupt device bitmap
+			// @ 0x1000.003C pg. 36 of yellow book
+			// 0x1000.0040
+			// 0x1000.0044
 			// each one is a word 
-			// go to the approaite word for that line , then use that word to fine the lowest orderd bit that's on to find the disk
+			// go to the appropriate word for that line , then use that word to fine the lowest orderd bit that's on to find the disk
 
+				
+		
 	// get the device register
 		// read the status
 		// ack the int
-			//write the ack command in the command felid
+			//write the ack command in the command field
 			// define an ack constant
 			// something-> d_command = 1
 		// the bitmap of the degivice word -1
 
 		// V(device's sema4)
 			// removedBlock, wake somebody up waiting for I/O
-				// put contents of status in the v0 and put them into the readyQue
+				// put contents of status in the v0 and put them into the readyQue}
 
 }
 

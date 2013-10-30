@@ -22,14 +22,22 @@ cpu_t startTOD;
 
 
 void moveState(state_t *before, state_t* after){
-	// typedef struct state_t {
-		// unsigned int	s_asid;
-		// unsigned int	s_cause;
-		// unsigned int	s_status;
-		// unsigned int 	s_pc;
-		// int	 			s_reg[STATEREGNUM];
+	typedef struct state_t {
+		unsigned int	s_aside;
+		unsigned int	s_cause;
+		unsigned int	s_status;
+		unsigned int 	s_pc;
+		int	 	s_reg[STATEREGNUM];
 
-	// } state_t, *state_PTR;
+	} state_t, *state_PTR;
+	after->s_aside = before->s_aside;
+	after->s_cause = before->s_cause;
+	after->s_status = before->s_status;
+	after->s_pc = before->s_pc;
+	while(i < length.s_reg) {
+		after->s_reg[i] = before->s_reg[i];
+		i++;
+	}
 }
 
 void test(void){
