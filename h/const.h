@@ -98,18 +98,29 @@
 
 
 #define ALLOFF 0x00000000
+//global interrupt enable bit
 #define IEc 0x00000001
+//The “current” kernel-mode user-mode control bit.
 #define KUc 0x00000002
+//the “previous” settings of the Status.IEc and Status.KUc
 #define IEp 0x00000004
 #define KUp 0x00000008
+//the “previous” settings of the Status.IEp and Status.KUp
 #define IEo 0x00000010
 #define KUo 0x00000020
+//Interrupt Mask. An 8-bit mask that enables/disables external interrupts.
 #define IM  0x0000ff00
+//The Bootstrap Exception Vector. This bit determines the starting address for the exception vectors.
 #define BEV 0x00400000
+//The “current” VM on/off flag bit. Status.VMc=0 indicates that virtual memory translation is currently off.
 #define VMc 0x01000000
+//the “previous” setting of the Status.VMc bit
 #define VMp 0x02000000
+//the “previous” setting of the Status.VMp bit
 #define VMo 0x04000000
+//the processor Local Timer enable bit. A 1-bit mask that enables disables the processor’s Local Timer.
 #define TE  0x08000000
+//a 4-bit field that controls coprocessor usability
 #define CU  0x10000000
 
 #define CREATEPROCESS 1
