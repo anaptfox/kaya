@@ -48,9 +48,19 @@ void syshandler(){
 
 void pgmTrapHandler(){
 
-	//did the current job perform a sys 5 for pgmtraps?
-	//if no, nuke it
-	// if yes, 
+	case EXCEPTION:
+	if(p_state.reg_a1 != 0){
+		terminateProcess; //note: the same thing as sys2 happens; not sure if this will work, or if we need to write a different kind of killEmAll
+	}
+	else{
+		 pgmTrapOldAreaAddress = pgmOldArea;
+		 currentProc = pgmTrapNewAreaAddress;//If the offending process has issued a SYS5 for PgmTrap exceptions, the
+	//handling of the PgmTrap is “passed up.” The processor state is moved
+	//from the PgmTrap Old Area into the processor state area whose address
+	//was recorded in the ProcBlk as the PgmTrap Old Area Address. Finally, the
+	//processor state whose address was recorded in the ProcBlk as the PgmTrap
+	//New Area Address is made the current processor state.
+	}
 
 }
 
