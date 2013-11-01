@@ -139,12 +139,14 @@ void Verhogen(int *semaddr){
 
 	pcb_t *p;
 
-	semaddr++;
+	*(semaddr)++;
 
-	if(semaddr <= 0){
+	if(*(semaddr) <= 0){
 		p = removeBlocked(semaddr);
 		insertProcQ ( & readyQueue ,  p );
 	}
+
+	continueWithCurrent();
 	
 }
 //When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
@@ -157,6 +159,9 @@ void Passeren(){
 
 	if(semaddr <= -1){
 		insertBlocked (semaddr , currentProc);
+		//DO TIMING STUFF
+		currentProc = NULL;
+		scheduler();
 	}
 }
 
@@ -176,4 +181,3 @@ void handleSys5(){
 
 }
 
-continueCurrentProcess()
