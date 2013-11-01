@@ -17,10 +17,10 @@ void syshandler(){
 
 	currentProc->s_pc = currentProc->s_pc + 4;
 
-	kernal_mode = (sys_old->s_status)
+	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
 
 
-	if (kernel_mode){
+	if (kernel_mode !0 ){
 		switch(sys_old->reg_a0){
         case CREATEPROCESS:
    			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
