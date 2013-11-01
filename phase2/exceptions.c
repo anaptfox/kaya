@@ -20,45 +20,51 @@ void syshandler(){
 	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
 
 
-	if (kernel_mode !0 ){
-		switch(sys_old->reg_a0){
-        case CREATEPROCESS:
-   			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
-            currentProc->p_state.reg_v0 = createProcess((state_t *) arg1);
-        break;
-                                
-        case TERMINATEPROCESS:        
-            currentProc->p_state.reg_v0 = terminateProcess((int) arg1);
-        break;
-        
-        case VERHOGEN:
-            Verhogen((int *) arg1);
-        break;
-        
-        case PASSEREN:
-            Passeren((int *)  arg1);
-        break;
-        
-        case EXCEPTION:
-        	handleSys5(int) arg1, (int) arg2, (int) arg3);
-        break;
-        
-        case GETCPUTIME:
-            currentProc->p_state.reg_v0 = getCpuTime();
-        break;
-        
-        case WAITFORCLOCK:
-            waitforclock();
-        break;
-        
-        case WAITFORIODEVICE:
-            currentProc->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
-        break;
-        
-        default:
-               //something
-    }
+
+	if (kernel_mode != 0 ){
+		
+	}else{
+		if(sys_num < 9){
+			switch(sys_old->reg_a0){
+	        case CREATEPROCESS:
+	   			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
+	            currentProc->p_state.reg_v0 = createProcess((state_t *) arg1);
+	        break;
+	                                
+	        case TERMINATEPROCESS:        
+	            currentProc->p_state.reg_v0 = terminateProcess((int) arg1);
+	        break;
+	        
+	        case VERHOGEN:
+	            Verhogen((int *) arg1);
+	        break;
+	        
+	        case PASSEREN:
+	            Passeren((int *)  arg1);
+	        break;
+	        
+	        case EXCEPTION:
+	        	handleSys5(int) arg1, (int) arg2, (int) arg3);
+	        break;
+	        
+	        case GETCPUTIME:
+	            currentProc->p_state.reg_v0 = getCpuTime();
+	        break;
+	        
+	        case WAITFORCLOCK:
+	            waitforclock();
+	        break;
+	        
+	        case WAITFORIODEVICE:
+	            currentProc->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
+	        break;
+	        
+	        default:
+	               //something
+	   	 	}
+		}	
 	}
+	
                         
     scheduler();
 
