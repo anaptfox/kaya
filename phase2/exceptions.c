@@ -110,7 +110,7 @@ void createProcess( state_t *state){
 //or goes here and is called in terminateJob().
 void terminateProcess(){
 	 while(!emptychild(p)){
-	 		killallofem(removeChild(p))
+	 		terminateProcess(removeChild(p));
 	 	}
 	 	if( p == currentProc)
 	 		outChild(p);
@@ -127,7 +127,6 @@ void terminateProcess(){
 	 		else{
 	 		softBlkCnt--;
 	 		}
-	k
     //while(!emptychild(currentProc)){
         //terminateProcess(removeChild(currentProc));     
     //}currentProc = NULL;
