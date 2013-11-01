@@ -107,7 +107,8 @@ void syshandler(){
                   
 }
 
-
+//If sys5 returns a 1 in the a0, that is, we get a PgmTrap exception,
+//pgmTrapHandler deals with the exception
 void pgmTrapHandler(){
 
 	if(notIssuedSys5){
@@ -124,7 +125,8 @@ void pgmTrapHandler(){
 
 }
 
-
+//If sys5 returns a 0 in the a0, that is, we get a TLB exception,
+//TLBHandler deals with the exception
 void TLBHandler(){
 
 	if(notIssuedSys5){
@@ -140,7 +142,9 @@ void TLBHandler(){
 
 }
 
-
+//When requested, this service causes a new process, said to be a progeny of the
+//caller, to be created. a1 should contain the physical address of a processor state
+//area at the time this instruction is executed.
 void createProcess(state_t *state){
 	pcb_t *newPcb;
 
@@ -150,7 +154,7 @@ void createProcess(state_t *state){
 		
 	}else{
 		
-		processCnt++; // get a pcb, processcnt++)alloc
+		processCnt++; // get a pcb, processcnt++ alloc
 		
 		newPcb->p_s = state->s_a1;// Copy the state pointed by a1 into the p_s of the new pct
 		 	
@@ -164,15 +168,16 @@ void createProcess(state_t *state){
 	
 }
 
-//Syscall 2. killemAll should probably either go in terminateJob and is called here,
-//or goes here and is called in terminateJob().
+//This services causes the executing process to cease to exist. In addition, recursively,
+//all progeny of this process are terminated as well. Execution of this instruction
+//does not complete until all progeny are terminated.
 void terminateProcess(pct *p){
 	 while(!emptychild(p)){
 	 		terminateProcess(removeChild(p));
 	 }
  	if( p == currentProc)
  		outChild(p);
- 		currentProc = NULL; // can be done out side of kill em all. 
+ 		currentProc = NULL;  
  	if (p->p_semAdd == null){
  		// on the ready que
  		outProcQ(&(readyQue), p);
@@ -189,7 +194,7 @@ void terminateProcess(pct *p){
 }
 
 //When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
-//perform a V operation on a semaphore. (What is a V operation?)
+//perform a V operation on a semaphore. 
 void Verhogen(int *semaddr){
 
 	pcb_t *p;
@@ -205,7 +210,7 @@ void Verhogen(int *semaddr){
 	
 }
 //When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
-//perform a P operation on a semaphore. (What is a P operation?)
+//perform a P operation on a semaphore.
 void Passeren(){
 	
 	pcb_t *p;
