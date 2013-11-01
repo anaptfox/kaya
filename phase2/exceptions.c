@@ -2,7 +2,7 @@ void syshandler(){
 
 	int cause;
 
-	int kernal_mode;
+	int kernel_mode;
 
 	state_t *sys_old = (state_t *) SYS_OLD;
 
@@ -11,7 +11,7 @@ void syshandler(){
 	// ,, 2
 	
 
-	if (kernal_mode){
+	if (kernel_mode){
 		switch(sys_old->reg_a0){
         case CREATEPROCESS:
    			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
@@ -109,27 +109,28 @@ void createProcess( state_t *state){
 //Syscall 2. killemAll should probably either go in terminateJob and is called here,
 //or goes here and is called in terminateJob().
 void terminateProcess(){
-	// while(!emptychild(p)){
-	// 		killallofem(removeChild(p))
-	// 	}
-	// 	if( p == currentProc)
-	// 		outChild(p);
-	// 		currentProc = NULL; // can be done out side of kill em all. 
-	// 	if (p->p_semAdd == null){
-	// 		// on the ready que
-	// 		outProcQ();
-	// 	}
-	// 	else
-	// 		// on a sema4
-	// 		outBlocked();
-	// 		increment the sema4 by 1 
-	// 			if it is not on an I/O sema4
-	// 		decrement softBlkCnt
-	// 			if it is an I/O sema4
-    while(!emptychild(currentProc)){
-        terminateProcess(removeChild(currentProc));     
-    }
-    currentProc = NULL;;
+	 while(!emptychild(p)){
+	 		killallofem(removeChild(p))
+	 	}
+	 	if( p == currentProc)
+	 		outChild(p);
+	 		currentProc = NULL; // can be done out side of kill em all. 
+	 	if (p->p_semAdd == null){
+	 		// on the ready que
+	 		outProcQ();
+	 	}
+	 	else
+	 		// on a sema4
+	 		if (outBlocked(p) != I/O){
+	 		Verhogen(p);
+	 		}
+	 		else{
+	 		softBlkCnt--;
+	 		}
+	k
+    //while(!emptychild(currentProc)){
+        //terminateProcess(removeChild(currentProc));     
+    //}currentProc = NULL;
 
 }
 
