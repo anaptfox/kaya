@@ -38,7 +38,7 @@ void test(void){
 
 int main(void)
 {
-	//inilize the four new area
+	//inilize the four new areas
 
 		//set up devregarea
 		devregarea_t *devregarea;
@@ -53,7 +53,7 @@ int main(void)
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->status = ALLOFF;
 
-		//PRogramTrp
+		//ProgramTrap
 		area = (state_t *)PGMTRAP_NEW;
 		moveState(area, (state_t *) PGMTRAP_NEW)
 		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
@@ -79,7 +79,7 @@ int main(void)
 	initPcbs();
 	initASLs();
 
-	//inilize semaphores to 0
+	//iniltialize semaphores to 0
 
 	for(int i=0; i<DEVICE_CNT; i++){
         for(int j=0; j<DEVICE_LINE; j++){
