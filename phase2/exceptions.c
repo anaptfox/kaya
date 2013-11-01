@@ -233,7 +233,6 @@ void waitForClock(){
 
 void waitForIO(){
 
-	
 
 }
 
