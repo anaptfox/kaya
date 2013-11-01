@@ -20,7 +20,7 @@ int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
 cpu_t startTOD;
 
-//Copy states
+//Copy before into after
 void moveState(state_t *before, state_t* after){
 	after->s_aside = before->s_aside;
 	after->s_cause = before->s_cause;

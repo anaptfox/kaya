@@ -6,6 +6,8 @@
 
 
 state_t *sys_old = (state_t *) SYS_OLD;
+state_t *pgm_old = (state_t *) PGMTRAP_OLD;
+state_t *tlb_old = (state_t *) TLB_OLD;
 
 void syshandler(){
 
@@ -19,56 +21,80 @@ void syshandler(){
 
 	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
 
-	if (kernel_mode != 0 ){
-		
-	}else{
-		if(sys_num < 9){
-			switch(sys_old->reg_a0){
-	        case CREATEPROCESS:
-	   			//, an error code of -1 is placed/returned in the caller’s v0, otherwise, return the value 0 in the caller’s v0
-	            currentProc->p_state.reg_v0 = createProcess((state_t *) arg1);
-	        break;
-	                                
-	        case TERMINATEPROCESS:        
-	            currentProc->p_state.reg_v0 = terminateProcess((int) arg1);
-	        break;
-	        
-	        case VERHOGEN:
-	            Verhogen((int *) arg1);
-	        break;
-	        
-	        case PASSEREN:
-	            Passeren((int *)  arg1);
-	        break;
-	        
-	        case EXCEPTION:
-	        	handleSys5(int) arg1, (int) arg2, (int) arg3);
-	        break;
-	        
-	        case GETCPUTIME:
-	            currentProc->p_state.reg_v0 = getCpuTime();
-	        break;
-	        
-	        case WAITFORCLOCK:
-	            waitforclock();
-	        break;
-	        
-	        case WAITFORIODEVICE:
-	            currentProc->p_state.reg_v0 = waitForIO((int) arg1, (int) arg2, (int) arg3);
-	        break;
-	        
-	        default:
-	               //something
-	   	 	}
+	causeExcCode = sys_old->s_cause ;
 
+	//Check for sys 
+	if(causeExcCode == 8){
+		//if user mode
+		if (kernel_mode != 0 ){
+			//check for sys 1-8
+			if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
+				//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
+				moveState(pgm_old, sys_old);
+
+				//setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction)
+				sys_old->s_cause = RI; //QUESTION  what is RI?
+
+				// and calling Kaya’s PgmTrap exception handler.
+				pgmTrapHandler();
+			}else{
+				//QUESTION: What to do here?
+			}
+		//if kernel mode
 		}else{
-			passUpOrDie();
-		}	
-	}
+			//check for sys 1-8
+			if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
 	
-                        
-    scheduler();
-
+				switch(sys_old->reg_a0){
+			        case CREATEPROCESS:
+			            createProcess((state_t *) arg1);
+			        break;
+			                                
+			        case TERMINATEPROCESS:        
+			            terminateProcess();
+			        break;
+			        
+			        case VERHOGEN:
+			            Verhogen((int *) arg1);
+			        break;
+			        
+			        case PASSEREN:
+			            Passeren((int *)  arg1);
+			        break;
+			        
+			        case EXCEPTION:
+			        	handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3);
+			        break;
+			        
+			        case GETCPUTIME:
+			            getCpuTime();
+			        break;
+			        
+			        case WAITFORCLOCK:
+			            waitforclock();
+			        break;
+			        
+			        case WAITFORIODEVICE:
+			            waitForIO((int) arg1, (int) arg2, (int) arg3);
+			        break;
+			        
+			        default:
+			               //something
+			    }
+			// not sys 1-8
+			}else{
+				passUpOrDie();
+			}	
+		}
+	//check for break
+	}else if(causeExcCode == 9){
+		// a0 contains LDST, FORK, PANIC, or HALT[1. . .4]
+		
+	//Not sys or break panic;
+	}else{
+		PANIC();
+	}
+                  
 }
 
 
@@ -183,7 +209,10 @@ void getCpuTime(){
 	LDST(sys_old);
 }
 
-void waitforclock(){
+// This instruction performs a P operation on the nucleus maintained pseudo-clock
+// timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
+// by the nucleus
+void waitForClock(){
 
 }
 
@@ -191,7 +220,23 @@ void waitForIO(){
 
 }
 
-void handleSys5(){
+void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
+
+
+	//save the contents of a2 and a3 (in the invoking process’es ProcBlk)
+	pcb_vect = currentProc->p_states[arg1];
+
+	moveState(arg2, &(pcb_vect->oldState));
+	moveState(arg3, &(pcb_vect->newState));
+
+	//the nucleus stores the processor state at the time of the exception in the area
+	//pointed to by the address in a2
+	moveState(&(currentProc->p_state), arg2);
+
+	//and loads the new processor state from the area
+	//pointed to by the address given in a3
+	LDST(arg3);
+
 
 }
 
