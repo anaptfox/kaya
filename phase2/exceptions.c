@@ -1,15 +1,24 @@
+#include "../h/const.h"
+#include "../h/types.h"
+#include "../e/pcb.e"
+#include "../e/interupts.e"
+#include "../e/scheduler.e"
+
+
+state_t *sys_old = (state_t *) SYS_OLD;
+
 void syshandler(){
 
 	int cause;
 
 	int kernel_mode;
 
-	state_t *sys_old = (state_t *) SYS_OLD;
+	moveState(sys_old, &(currentProc->p_state));
 
-	// get the cause from the SYS old
+	currentProc->s_pc = currentProc->s_pc + 4;
 
-	// ,, 2
-	
+	kernal_mode = (sys_old->s_status)
+
 
 	if (kernel_mode){
 		switch(sys_old->reg_a0){
@@ -80,14 +89,13 @@ void TLBHandler(){
 }
 
 
-void createProcess( state_t *state){
+void createProcess(state_t *state){
 	pcb_t *newPcb;
+
 	if((newPcb = allocPcb()) == NULL){
 		
 		state->s_v0 = -1;
 		
-		return -1;
-
 	}else{
 		
 		processCnt++; // get a pcb, processcnt++)alloc
@@ -99,8 +107,6 @@ void createProcess( state_t *state){
 		insertProcQ(&readyQue, newPcb);// put the new pcb  on the readyQue
 		
 		state->s_v0 = 0;
-		
-		return 0;
 		
 	}
 	
@@ -166,7 +172,8 @@ void Passeren(){
 }
 
 void getCpuTime(){
-	return currentProc->p_time;
+	currentProc->p_state.reg_v0 = currentProc->p_time;
+	LDST(sys_old);
 }
 
 void waitforclock(){
@@ -178,6 +185,11 @@ void waitForIO(){
 }
 
 void handleSys5(){
+
+}
+
+
+void passUpOrDie(){
 
 }
 
