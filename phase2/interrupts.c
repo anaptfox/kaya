@@ -77,9 +77,12 @@ void inthandler(){
 		// the bitmap of the degivice word -1
 
 		// V(device's sema4)
+		V(device->semd_h);
 			// removedBlock, wake somebody up waiting for I/O
-				// put contents of status in the v0 and put them into the readyQue}
-
+			SIGNAL();
+			// put contents of status in the v0 and put them into the readyQue}
+			readyQue = status_v0;	
+			
 	}
 }
 
