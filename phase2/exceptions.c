@@ -19,8 +19,6 @@ void syshandler(){
 
 	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
 
-
-
 	if (kernel_mode != 0 ){
 		
 	}else{
@@ -62,6 +60,9 @@ void syshandler(){
 	        default:
 	               //something
 	   	 	}
+
+		}else{
+			passUpOrDie();
 		}	
 	}
 	
