@@ -89,7 +89,16 @@ void syshandler(){
 	//check for break
 	}else if(causeExcCode == 9){
 		// a0 contains LDST, FORK, PANIC, or HALT[1. . .4]
-		
+		if(notIssuedSys5){
+			//Kill it
+			terminateProcess(currentProc);
+		}else{
+			//The processor state is moved from the SYS/Bp Old Area into the processor
+			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			moveState(sys_old, &(currentProc->pcb_vect[3]->oldState));
+			moveState(&(currentProc->pcb_vect[3]->newState, &(currentProc->p_state));
+
+		}
 	//Not sys or break panic;
 	}else{
 		PANIC();
@@ -100,24 +109,33 @@ void syshandler(){
 
 void pgmTrapHandler(){
 
-	case EXCEPTION:
-	if(p_state.reg_a1 != 0){
-		terminateProcess; //note: the same thing as sys2 happens; not sure if this will work, or if we need to write a different kind of killEmAll
-	}
-	else{
-		 pgmTrapOldAreaAddress = pgmOldArea;
-		 currentProc = pgmTrapNewAreaAddress;//If the offending process has issued a SYS5 for PgmTrap exceptions, the
-	//handling of the PgmTrap is “passed up.” The processor state is moved
-	//from the PgmTrap Old Area into the processor state area whose address
-	//was recorded in the ProcBlk as the PgmTrap Old Area Address. Finally, the
-	//processor state whose address was recorded in the ProcBlk as the PgmTrap
-	//New Area Address is made the current processor state.
+	if(notIssuedSys5){
+			//Kill it
+			terminateProcess(currentProc);
+		}else{
+			//The processor state is moved from the SYS/Bp Old Area into the processor
+			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			moveState(pgm_old, &(currentProc->pcb_vect[2]->oldState));
+			moveState(&(currentProc->pcb_vect[2]->newState, &(currentProc->p_state))
+
+		}
 	}
 
 }
 
 
 void TLBHandler(){
+
+	if(notIssuedSys5){
+			//Kill it
+			terminateProcess(currentProc);
+		}else{
+			//The processor state is moved from the SYS/Bp Old Area into the processor
+			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			moveState(tlb_old, &(currentProc->pcb_vect[0]->oldState));
+			moveState(&(currentProc->pcb_vect[0]->newState, &(currentProc->p_state))
+
+		}
 
 }
 
@@ -147,28 +165,25 @@ void createProcess(state_t *state){
 
 //Syscall 2. killemAll should probably either go in terminateJob and is called here,
 //or goes here and is called in terminateJob().
-void terminateProcess(){
+void terminateProcess(pct *p){
 	 while(!emptychild(p)){
 	 		terminateProcess(removeChild(p));
-	 	}
-	 	if( p == currentProc)
-	 		outChild(p);
-	 		currentProc = NULL; // can be done out side of kill em all. 
-	 	if (p->p_semAdd == null){
-	 		// on the ready que
-	 		outProcQ();
-	 	}
-	 	else
-	 		// on a sema4
-	 		if (outBlocked(p) != I/O){
-	 		Verhogen(p);
-	 		}
-	 		else{
-	 		softBlkCnt--;
-	 		}
-    //while(!emptychild(currentProc)){
-        //terminateProcess(removeChild(currentProc));     
-    //}currentProc = NULL;
+	 }
+ 	if( p == currentProc)
+ 		outChild(p);
+ 		currentProc = NULL; // can be done out side of kill em all. 
+ 	if (p->p_semAdd == null){
+ 		// on the ready que
+ 		outProcQ(&(readyQue), p);
+ 	}
+ 	else{
+ 		// on a sema4
+ 		if (outBlocked(p) != I/O){//QUESTION
+ 			Verhogen(p);
+ 		}else{
+ 			softBlkCnt--;
+ 		}	
+ 	}
 
 }
 
@@ -218,6 +233,8 @@ void waitForClock(){
 
 void waitForIO(){
 
+	
+
 }
 
 void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
@@ -240,8 +257,4 @@ void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 
 }
 
-
-void passUpOrDie(){
-
-}
 
