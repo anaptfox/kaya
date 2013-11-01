@@ -23,13 +23,21 @@ void scheduler(){
 			// if process count > 0 and the soft-block count > 0 enter a wait state. 
 			if(processCnt > 0 && softBlkCnt > 0){
 				WAIT();
+				//handle interrupt
 			}
 		}
 
 		// DO TIMEING STUFF
 		LDIT(5000);
+		startTtime(startTOD);
 		LDST(&currentProc->p_s); 
 	}
 
+	//what if its not null?
+
 }
 
+
+void continueWithCurrent(){
+	//continue with current job
+}

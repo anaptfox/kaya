@@ -20,16 +20,8 @@ int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
 cpu_t startTOD;
 
-
+//Copy states
 void moveState(state_t *before, state_t* after){
-	typedef struct state_t {
-		unsigned int	s_aside;
-		unsigned int	s_cause;
-		unsigned int	s_status;
-		unsigned int 	s_pc;
-		int	 	s_reg[STATEREGNUM];
-
-	} state_t, *state_PTR;
 	after->s_aside = before->s_aside;
 	after->s_cause = before->s_cause;
 	after->s_status = before->s_status;
@@ -46,31 +38,37 @@ void test(void){
 
 int main(void)
 {
-	state_t *area; 
 	//inilize the four new area
+
+		//set up devregarea
+		devregarea_t *devregarea;
+
+		devregarea = (devregarea_t *) 0x10000000;
+
 		//SYSCALLS
-		area = SYS_NEW;
+		state_t *area = (state_t *)SYS_NEW;
 		STST(area);
 
 		area->s_pc = p->s_t9 = (memaddr) sysHandler;
-		area->s_sp = RAMBASEADDR - RAMTOP;
+		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->status = ALLOFF;
 
 		//PRogramTrp
+		area = (state_t *)PGMTRAP_NEW;
 		moveState(area, (state_t *) PGMTRAP_NEW)
 		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		//TLB Management
-
+		area = (state_t *)TLB_NEW;
 		moveState(area, (state_t *) TLB_NEW)
-		area->s_pc = p->s_t9= (memaddr) pgmTrapHandler;
+		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		//Interrupt
-
+		area = (state_t *)INT_NEW;
 		moveState(area, (state_t *) INT_NEW)
 		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
@@ -90,14 +88,14 @@ int main(void)
     }
 
 
-	//initilize the pcbs
+	//Alloc the first pcb
 	pct_t *p = allocPcb();
 	if(p == NULL){
 		PANIC();
 	}
 	p->s_pc = p->s_t9 = (memaddr) test;
 	p->s_sp = RAMTOP - FRAMESIZE;
-	p->status = ALLOFF; //interrupts enabled, virtual memory off, processor local timer enables, kernel mode on
+	p->status = ALLOFF; //TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on
 	mkEmptyProcQ(&readyQue);
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;

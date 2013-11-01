@@ -6,7 +6,9 @@
 
 void inthandler(){
 	//Interrupt Handler
+
 	//In order to occur two things have to happen
+		
 		// Ints enable bit needs to be on
 			// two tiered bit, IE bit and Int mask
 				// Int mask is a 8 bit field associated with a line
