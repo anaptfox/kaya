@@ -19,7 +19,7 @@ void syshandler(){
 
 	currentProc->s_pc = currentProc->s_pc + 4;
 
-	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
+	kernel_mode = (sys_old->s_status) & //figure out if bit 3 is on;
 
 	causeExcCode = sys_old->s_cause ;
 
