@@ -227,7 +227,7 @@ void getCpuTime(){
 
 // This instruction performs a P operation on the nucleus maintained pseudo-clock
 // timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
-// by the nucleus
+// by the nucleus (use local timer)
 void waitForClock(){
 
 }
