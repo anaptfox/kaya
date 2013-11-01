@@ -37,6 +37,7 @@ void syshandler(){
 
 				// and calling Kaya’s PgmTrap exception handler.
 				pgmTrapHandler();
+				
 			}else{
 				//QUESTION: What to do here?
 			}

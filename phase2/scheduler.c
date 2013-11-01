@@ -29,7 +29,7 @@ void scheduler(){
 
 		// DO TIMEING STUFF
 		LDIT(5000);
-		startTtime(startTOD);
+		STCK(startTOD);
 		LDST(&currentProc->p_s); 
 	}
 
