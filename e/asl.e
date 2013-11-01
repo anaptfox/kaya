@@ -9,7 +9,9 @@
 *  Written by Mikeyg
 */
 
+#include "../h/const.h"
 #include "../h/types.h"
+#include "../e/pcb.e"
 
 extern int insertBlocked (int *semAdd, pcb_t *p);
 extern pcb_t *removeBlocked (int *semAdd);
