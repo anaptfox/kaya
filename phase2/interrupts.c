@@ -5,6 +5,7 @@
 #include "../e/scheduler.e"
 
 void inthandler(){
+	state_t p = p->p_state->status;
 	//Interrupt Handler
 
 	//In order to occur two things have to happen
@@ -17,16 +18,23 @@ void inthandler(){
 	// which device signaled the inter. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 	//determine lowest number
 		// Pending int line
-				if(IEc && IM){ // 0x0000ff01
+				if(p & IEc & IM){ // 0x0000ff01
 				// go to the cause register
 				// while
 				// look for the next bit that is on for the lowest bit
 					
 			// find out which device number it is given the line number
 			// in device register area, interrupt device bitmap
-			// @ 0x1000.003C pg. 36 of yellow book
-			// 0x1000.0040
-			// 0x1000.0044
+			if(devRegArea == 0x1000.003C) {//line 3 word 0
+				}
+			if(devRegArea == 0x1000.0040) { //line 4 word 1
+				}
+			if(devRegArea == 0x1000.0044) { //line 5 word 2
+				}
+			if(devRegArea == 0x1000.0048) { //line 6 word 3
+				}
+			if(devRegArea == 0x1000.004C) { // line 7 word 4
+				}
 			// each one is a word 
 			// go to the appropriate word for that line , then use that word to fine the lowest orderd bit that's on to find the disk
 
