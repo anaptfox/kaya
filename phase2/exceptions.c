@@ -27,7 +27,7 @@ void syshandler(){
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
-			sys_old->s_cause = RI; /*QUESTION  what is RI?*/
+			sys_old->s_cause = 10; /*QUESTION  what is RI?*/
 
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			
@@ -69,7 +69,7 @@ void syshandler(){
 		        break;
 		        
 		        case WAITFORCLOCK:
-		            waitforclock();
+		            waitForClock();
 		        break;
 		        
 		        case WAITFORIODEVICE:
@@ -81,7 +81,7 @@ void syshandler(){
 		    }
 		/* not sys 1-8 */
 		}else{
-			if(currentProc->p_states[2]->newState == NULL){
+			if(currentProc->p_states[2].newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
@@ -90,8 +90,8 @@ void syshandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in the 
 			ProcBlk as the SYS/Bp Old Area Address */
-			moveState(pgm_old, currentProc->p_states[2]->oldState);
-			moveState(currentProc->p_states[2]->newState, &(currentProc->p_s));
+			moveState(pgm_old, currentProc->p_states[2].oldState);
+			moveState(currentProc->p_states[2].newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
 
 		}
@@ -105,7 +105,7 @@ void syshandler(){
  pgmTrapHandler deals with the exception */
 void pgmTrapHandler(){
 
-	if(currentProc->p_states[1]->newState == NULL){
+	if(currentProc->p_states[1].newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
@@ -114,8 +114,8 @@ void pgmTrapHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
-			moveState(pgm_old, currentProc->p_states[1]->oldState);
-			moveState(currentProc->p_states[1]->newState, &(currentProc->p_s));
+			moveState(pgm_old, currentProc->p_states[1].oldState);
+			moveState(currentProc->p_states[1].newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
 
 		}
@@ -127,7 +127,7 @@ void pgmTrapHandler(){
 TLBHandler deals with the exception */
 void TLBHandler(){
 
-	if(currentProc->p_states[0]->newState == NULL){
+	if(currentProc->p_states[0].newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL:
@@ -135,8 +135,8 @@ void TLBHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in 
 			the ProcBlk as the SYS/Bp Old Area Address */
-			moveState(tlb_old, &(currentProc->p_states[0]->oldState));
-			moveState(&(currentProc->p_states[0]->newState, &(currentProc->p_s))
+			moveState(tlb_old, &(currentProc->p_states[0].oldState));
+			moveState(&(currentProc->p_states[0].newState, &(currentProc->p_s))
 
 		}
 
@@ -293,8 +293,8 @@ void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
 	p_states = currentProc->p_s[arg1];
 
-	p_states->oldState = arg2;
-	p_states->newState = arg3;
+	p_states.oldState = arg2;
+	p_states.newState = arg3;
 
 
 	/*the nucleus stores the processor state at the time of the exception in the area
