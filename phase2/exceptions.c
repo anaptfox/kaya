@@ -15,93 +15,95 @@ void syshandler(){
 
 	int kernel_mode;
 
-	moveState(sys_old, &(currentProc->p_state));
+	moveState(sys_old, &(currentProc->p_s));
 
 	currentProc->s_pc = currentProc->s_pc + 4;
 	kernal_mode = (sys_old->s_status) & KUp;
 
 
-	causeExcCode = sys_old->s_cause ; //QUESTION
+	//if user mode
+	if (kernel_mode != 0 ){
+		//check for sys 1-8
+		if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
 
-	//Check for sys 
-	if(causeExcCode == 8){
-		//if user mode
-		if (kernel_mode != 0 ){
-			//check for sys 1-8
-			if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
+			//setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction)
+			sys_old->s_cause = RI; //QUESTION  what is RI?
 
-				//setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction)
-				sys_old->s_cause = RI; //QUESTION  what is RI?
+			//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
+			moveState(sys_old, pgm_old);
 
-				//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
-				moveState(sys_old, pgm_old);
+			// and calling Kaya’s PgmTrap exception handler.
+			pgmTrapHandler();
 
-				// and calling Kaya’s PgmTrap exception handler.
-				pgmTrapHandler();
-
-			}
-		//if kernel mode
-		}else{
-			//check for sys 1-8
-			if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
-	
-				switch(sys_old->reg_a0){
-
-			        case CREATEPROCESS:
-			            createProcess((state_t *) arg1);
-			        break;
-			                                
-			        case TERMINATEPROCESS:        
-			            terminateProcess();
-			        break;
-			        
-			        case VERHOGEN:
-			            Verhogen((int *) arg1);
-			        break;
-			        
-			        case PASSEREN:
-			            Passeren((int *)  arg1);
-			        break;
-			        
-			        case EXCEPTION:
-			        	handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3);
-			        break;
-			        
-			        case GETCPUTIME:
-			            getCpuTime();
-			        break;
-			        
-			        case WAITFORCLOCK:
-			            waitforclock();
-			        break;
-			        
-			        case WAITFORIODEVICE:
-			            waitForIO((int) arg1, (int) arg2, (int) arg3);
-			        break;
-			        
-			        default:
-			            PANIC();
-			    }
-			// not sys 1-8
-			}else{
-				passUpOrDie();
-			}	
 		}
-	//check for break
-	}else if(causeExcCode == 9){
-		PANIC();
-	//Not sys or break panic;
+	//if kernel mode
 	}else{
-		PANIC();
+		//check for sys 1-8
+		if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
+
+			switch(sys_old->reg_a0){
+
+		        case CREATEPROCESS:
+		            createProcess((state_t *) arg1);
+		        break;
+		                                
+		        case TERMINATEPROCESS:        
+		            terminateProcess();
+		        break;
+		        
+		        case VERHOGEN:
+		            Verhogen((int *) arg1);
+		        break;
+		        
+		        case PASSEREN:
+		            Passeren((int *)  arg1);
+		        break;
+		        
+		        case EXCEPTION:
+		        	handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3);
+		        break;
+		        
+		        case GETCPUTIME:
+		            getCpuTime();
+		        break;
+		        
+		        case WAITFORCLOCK:
+		            waitforclock();
+		        break;
+		        
+		        case WAITFORIODEVICE:
+		            waitForIO((int) arg1, (int) arg2, (int) arg3);
+		        break;
+		        
+		        default:
+		            PANIC();
+		    }
+		// not sys 1-8
+		}else{
+			if(currentProc->pcb_vect[2]->newState == NULL){
+			//Kill it
+			terminateProcess(currentProc);
+			currentProc = NULL;
+			scheduler();
+			}else{
+			//The processor state is moved from the SYS/Bp Old Area into the processor
+			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			moveState(pgm_old, currentProc->pcb_vect[2]->oldState);
+			moveState(currentProc->pcb_vect[2]->newState, &(currentProc->p_s));
+			continueWithCurrent(currentProc->p_s);
+
+		}
 	}
-                  
+		}	
+	
+                 
 }
 
 //If sys5 returns a 1 in the a0, that is, we get a PgmTrap exception,
 //pgmTrapHandler deals with the exception
 void pgmTrapHandler(){
 
-	if(notIssuedSys5){
+	if(currentProc->pcb_vect[1]->newState == NULL){
 			//Kill it
 			terminateProcess(currentProc);
 			currentProc = NULL;
@@ -109,9 +111,9 @@ void pgmTrapHandler(){
 		}else{
 			//The processor state is moved from the SYS/Bp Old Area into the processor
 			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
-			moveState(pgm_old, currentProc->pcb_vect[2]->oldState);
-			moveState(currentProc->pcb_vect[2]->newState, &(currentProc->p_state));
-			continueWithCurrent(currentProc->p_state);
+			moveState(pgm_old, currentProc->pcb_vect[1]->oldState);
+			moveState(currentProc->pcb_vect[1]->newState, &(currentProc->p_s));
+			continueWithCurrent(currentProc->p_s);
 
 		}
 	}
@@ -122,7 +124,7 @@ void pgmTrapHandler(){
 //TLBHandler deals with the exception
 void TLBHandler(){
 
-	if(notIssuedSys5){
+	if(currentProc->pcb_vect[0]->newState == NULL){
 			//Kill it
 			terminateProcess(currentProc);
 			currentProc = NULL:
@@ -130,7 +132,7 @@ void TLBHandler(){
 			//The processor state is moved from the SYS/Bp Old Area into the processor
 			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
 			moveState(tlb_old, &(currentProc->pcb_vect[0]->oldState));
-			moveState(&(currentProc->pcb_vect[0]->newState, &(currentProc->p_state))
+			moveState(&(currentProc->pcb_vect[0]->newState, &(currentProc->p_s))
 
 		}
 
@@ -144,9 +146,9 @@ void createProcess(state_t *state){
 
 	if((newPcb = allocPcb()) == NULL){
 		
-		currentProc->p_state->s_v0 = -1;
+		currentProc->p_s->s_v0 = -1;
 
-		continueWithCurrent(currentProc->p_state);
+		continueWithCurrent(currentProc->p_s);
 		
 	}else{
 		
@@ -160,9 +162,9 @@ void createProcess(state_t *state){
 		 	
 		insertProcQ(&readyQue, newPcb);// put the new pcb  on the readyQue
 		
-		currentProc->p_state->s_v0 = 0;
+		currentProc->p_s->s_v0 = 0;
 		
-		continueWithCurrent(currentProc->p_state);
+		continueWithCurrent(currentProc->p_s);
 	}
 	
 }
@@ -183,10 +185,10 @@ void terminateProcess(pct *p){
  	}
  	else{
  		// on a sema4
- 		if (outBlocked(p) != I/O){//QUESTION
+ 		p = outBlocked(p);
+ 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){//QUESTION
 
- 			//ASSDRESS GREATER THAN FIRST AND LEST THAN L
- 			Verhogen(p);
+ 			*(p->p_semAdd)++;
 
  		}else{
  			softBlkCnt--;
@@ -210,7 +212,7 @@ void Verhogen(int *semaddr){
 		insertProcQ (&readyQueue, p);
 	}
 
-	continueWithCurrent(currentProc->p_state);
+	continueWithCurrent(currentProc->p_s);
 	
 }
 
@@ -232,13 +234,13 @@ void Passeren(int *semaddr){
 		scheduler();
 	}
 
-	continueWithCurrent(currentProc->p_state);
+	continueWithCurrent(currentProc->p_s);
 
 }
 
 void getCpuTime(){
-	currentProc->p_state.reg_v0 = currentProc->p_time;
-	continueWithCurrent(currentProc->p_state);
+	currentProc->p_s.reg_v0 = currentProc->p_time;
+	continueWithCurrent(currentProc->p_s);
 }
 
 // This instruction performs a P operation on the nucleus maintained pseudo-clock
@@ -246,19 +248,17 @@ void getCpuTime(){
 // by the nucleus (use local timer)
 void waitForClock(){
 	
-	pcb_t *p;
+	*(pseudo_clock->s_semadd)--;
 
-	*(semaddr)--;
-
-	if(*(semaddr) <= -1){
-		insertBlocked (semaddr , currentProc);
+	if(*(pseudo_clock->s_semadd) <= -1){
+		insertBlocked (pseudo_clock->s_semadd , currentProc);
 		//DO TIMING STUFF
 		//sstore clock - do substracti - add to feild of pcb
 		currentProc = NULL;
 		scheduler();
 	}
-
-	continueWithCurrent(currentProc->p_state);
+	softBlkCnt++;
+	continueWithCurrent(currentProc->p_s);
 
 }
 
@@ -268,9 +268,18 @@ void waitForIO((int) arg1, (int) arg2, (int) arg3){
 	//arg2 = device number
 	//arg3 = r/w
 
-	P(deviceSemas[arg2][arg1]);
+	*(deviceSemas[arg2][arg1]->s_semadd)--;
 
-	//return word of this device?
+	if(*(deviceSemas[arg2][arg1]->s_semadd) <= -1){
+		insertBlocked (deviceSemas[arg2][arg1]->s_semadd , currentProc);
+		//DO TIMING STUFF
+		//sstore clock - do substracti - add to feild of pcb
+		currentProc = NULL;
+		scheduler();
+	}
+	softBlkCnt++;
+	continueWithCurrent(currentProc->p_s);
+
 
 }
 
@@ -279,18 +288,19 @@ void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 
 
 	//save the contents of a2 and a3 (in the invoking process’es ProcBlk)
-	pcb_vect = currentProc->p_states[arg1];
+	pcb_vect = currentProc->p_s[arg1];
 
-	moveState(arg2, &(pcb_vect->oldState));
-	moveState(arg3, &(pcb_vect->newState));
+	pcb_vect->oldState = arg2;
+	pcb_vect->newState = arg3;
+
 
 	//the nucleus stores the processor state at the time of the exception in the area
 	//pointed to by the address in a2
-	moveState(&(currentProc->p_state), arg2);
+	arg2 = &(currentProc->p_s);
 
 	//and loads the new processor state from the area
 	//pointed to by the address given in a3
-	LDST(arg3);
+	LDST(&(arg3));
 
 
 }

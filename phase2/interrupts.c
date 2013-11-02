@@ -90,7 +90,6 @@ void inthandler(){
 	
 	insertProcQ (&readyQueue, p);
 	
-
 	currentProc = NULL;
 
 	scheduler();

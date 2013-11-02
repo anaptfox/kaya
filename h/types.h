@@ -87,8 +87,8 @@ typedef struct state_t {
 #define s_LO	s_reg[30]
 
 typedef struct pcb_vect {
-	int oldState;
-	int newState;
+	memaddr oldState;
+	memaddr newState;
 } pcb_vect;
 
 /*pcb descriptor type*/
