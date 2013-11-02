@@ -100,7 +100,7 @@ int main(void)
 	}
 	p->s_pc = p->s_t9 = (memaddr) test;
 	p->s_sp = RAMTOP - FRAMESIZE;
-	p->status = 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
+	p->status = p->status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
 	mkEmptyProcQ(&readyQue);
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
