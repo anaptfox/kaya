@@ -19,6 +19,8 @@ void scheduler(){
 		// if process count > 0 and the soft-block count > 0 enter a wait state. 
 			//enable interrupts
 
+			state_t *int_old = (state_t *) INT_OLD;
+			int_old->s_status = ; 
 			//handle interrupt
 			WAIT();
 		}
