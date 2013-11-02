@@ -8,29 +8,29 @@
 
 /* Global var */
 
-pct_t* readyQue;
+pct_t *readyQue;
 
-pcb_t* currentProc;
+pcb_t *currentProc;
 
 int processCnt;
 
 int softBlkCnt;
 
-semd_t deviceSemas[DEVICE_CNT][DEVICE_LINE];
+semd_t *deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
-semd_t pseudo_clock;
+semd_t *pseudo_clock;
 
 cpu_t startTOD;
 
 
 /* Copy before into after */
-void moveState(state_t *before, state_t* after){
+void moveState(state_t *before, state_t *after){
 	after->s_aside = before->s_aside;
 	after->s_cause = before->s_cause;
 	after->s_status = before->s_status;
 	after->s_pc = before->s_pc;
 	int i = 0;
-	while(i < length.s_reg) {
+	while(i < STATEREGNUM + 1) {
 		after->s_reg[i] = before->s_reg[i];
 		i++;
 	}
@@ -50,31 +50,32 @@ int main(void)
 		devregarea = (devregarea_t *) 0x10000000;
 
 		/* SYSCALLS*/
-		state_t *area = (state_t *)SYS_NEW;
+		state_t *area;
+		area = (state_t *)SYS_NEW;
 		STST(area);
 
-		area->s_pc = p->s_t9 = (memaddr) sysHandler;
+		area->s_pc = area->s_t9 = (memaddr) sysHandler;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->status = ALLOFF;
 
 		/* ProgramTrap*/
 		area = (state_t *)PGMTRAP_NEW;
 		moveState(area, (state_t *) PGMTRAP_NEW)
-		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
+		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		/* TLB Management*/
 		area = (state_t *)TLB_NEW;
 		moveState(area, (state_t *) TLB_NEW)
-		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
+		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
 		moveState(area, (state_t *) INT_NEW)
-		area->s_pc = p->s_t9 = (memaddr) pgmTrapHandler;
+		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->status = ALLOFF;
 	
