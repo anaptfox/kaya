@@ -2,6 +2,7 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 #include "../e/exceptions.e"
+#include "../e/interrupts.e"
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
@@ -68,14 +69,14 @@ int main(void)
 		/* TLB Management*/
 		area = (state_t *)TLB_NEW;
 		moveState(area, (state_t *) TLB_NEW);
-		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
+		area->s_pc = area->s_t9 = (memaddr) TLBHandler ;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
 		moveState(area, (state_t *) INT_NEW);
-		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
+		area->s_pc = area->s_t9 = (memaddr) intHandler;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 	
