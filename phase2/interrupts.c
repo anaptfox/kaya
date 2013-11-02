@@ -89,7 +89,7 @@ void inthandler(){
 		/* ack the int */
 		device-> d_command = 1;
 				
-		pcb_t *p = removeBlocked(deviceSemas[device_num][line]->s_semadd);
+		pcb_t *p = removeBlocked(deviceSemas[device_num][line]->s_semAdd);
 
 		p->p_s.s_v0 = device_status;
 		
