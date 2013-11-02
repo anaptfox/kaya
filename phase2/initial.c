@@ -22,6 +22,7 @@ semd_t *pseudo_clock;
 
 cpu_t startTOD;
 
+int i;
 
 /* Copy before into after */
 void moveState(state_t *before, state_t *after){
@@ -29,7 +30,6 @@ void moveState(state_t *before, state_t *after){
 	after->s_cause = before->s_cause;
 	after->s_status = before->s_status;
 	after->s_pc = before->s_pc;
-	int i;
 	i = 0;
 	while(i < STATEREGNUM + 1) {
 		after->s_reg[i] = before->s_reg[i];
@@ -63,21 +63,21 @@ int main(void)
 		area = (state_t *)PGMTRAP_NEW;
 		moveState(area, (state_t *) PGMTRAP_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
-		area->s_sp = RAMBASEADDR - RAMTOP;
+		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 
 		/* TLB Management*/
 		area = (state_t *)TLB_NEW;
 		moveState(area, (state_t *) TLB_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
-		area->s_sp = RAMBASEADDR - RAMTOP;
+		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
 		moveState(area, (state_t *) INT_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
-		area->s_sp = RAMBASEADDR - RAMTOP;
+		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 	
 	
@@ -86,9 +86,9 @@ int main(void)
 	initASLs();
 
 	/* iniltialize semaphores to 0*/
-
-	for(int i=0; i<DEVICE_CNT; i++){
-        for(int j=0; j<DEVICE_LINE; j++){
+	int j;
+	for(i=0; i<DEVICE_CNT; i++){
+        for(j=0; j<DEVICE_LINE; j++){
                   deviceSemas[i][j] = 0;
         }
     }
