@@ -4,8 +4,9 @@
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
-#include "../e/interupts.e"
+#include "../e/interrupts.e"
 #include "../e/scheduler.e"
+#include "/usr/local/include/umps2/umps/libumps.e"
 
 extern void syshandler();
 extern void pgmTrapHandler();
