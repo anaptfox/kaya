@@ -213,7 +213,7 @@ void Verhogen(int *semaddr){
 
 	if(*(semaddr) <= 0){
 		p = removeBlocked(semaddr);
-		insertProcQ (&readyQueue, p);
+		insertProcQ (&readyQue, p);
 	}
 
 	continueWithCurrent(currentProc->p_s);
@@ -242,7 +242,7 @@ void Passeren(int *semaddr){
 }
 
 void getCpuTime(){
-	currentProc->p_s.reg_v0 = currentProc->p_time;
+	currentProc->p_s._v0 = currentProc->p_time;
 	continueWithCurrent(currentProc->p_s);
 }
 
@@ -251,10 +251,10 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 void waitForClock(){
 	
-	*(pseudo_clock->s_semadd)--;
+	*(pseudo_clock->s_semAdd)--;
 
-	if(*(pseudo_clock->s_semadd) <= -1){
-		insertBlocked (pseudo_clock->s_semadd , currentProc);
+	if(*(pseudo_clock->s_semAdd) <= -1){
+		insertBlocked (pseudo_clock->s_semAdd , currentProc);
 		/*DO TIMING STUFF
 		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
@@ -271,10 +271,10 @@ void waitForIO((int) arg1, (int) arg2, (int) arg3){
 	arg2 = device number
 	arg3 = r/w
 	*/
-	*(deviceSemas[arg2][arg1]->s_semadd)--;
+	*(deviceSemas[arg2][arg1]->s_semAdd)--;
 
-	if(*(deviceSemas[arg2][arg1]->s_semadd) <= -1){
-		insertBlocked (deviceSemas[arg2][arg1]->s_semadd , currentProc);
+	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
+		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
 		/*DO TIMING STUFF
 		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
