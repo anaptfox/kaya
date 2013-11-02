@@ -99,9 +99,9 @@ int main(void)
 	if(p == NULL){
 		PANIC();
 	}
-	p->p_s->s_pc = p->p_s->s_t9 = (memaddr) test;
-	p->p_s->s_sp = devregarea->ramsize - PAGESIZE;
-	p->p_s->s_status = p->p_s->s_status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
+	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
+	p->p_s.s_sp = devregarea->ramsize - PAGESIZE;
+	p->p_s.s_status = p->p_s.s_status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
 	mkEmptyProcQ(&readyQue);
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
