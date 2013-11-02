@@ -10,6 +10,21 @@
 #include "../e/interrupts.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
+
+extern pcb_t *readyQue;
+
+extern pcb_t *currentProc;
+
+extern int processCnt;
+
+extern int softBlkCnt;
+
+extern semd_t *deviceSemas[DEVICE_CNT][DEVICE_LINE];
+
+extern semd_t *pseudo_clock;
+ 
+extern cpu_t startTOD;
+
 extern void moveState(state_t *before, state_t* after);
 extern void test(void);
 extern int main(void);

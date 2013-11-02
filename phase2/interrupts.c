@@ -1,9 +1,9 @@
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
+#include "../e/initial.e"
 #include "../e/exceptions.e"
 #include "../e/scheduler.e"
-#include "../e/initial.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 #define deviceZero 0x00000001
