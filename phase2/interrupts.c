@@ -16,11 +16,14 @@
 
 state_t *int_old = (state_t *) INT_OLD;
 
+int i;
+
 /*p is the interrupting Bit*/
 
 int deviceIterator(memaddr p){
 	memaddr device = deviceZero;
-	int temp = p & device;
+	int temp;
+	temp = p & device;
 	i = 8;
 	while(temp == 0 && i < 15){
 		temp = p & (device << 1);
@@ -37,14 +40,14 @@ void inthandler(){
 	
 	Ints enable bit needs to be on*/
 
-	int ints_enabled = int_old->s_status & IEc & IM;
+	int ints_enabled = (int_old->s_status & IEc & IM);
 
 	/*he bit for the corresponding line to be on
 	which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 	*/
 	int cause = int_old->s_cause; 
 
-	//*Pending int line*/
+	/*Pending int line*/
 	int line = deviceIterator(cause);
 
 						
