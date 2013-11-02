@@ -21,24 +21,25 @@ void syshandler(){
 	kernal_mode = (sys_old->s_status) & KUp;
 
 
-	//if user mode
+	/*if user mode */
 	if (kernel_mode != 0 ){
-		//check for sys 1-8
+		/*check for sys 1-8 */
 		if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
 
-			//setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction)
-			sys_old->s_cause = RI; //QUESTION  what is RI?
+			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
+			sys_old->s_cause = RI; /*QUESTION  what is RI?*/
 
-			//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
+			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
+			
 			moveState(sys_old, pgm_old);
 
-			// and calling Kaya’s PgmTrap exception handler.
+			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
 		}
-	//if kernel mode
+	/*if kernel mode */
 	}else{
-		//check for sys 1-8
+		/*check for sys 1-8 */
 		if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
 
 			switch(sys_old->reg_a0){
@@ -78,16 +79,17 @@ void syshandler(){
 		        default:
 		            PANIC();
 		    }
-		// not sys 1-8
+		/* not sys 1-8 */
 		}else{
 			if(currentProc->pcb_vect[2]->newState == NULL){
-			//Kill it
+			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
 			scheduler();
 			}else{
-			//The processor state is moved from the SYS/Bp Old Area into the processor
-			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			/*The processor state is moved from the SYS/Bp Old Area into the processor
+			state area whose address was recorded in the 
+			ProcBlk as the SYS/Bp Old Area Address */
 			moveState(pgm_old, currentProc->pcb_vect[2]->oldState);
 			moveState(currentProc->pcb_vect[2]->newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
@@ -99,18 +101,19 @@ void syshandler(){
                  
 }
 
-//If sys5 returns a 1 in the a0, that is, we get a PgmTrap exception,
-//pgmTrapHandler deals with the exception
+/*If sys5 returns a 1 in the a0, that is, we get a PgmTrap exception,
+ pgmTrapHandler deals with the exception */
 void pgmTrapHandler(){
 
 	if(currentProc->pcb_vect[1]->newState == NULL){
-			//Kill it
+			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
 			scheduler();
 		}else{
-			//The processor state is moved from the SYS/Bp Old Area into the processor
-			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			/*The processor state is moved from the SYS/Bp Old Area into the processor
+			 state area whose address was recorded in the ProcBlk 
+			as the SYS/Bp Old Area Address */
 			moveState(pgm_old, currentProc->pcb_vect[1]->oldState);
 			moveState(currentProc->pcb_vect[1]->newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
@@ -120,17 +123,18 @@ void pgmTrapHandler(){
 
 }
 
-//If sys5 returns a 0 in the a0, that is, we get a TLB exception,
-//TLBHandler deals with the exception
+/* If sys5 returns a 0 in the a0, that is, we get a TLB exception,
+TLBHandler deals with the exception */
 void TLBHandler(){
 
 	if(currentProc->pcb_vect[0]->newState == NULL){
-			//Kill it
+			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL:
 		}else{
-			//The processor state is moved from the SYS/Bp Old Area into the processor
-			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
+			/*The processor state is moved from the SYS/Bp Old Area into the processor
+			state area whose address was recorded in 
+			the ProcBlk as the SYS/Bp Old Area Address */
 			moveState(tlb_old, &(currentProc->pcb_vect[0]->oldState));
 			moveState(&(currentProc->pcb_vect[0]->newState, &(currentProc->p_s))
 
@@ -138,9 +142,9 @@ void TLBHandler(){
 
 }
 
-//When requested, this service causes a new process, said to be a progeny of the
-//caller, to be created. a1 should contain the physical address of a processor state
-//area at the time this instruction is executed.
+/*When requested, this service causes a new process, said to be a progeny of the
+caller, to be created. a1 should contain the physical address of a processor state
+area at the time this instruction is executed. */
 void createProcess(state_t *state){
 	pcb_t *newPcb;
 
@@ -152,15 +156,15 @@ void createProcess(state_t *state){
 		
 	}else{
 		
-		processCnt++; // get a pcb, processcnt++ alloc
+		processCnt++; /* get a pcb, processcnt++ alloc */
 		
-		newPcb->p_s = state->s_a1;// Copy the state pointed by a1 into the p_s of the new pct
-		//CALL MOVE STAE INSTEAT OF COPY
+		newPcb->p_s = state->s_a1;/*Copy the state pointed by a1 into the p_s of the new pct
+		CALL MOVE STAE INSTEAT OF COPY */
 		 	
-		currentProc->currentProc_child = newPcb; // make the newpcb a child of current
-		//INSERT CHILD
+		currentProc->currentProc_child = newPcb; /* make the newpcb a child of current
+		INSERT CHILD */
 		 	
-		insertProcQ(&readyQue, newPcb);// put the new pcb  on the readyQue
+		insertProcQ(&readyQue, newPcb);/* put the new pcb  on the readyQue */
 		
 		currentProc->p_s->s_v0 = 0;
 		
@@ -169,9 +173,9 @@ void createProcess(state_t *state){
 	
 }
 
-//This services causes the executing process to cease to exist. In addition, recursively,
-//all progeny of this process are terminated as well. Execution of this instruction
-//does not complete until all progeny are terminated.
+/*This services causes the executing process to cease to exist. In addition, recursively,
+all progeny of this process are terminated as well. Execution of this instruction
+does not complete until all progeny are terminated. */
 void terminateProcess(pct *p){
 	 while(!emptychild(p)){
 	 		terminateProcess(removeChild(p));
@@ -180,11 +184,11 @@ void terminateProcess(pct *p){
  		outChild(p);
  		currentProc = NULL;  
  	if (p->p_semAdd == null){
- 		// on the ready que
+ 		/* on the ready que */
  		outProcQ(&(readyQue), p);
  	}
  	else{
- 		// on a sema4
+ 		/* on a sema4 */
  		p = outBlocked(p);
  		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){//QUESTION
 
@@ -199,8 +203,8 @@ void terminateProcess(pct *p){
 
 }
 
-//When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
-//perform a V operation on a semaphore. 
+/*When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
+perform a V operation on a semaphore.  */
 void Verhogen(int *semaddr){
 
 	pcb_t *p;
@@ -216,9 +220,8 @@ void Verhogen(int *semaddr){
 	
 }
 
-//When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
-
-//perform a P operation on a semaphore. (What is a P operation?)
+/*When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
+perform a P operation on a semaphore. */
 void Passeren(int *semaddr){
 
 	
@@ -228,8 +231,8 @@ void Passeren(int *semaddr){
 
 	if(*(semaddr) <= -1){
 		insertBlocked (semaddr , currentProc);
-		//DO TIMING STUFF
-		//sstore clock - do substracti - add to feild of pcb
+		/*DO TIMING STUFF
+		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
 		scheduler();
 	}
@@ -243,17 +246,17 @@ void getCpuTime(){
 	continueWithCurrent(currentProc->p_s);
 }
 
-// This instruction performs a P operation on the nucleus maintained pseudo-clock
-// timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
-// by the nucleus (use local timer)
+/*This instruction performs a P operation on the nucleus maintained pseudo-clock
+timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
+by the nucleus (use local timer) */
 void waitForClock(){
 	
 	*(pseudo_clock->s_semadd)--;
 
 	if(*(pseudo_clock->s_semadd) <= -1){
 		insertBlocked (pseudo_clock->s_semadd , currentProc);
-		//DO TIMING STUFF
-		//sstore clock - do substracti - add to feild of pcb
+		/*DO TIMING STUFF
+		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
 		scheduler();
 	}
@@ -264,16 +267,16 @@ void waitForClock(){
 
 void waitForIO((int) arg1, (int) arg2, (int) arg3){
 
-	//arg1 = line number
-	//arg2 = device number
-	//arg3 = r/w
-
+	/*arg1 = line number
+	arg2 = device number
+	arg3 = r/w
+	*/
 	*(deviceSemas[arg2][arg1]->s_semadd)--;
 
 	if(*(deviceSemas[arg2][arg1]->s_semadd) <= -1){
 		insertBlocked (deviceSemas[arg2][arg1]->s_semadd , currentProc);
-		//DO TIMING STUFF
-		//sstore clock - do substracti - add to feild of pcb
+		/*DO TIMING STUFF
+		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
 		scheduler();
 	}
@@ -287,19 +290,19 @@ void waitForIO((int) arg1, (int) arg2, (int) arg3){
 void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 
 
-	//save the contents of a2 and a3 (in the invoking process’es ProcBlk)
+	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
 	pcb_vect = currentProc->p_s[arg1];
 
 	pcb_vect->oldState = arg2;
 	pcb_vect->newState = arg3;
 
 
-	//the nucleus stores the processor state at the time of the exception in the area
-	//pointed to by the address in a2
+	/*the nucleus stores the processor state at the time of the exception in the area
+	pointed to by the address in a2 */
 	arg2 = &(currentProc->p_s);
 
-	//and loads the new processor state from the area
-	//pointed to by the address given in a3
+	/*and loads the new processor state from the area
+	pointed to by the address given in a3 */
 	LDST(&(arg3));
 
 
