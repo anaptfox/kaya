@@ -148,7 +148,7 @@ void createProcess(state_t *state){
 
 	if((newPcb = allocPcb()) == NULL){
 		
-		currentProc->p_s->s_v0 = -1;
+		currentProc->p_s.s_v0 = -1;
 
 		continueWithCurrent(currentProc->p_s);
 		
@@ -156,10 +156,11 @@ void createProcess(state_t *state){
 		
 		processCnt++; /* get a pcb, processcnt++ alloc */
 		
-		newPcb->p_s = state->s_a1;/*Copy the state pointed by a1 into the p_s of the new pct
+		
+		moveState(state.s_a1,newPcb->p_s);/*Copy the state pointed by a1 into the p_s of the new pct
 		CALL MOVE STAE INSTEAT OF COPY */
-		 	
-		currentProc->currentProc_child = newPcb; /* make the newpcb a child of current
+		
+		insertChild(currentProc, newPcb); /* make the newpcb a child of current
 		INSERT CHILD */
 		 	
 		insertProcQ(&readyQue, newPcb);/* put the new pcb  on the readyQue */
