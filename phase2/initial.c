@@ -18,9 +18,10 @@ int softBlkCnt;
 
 semd_t deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
+semd_t pseudo_clock;
+
 cpu_t startTOD;
 
-semd_t pseudo_clock;
 
 //Copy before into after
 void moveState(state_t *before, state_t* after){

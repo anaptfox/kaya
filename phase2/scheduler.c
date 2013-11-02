@@ -6,42 +6,33 @@
 
 void scheduler(){
 
+	currentProc = removeProc(&readyque);
+
 	if(currentProc == NULL){
+		// If the Process Count is zero invoke the HALT ROM service/instruction.
+		if(processCnt == 0){
+			HALT();
+		}else if(processCnt > 0 && softBlkCnt = 0){
+		//Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
+			PANIC();
+		}else{
+		// if process count > 0 and the soft-block count > 0 enter a wait state. 
+			//enable interrupts
 
-		currentProc = removeProc(&readyque);
-
-		if(currentProc == NULL){
-			// If the Process Count is zero invoke the HALT ROM service/instruction.
-			if(processCnt == 0){
-				HALT();
-			}
-			//Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
-			if(processCnt > 0 && softBlkCnt = 0){
-				PANIC();
-			}
-			// if process count > 0 and the soft-block count > 0 enter a wait state. 
-			if(processCnt > 0 && softBlkCnt > 0){
-				//enable interrupts
-
-				//handle interrupt
-				WAIT();
-			}
+			//handle interrupt
+			WAIT();
 		}
-
-		// DO TIMING STUFF
-		LDIT(5000);
-		STCK(startTOD);
-		LDST(&currentProc->p_s); 
 	}
+
+	// DO TIMING STUFF
+	LDIT(5000);
+	STCK(startTOD);
+	continueWithCurrent(&currentProc->p_s); 
+	
 
 }
 
 
-void continueWithCurrent(){
-	//continue with current job
-	if(currentProc != NULL){
-		LDIT(5000);
-		STCK(startTOD);
-		LDST(&currentProc->p_s);
-	}
+void continueWithCurrent(state_t *process){
+	LDST(process);
 }
