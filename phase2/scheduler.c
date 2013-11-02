@@ -1,12 +1,13 @@
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
+#include "../e/asl.e"
 #include "../e/initial.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 void scheduler(){
 
-	currentProc = removeProc(&readyque);
+	currentProc = removeProc(&readyQue);
 
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
