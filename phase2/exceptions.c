@@ -127,13 +127,14 @@ void TLBHandler(){
 	if(currentProc->p_states[0].newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
-			currentProc = NULL:
+			currentProc = NULL;
+			scheduler();
 		}else{
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in 
 			the ProcBlk as the SYS/Bp Old Area Address */
 			moveState(tlb_old, (state_t *) currentProc->p_states[0].oldState);
-			moveState((state_t *) currentProc->p_states[0].newState, &(currentProc->p_s))
+			moveState((state_t *) currentProc->p_states[0].newState, &(currentProc->p_s));
 
 		}
 
