@@ -154,7 +154,7 @@ void createProcess(state_t *state){
 		
 	}else{
 		
-		processCnt++; /* get a pcb, processcnt++ alloc */
+		processCnt++; /* get a pcb, processCnt++ alloc */
 		
 		
 		moveState((state_t *)state->s_a1, &(newPcb->p_s));/*Copy the state pointed by a1 into the p_s of the new pct
@@ -182,14 +182,14 @@ void terminateProcess(pcb_t *p){
  	if( p == currentProc)
  		outChild(p);
  		currentProc = NULL;  
- 	if (p->p_semAdd == null){
+ 	if (p->p_semAdd == NULL){
  		/* on the ready que */
  		outProcQ(&(readyQue), p);
  	}
  	else{
  		/* on a sema4 */
  		p = outBlocked(p);
- 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){//QUESTION
+ 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){
 
  			*(p->p_semAdd)++;
 
@@ -197,8 +197,8 @@ void terminateProcess(pcb_t *p){
  			softBlkCnt--;
  		}	
  	}
- 	freePcb();
- 	processcnt --;
+ 	freePcb(p);
+ 	processCnt --;
 
 }
 
@@ -241,7 +241,7 @@ void Passeren(int *semaddr){
 }
 
 void getCpuTime(){
-	currentProc->p_s._v0 = currentProc->p_time;
+	currentProc->p_s.s_v0 = currentProc->p_time;
 	continueWithCurrent(currentProc->p_s);
 }
 
