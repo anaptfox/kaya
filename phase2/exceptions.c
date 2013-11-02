@@ -157,7 +157,7 @@ void createProcess(state_t *state){
 		processCnt++; /* get a pcb, processcnt++ alloc */
 		
 		
-		moveState((state_t *)state.s_a1, &(newPcb->p_s));/*Copy the state pointed by a1 into the p_s of the new pct
+		moveState((state_t *)state->s_a1, &(newPcb->p_s));/*Copy the state pointed by a1 into the p_s of the new pct
 		CALL MOVE STAE INSTEAT OF COPY */
 		
 		insertChild(currentProc, newPcb); /* make the newpcb a child of current
@@ -175,7 +175,7 @@ void createProcess(state_t *state){
 /*This services causes the executing process to cease to exist. In addition, recursively,
 all progeny of this process are terminated as well. Execution of this instruction
 does not complete until all progeny are terminated. */
-void terminateProcess(pct *p){
+void terminateProcess(pcb_t *p){
 	 while(!emptychild(p)){
 	 		terminateProcess(removeChild(p));
 	 }
