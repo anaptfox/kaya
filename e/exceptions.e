@@ -8,7 +8,7 @@
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
-extern void syshandler();
+extern void sysHandler();
 extern void pgmTrapHandler();
 extern void TLBHandler();
 extern void createProcess(state_t *state);

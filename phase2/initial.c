@@ -29,7 +29,8 @@ void moveState(state_t *before, state_t *after){
 	after->s_cause = before->s_cause;
 	after->s_status = before->s_status;
 	after->s_pc = before->s_pc;
-	int i = 0;
+	int i;
+	i = 0;
 	while(i < STATEREGNUM + 1) {
 		after->s_reg[i] = before->s_reg[i];
 		i++;
