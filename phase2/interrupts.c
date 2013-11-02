@@ -33,7 +33,7 @@ int deviceIterator(memaddr p){
 	return i - 8;	
 }
 
-void inthandler(){
+void intHandler(){
 
 	/*Interrupt Handler
 
