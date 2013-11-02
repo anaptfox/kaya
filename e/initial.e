@@ -8,7 +8,7 @@
 #include "../e/exceptions.e"
 #include "../e/scheduler.e"
 #include "../e/interrupts.e"
-#include <libumps.e>
+#include "/usr/local/include/umps2/umps/libumps.e"
 
 extern void moveState(state_t *before, state_t* after);
 extern void test(void);

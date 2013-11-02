@@ -2,7 +2,7 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 #include "../e/initial.e"
-#include <libumps.e>
+#include "/usr/local/include/umps2/umps/libumps.e"
 
 void scheduler(){
 

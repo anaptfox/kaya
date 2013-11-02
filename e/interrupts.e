@@ -6,6 +6,7 @@
 #include "../e/pcb.e"
 #include "../e/exceptions.e"
 #include "../e/scheduler.e"
+#include "/usr/local/include/umps2/umps/libumps.e"
 
 extern void inthandler();
 #endif
