@@ -264,7 +264,7 @@ void waitForClock(){
 
 }
 
-void waitForIO((int) arg1, (int) arg2, (int) arg3){
+void waitForIO(int arg1, int arg2, int arg3){
 
 	/*arg1 = line number
 	arg2 = device number
@@ -286,7 +286,7 @@ void waitForIO((int) arg1, (int) arg2, (int) arg3){
 }
 
 
-void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
+void handleSys5(int arg1, memaddr arg2, memaddr arg3){
 
 
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
