@@ -287,7 +287,7 @@ void handleSys5(int arg1, memaddr arg2, memaddr arg3){
 
 
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
-	pcb_vect p_states = currentProc->p_s[arg1];
+	pcb_vect p_states = currentProc->p_s.p_states[arg1];
 
 	p_states.oldState = arg2;
 	p_states.newState = arg3;
