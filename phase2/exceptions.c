@@ -17,14 +17,14 @@ void syshandler(){
 
 	moveState(sys_old, &(currentProc->p_s));
 
-	currentProc->s_pc = currentProc->s_pc + 4;
-	kernal_mode = (sys_old->s_status) & KUp;
+	currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
+	kernel_mode = (sys_old->s_status) & KUp;
 
 
 	/*if user mode */
 	if (kernel_mode != 0 ){
 		/*check for sys 1-8 */
-		if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
+		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
 			sys_old->s_cause = RI; /*QUESTION  what is RI?*/
@@ -40,12 +40,12 @@ void syshandler(){
 	/*if kernel mode */
 	}else{
 		/*check for sys 1-8 */
-		if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
+		if((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
-			switch(sys_old->reg_a0){
+			switch(sys_old->s_a0){
 
 		        case CREATEPROCESS:
-		            createProcess((state_t *) arg1);
+		            createProcess((state_t *) sys_old->s_a1);
 		        break;
 		                                
 		        case TERMINATEPROCESS:        
@@ -53,15 +53,15 @@ void syshandler(){
 		        break;
 		        
 		        case VERHOGEN:
-		            Verhogen((int *) arg1);
+		            Verhogen((int *) sys_old->s_a1);
 		        break;
 		        
 		        case PASSEREN:
-		            Passeren((int *)  arg1);
+		            Passeren((int *)  sys_old->s_a1);
 		        break;
 		        
 		        case EXCEPTION:
-		        	handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3);
+		        	handleSys5((int) sys_old->s_a1, (memaddr) sys_old->s_a2, (memaddr) sys_old->s_a3);
 		        break;
 		        
 		        case GETCPUTIME:
@@ -73,7 +73,7 @@ void syshandler(){
 		        break;
 		        
 		        case WAITFORIODEVICE:
-		            waitForIO((int) arg1, (int) arg2, (int) arg3);
+		            waitForIO((int) sys_old->s_a1, (int) sys_old->s_a2, (int) sys_old->s_a3);
 		        break;
 		        
 		        default:
@@ -81,7 +81,7 @@ void syshandler(){
 		    }
 		/* not sys 1-8 */
 		}else{
-			if(currentProc->pcb_vect[2]->newState == NULL){
+			if(currentProc->p_states[2]->newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
@@ -90,8 +90,8 @@ void syshandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in the 
 			ProcBlk as the SYS/Bp Old Area Address */
-			moveState(pgm_old, currentProc->pcb_vect[2]->oldState);
-			moveState(currentProc->pcb_vect[2]->newState, &(currentProc->p_s));
+			moveState(pgm_old, currentProc->p_states[2]->oldState);
+			moveState(currentProc->p_states[2]->newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
 
 		}
@@ -105,7 +105,7 @@ void syshandler(){
  pgmTrapHandler deals with the exception */
 void pgmTrapHandler(){
 
-	if(currentProc->pcb_vect[1]->newState == NULL){
+	if(currentProc->p_states[1]->newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL;
@@ -114,8 +114,8 @@ void pgmTrapHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
-			moveState(pgm_old, currentProc->pcb_vect[1]->oldState);
-			moveState(currentProc->pcb_vect[1]->newState, &(currentProc->p_s));
+			moveState(pgm_old, currentProc->p_states[1]->oldState);
+			moveState(currentProc->p_states[1]->newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
 
 		}
@@ -127,7 +127,7 @@ void pgmTrapHandler(){
 TLBHandler deals with the exception */
 void TLBHandler(){
 
-	if(currentProc->pcb_vect[0]->newState == NULL){
+	if(currentProc->p_states[0]->newState == NULL){
 			/*Kill it */
 			terminateProcess(currentProc);
 			currentProc = NULL:
@@ -135,8 +135,8 @@ void TLBHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in 
 			the ProcBlk as the SYS/Bp Old Area Address */
-			moveState(tlb_old, &(currentProc->pcb_vect[0]->oldState));
-			moveState(&(currentProc->pcb_vect[0]->newState, &(currentProc->p_s))
+			moveState(tlb_old, &(currentProc->p_states[0]->oldState));
+			moveState(&(currentProc->p_states[0]->newState, &(currentProc->p_s))
 
 		}
 
@@ -291,10 +291,10 @@ void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 
 
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
-	pcb_vect = currentProc->p_s[arg1];
+	p_states = currentProc->p_s[arg1];
 
-	pcb_vect->oldState = arg2;
-	pcb_vect->newState = arg3;
+	p_states->oldState = arg2;
+	p_states->newState = arg3;
 
 
 	/*the nucleus stores the processor state at the time of the exception in the area
