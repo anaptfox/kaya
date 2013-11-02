@@ -39,7 +39,7 @@ void inthandler(){
 
 	In order to occur two things have to happen
 	
-	Ints enable bit needs to be on*/
+	Ints enable bit needs to beon*/
 
 	int ints_enabled = (int_old->s_status & IEc & IM);
 	if(ints_enabled){
