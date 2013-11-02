@@ -61,21 +61,21 @@ int main(void)
 
 		/* ProgramTrap*/
 		area = (state_t *)PGMTRAP_NEW;
-		moveState(area, (state_t *) PGMTRAP_NEW)
+		moveState(area, (state_t *) PGMTRAP_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->s_status = ALLOFF;
 
 		/* TLB Management*/
 		area = (state_t *)TLB_NEW;
-		moveState(area, (state_t *) TLB_NEW)
+		moveState(area, (state_t *) TLB_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->s_status = ALLOFF;
 
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
-		moveState(area, (state_t *) INT_NEW)
+		moveState(area, (state_t *) INT_NEW);
 		area->s_pc = area->s_t9 = (memaddr) pgmTrapHandler;
 		area->s_sp = RAMBASEADDR - RAMTOP;
 		area->s_status = ALLOFF;
