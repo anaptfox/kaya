@@ -8,5 +8,5 @@
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
-extern void inthandler();
+extern void intHandler();
 #endif

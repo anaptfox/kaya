@@ -76,7 +76,7 @@ int main(void)
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
 		moveState(area, (state_t *) INT_NEW);
-		area->s_pc = area->s_t9 = (memaddr) intHandler;
+		area->s_pc = area->s_t9 = (memaddr) TLBHandler;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 	
