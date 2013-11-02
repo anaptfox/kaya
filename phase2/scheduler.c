@@ -20,7 +20,7 @@ void scheduler(){
 			//enable interrupts
 
 			state_t *int_old = (state_t *) INT_OLD;
-			int_old->s_status = 0x00000001; 
+			int_old->s_status = int_old->s_status | 0x00000001; 
 			//handle interrupt
 			WAIT();
 		}
