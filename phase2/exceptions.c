@@ -19,9 +19,9 @@ void syshandler(){
 
 	currentProc->s_pc = currentProc->s_pc + 4;
 
-	kernal_mode = (sys_old->s_status) & //figure out if bit 3 is on;
+	kernal_mode = (sys_old->s_status) & KUp;
 
-	causeExcCode = sys_old->s_cause ;
+	causeExcCode = sys_old->s_cause ; //QUESTION
 
 	//Check for sys 
 	if(causeExcCode == 8){
@@ -29,17 +29,16 @@ void syshandler(){
 		if (kernel_mode != 0 ){
 			//check for sys 1-8
 			if ((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
-				//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
-				moveState(pgm_old, sys_old);
 
 				//setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction)
 				sys_old->s_cause = RI; //QUESTION  what is RI?
 
+				//moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area
+				moveState(sys_old, pgm_old);
+
 				// and calling Kaya’s PgmTrap exception handler.
 				pgmTrapHandler();
-				
-			}else{
-				//QUESTION: What to do here?
+
 			}
 		//if kernel mode
 		}else{
@@ -47,6 +46,7 @@ void syshandler(){
 			if((sys_old->reg_a0 > 0) && (sysBp_old->reg_a0 <= 8)){
 	
 				switch(sys_old->reg_a0){
+
 			        case CREATEPROCESS:
 			            createProcess((state_t *) arg1);
 			        break;
@@ -80,7 +80,7 @@ void syshandler(){
 			        break;
 			        
 			        default:
-			               //something
+			            PANIC();
 			    }
 			// not sys 1-8
 			}else{
@@ -89,17 +89,7 @@ void syshandler(){
 		}
 	//check for break
 	}else if(causeExcCode == 9){
-		// a0 contains LDST, FORK, PANIC, or HALT[1. . .4]
-		if(notIssuedSys5){
-			//Kill it
-			terminateProcess(currentProc);
-		}else{
-			//The processor state is moved from the SYS/Bp Old Area into the processor
-			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
-			moveState(sys_old, &(currentProc->pcb_vect[3]->oldState));
-			moveState(&(currentProc->pcb_vect[3]->newState, &(currentProc->p_state));
-
-		}
+		PANIC();
 	//Not sys or break panic;
 	}else{
 		PANIC();
@@ -113,11 +103,14 @@ void pgmTrapHandler(){
 	if(notIssuedSys5){
 			//Kill it
 			terminateProcess(currentProc);
+			currentProc = NULL;
+			scheduler();
 		}else{
 			//The processor state is moved from the SYS/Bp Old Area into the processor
 			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
-			moveState(pgm_old, &(currentProc->pcb_vect[2]->oldState));
-			moveState(&(currentProc->pcb_vect[2]->newState, &(currentProc->p_state))
+			moveState(pgm_old, currentProc->pcb_vect[2]->oldState);
+			moveState(currentProc->pcb_vect[2]->newState, &(currentProc->p_state));
+			continueWithCurrent(currentProc->p_state);
 
 		}
 	}
@@ -130,6 +123,7 @@ void TLBHandler(){
 	if(notIssuedSys5){
 			//Kill it
 			terminateProcess(currentProc);
+			currentProc = NULL:
 		}else{
 			//The processor state is moved from the SYS/Bp Old Area into the processor
 			// state area whose address was recorded in the ProcBlk as the SYS/Bp Old Area Address
@@ -146,20 +140,25 @@ void createProcess(state_t *state){
 
 	if((newPcb = allocPcb()) == NULL){
 		
-		state->s_v0 = -1;
+		currentProc->p_state->s_v0 = -1;
+
+		continueWithCurrent(currentProc->p_state);
 		
 	}else{
 		
 		processCnt++; // get a pcb, processcnt++)alloc
 		
 		newPcb->p_s = state->s_a1;// Copy the state pointed by a1 into the p_s of the new pct
+		//CALL MOVE STAE INSTEAT OF COPY
 		 	
 		currentProc->currentProc_child = newPcb; // make the newpcb a child of current
+		//INSERT CHILD
 		 	
 		insertProcQ(&readyQue, newPcb);// put the new pcb  on the readyQue
 		
-		state->s_v0 = 0;
+		currentProc->p_state->s_v0 = 0;
 		
+		continueWithCurrent(currentProc->p_state);
 	}
 	
 }
@@ -180,11 +179,16 @@ void terminateProcess(pct *p){
  	else{
  		// on a sema4
  		if (outBlocked(p) != I/O){//QUESTION
+
+ 			//ASSDRESS GREATER THAN FIRST AND LEST THAN L
  			Verhogen(p);
+
  		}else{
  			softBlkCnt--;
  		}	
  	}
+ 	freePcb();
+ 	processcnt --;
 
 }
 
@@ -198,44 +202,71 @@ void Verhogen(int *semaddr){
 
 	if(*(semaddr) <= 0){
 		p = removeBlocked(semaddr);
-		insertProcQ ( & readyQueue ,  p );
+		insertProcQ (&readyQueue, p);
 	}
 
-	continueWithCurrent();
+	continueWithCurrent(currentProc->p_state);
 	
 }
+
 //When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
 //perform a P operation on a semaphore. (What is a P operation?)
-void Passeren(){
+void Passeren(int *semaddr){
 	
 	pcb_t *p;
 
-	semaddr--;
+	*(semaddr)--;
 
-	if(semaddr <= -1){
+	if(*(semaddr) <= -1){
 		insertBlocked (semaddr , currentProc);
 		//DO TIMING STUFF
+		//sstore clock - do substracti - add to feild of pcb
 		currentProc = NULL;
 		scheduler();
 	}
+
+	continueWithCurrent(currentProc->p_state);
+
 }
 
 void getCpuTime(){
 	currentProc->p_state.reg_v0 = currentProc->p_time;
-	LDST(sys_old);
+	continueWithCurrent(currentProc->p_state);
 }
 
 // This instruction performs a P operation on the nucleus maintained pseudo-clock
 // timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 // by the nucleus
 void waitForClock(){
+	
+	pcb_t *p;
+
+	*(semaddr)--;
+
+	if(*(semaddr) <= -1){
+		insertBlocked (semaddr , currentProc);
+		//DO TIMING STUFF
+		//sstore clock - do substracti - add to feild of pcb
+		currentProc = NULL;
+		scheduler();
+	}
+
+	continueWithCurrent(currentProc->p_state);
 
 }
 
-void waitForIO(){
+void waitForIO((int) arg1, (int) arg2, (int) arg3){
 
+	//arg1 = line number
+	//arg2 = device number
+	//arg3 = r/w
+
+	P(deviceSemas[arg2][arg1]);
+
+	//return word of this device?
 
 }
+
 
 void handleSys5((int) arg1, (memaddr) arg2, (memaddr) arg3){
 
