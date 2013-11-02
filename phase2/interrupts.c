@@ -3,8 +3,31 @@
 #include "../e/pcb.e"
 #include "../e/exceptions.e"
 #include "../e/scheduler.e"
+#define deviceZero 0x00000001
+#define deviceOne 0x00000002
+#define deviceTwo 0x00000004
+#define deviceThree 0x00000008
+#define deviceFour 0x00000010
+#define deviceFive 0x00000020
+#define deviceSix 0x00000040
+#define deviceSeven 0x00000080
 
+//p is the interrupting Bit
+deviceIterator(unsigned int p){
+	device = deviceZero;
+	temp = p & device;
+	i = 0;
+	while(temp == 0 && i <= 7){
+		temp = p & (device << 1);
+		i++;
+	}
+	else{
+	return i;	
+	}
+}
 void inthandler(){
+
+	
 	state_t p = p->p_state->status;
 	//Interrupt Handler
 
@@ -26,14 +49,19 @@ void inthandler(){
 			// find out which device number it is given the line number
 			// in device register area, interrupt device bitmap
 			if(devRegArea == 0x1000.003C) {//line 3 word 0
+				deviceIterator(devRegArea);
 				}
 			if(devRegArea == 0x1000.0040) { //line 4 word 1
+				deviceIterator(devRegArea);
 				}
 			if(devRegArea == 0x1000.0044) { //line 5 word 2
+				deviceIterator(devRegArea);
 				}
 			if(devRegArea == 0x1000.0048) { //line 6 word 3
+				deviceIterator(devRegArea);
 				}
 			if(devRegArea == 0x1000.004C) { // line 7 word 4
+				deviceIterator(devRegArea);
 				}
 			// each one is a word 
 			// go to the appropriate word for that line , then use that word to fine the lowest orderd bit that's on to find the disk
@@ -49,8 +77,13 @@ void inthandler(){
 		// the bitmap of the degivice word -1
 
 		// V(device's sema4)
+		V(device->semd_h);
 			// removedBlock, wake somebody up waiting for I/O
-				// put contents of status in the v0 and put them into the readyQue}
-
+			SIGNAL();
+			// put contents of status in the v0 and put them into the readyQue}
+			readyQue = status_v0;	
+			
+	}
 }
+
 

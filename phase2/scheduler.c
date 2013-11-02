@@ -4,7 +4,6 @@
 #include "../e/initial.e"
 #include <libumps.e>
 
-
 void scheduler(){
 
 	if(currentProc == NULL){
@@ -29,7 +28,7 @@ void scheduler(){
 			}
 		}
 
-		// DO TIMEING STUFF
+		// DO TIMING STUFF
 		LDIT(5000);
 		STCK(startTOD);
 		LDST(&currentProc->p_s); 
