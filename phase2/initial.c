@@ -8,7 +8,7 @@
 
 /* Global var */
 
-pct_t *readyQue;
+pcb_t *readyQue;
 
 pcb_t *currentProc;
 
@@ -25,7 +25,7 @@ cpu_t startTOD;
 
 /* Copy before into after */
 void moveState(state_t *before, state_t *after){
-	after->s_aside = before->s_aside;
+	after->s_asid = before->s_asid;
 	after->s_cause = before->s_cause;
 	after->s_status = before->s_status;
 	after->s_pc = before->s_pc;
