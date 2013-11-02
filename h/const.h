@@ -16,6 +16,8 @@
 
 #define ROMPAGESTART	0x20000000	 /* ROM Reserved Page */
 
+#define ON 1
+#define OFF 0
 
 /* timer, timescale, TOD-LO and other bus regs */
 #define RAMBASEADDR	0x10000000
