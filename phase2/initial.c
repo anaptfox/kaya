@@ -95,12 +95,12 @@ int main(void)
 
 
 	/* Alloc the first pcb*/
-	pct_t *p = allocPcb();
+	pcb_t *p = allocPcb();
 	if(p == NULL){
 		PANIC();
 	}
 	p->s_pc = p->s_t9 = (memaddr) test;
-	p->s_sp = RAMTOP - FRAMESIZE;
+	p->s_sp = devregarea->ramsize - PAGESIZE;
 	p->status = p->status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
 	mkEmptyProcQ(&readyQue);
 	currentProc = NULL;
