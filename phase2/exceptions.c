@@ -11,8 +11,6 @@ state_t *tlb_old = (state_t *) TLB_OLD;
 
 void syshandler(){
 
-	int cause;
-
 	int kernel_mode;
 
 	moveState(sys_old, &(currentProc->p_s));
@@ -114,12 +112,11 @@ void pgmTrapHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
-			moveState(pgm_old, currentProc->p_states[1].oldState);
-			moveState(currentProc->p_states[1].newState, &(currentProc->p_s));
+			moveState(pgm_old, (state_t *) currentProc->p_states[1].oldState);
+			moveState((state_t *) currentProc->p_states[1].newState, &(currentProc->p_s));
 			continueWithCurrent(currentProc->p_s);
 
 		}
-	}
 
 }
 
