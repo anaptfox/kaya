@@ -6,6 +6,7 @@
 #include "../e/interrupts.e"
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
+#include "../e/scheduler.e"
 
 /* Global var */
 
@@ -38,9 +39,7 @@ void moveState(state_t *before, state_t *after){
 	}
 }
 
-void test(void){
-
-}
+extern void test(void);
 
 int main(void)
 {

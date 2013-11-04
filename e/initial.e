@@ -26,6 +26,5 @@ extern semd_t *pseudo_clock;
 extern cpu_t startTOD;
 
 extern void moveState(state_t *before, state_t* after);
-extern void test(void);
 extern int main(void);
 #endif
