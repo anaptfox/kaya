@@ -176,7 +176,7 @@ void createProcess(state_t *state){
 all progeny of this process are terminated as well. Execution of this instruction
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
-	 while(!emptychild(p)){
+	 while(!emptyChild(p)){
 	 		terminateProcess(removeChild(p));
 	 }
  	if( p == currentProc)
