@@ -8,5 +8,5 @@
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 extern void scheduler();
-extern void continueWithCurrent();
+extern void continueWithCurrent(state_t *process);
 #endif
