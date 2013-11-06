@@ -12,12 +12,11 @@ extern void sysHandler();
 extern void pgmTrapHandler();
 extern void TLBHandler();
 extern void createProcess(state_t *state);
-extern void terminateProcess();
+extern void terminateProcess(pcb_t *p);
 extern void Verhogen(int *semaddr);
-extern void Passeren();
+extern void Passeren(int *semaddr);
 extern void getCpuTime();
 extern void waitForClock();
-extern void waitForIO();
-extern void handleSys5();
-extern void passUpOrDie();
+extern void waitForIO(int arg1, int arg2, int arg3);
+extern void handleSys5(int arg1, memaddr arg2, memaddr arg3);
 #endif
