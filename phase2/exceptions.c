@@ -47,7 +47,7 @@ void syshandler(){
 		        break;
 		                                
 		        case TERMINATEPROCESS:        
-		            terminateProcess();
+		            terminateProcess(currentProc);
 		        break;
 		        
 		        case VERHOGEN:
@@ -90,7 +90,7 @@ void syshandler(){
 			ProcBlk as the SYS/Bp Old Area Address */
 			moveState(pgm_old, (state_t *) currentProc->p_states[2].oldState);
 			moveState((state_t *) currentProc->p_states[2].newState, &(currentProc->p_s));
-			continueWithCurrent(currentProc->p_s);
+			continueWithCurrent(&(currentProc->p_s));
 
 		}
 	}
@@ -114,7 +114,7 @@ void pgmTrapHandler(){
 			as the SYS/Bp Old Area Address */
 			moveState(pgm_old, (state_t *) currentProc->p_states[1].oldState);
 			moveState((state_t *) currentProc->p_states[1].newState, &(currentProc->p_s));
-			continueWithCurrent(currentProc->p_s);
+			continueWithCurrent(&(currentProc->p_s));
 
 		}
 
@@ -150,7 +150,7 @@ void createProcess(state_t *state){
 		
 		currentProc->p_s.s_v0 = -1;
 
-		continueWithCurrent(currentProc->p_s);
+		continueWithCurrent(&(currentProc->p_s));
 		
 	}else{
 		
@@ -167,7 +167,7 @@ void createProcess(state_t *state){
 		
 		currentProc->p_s.s_v0 = 0;
 		
-		continueWithCurrent(currentProc->p_s);
+		continueWithCurrent(&(currentProc->p_s));
 	}
 	
 }
@@ -215,7 +215,7 @@ void Verhogen(int *semaddr){
 		insertProcQ (&readyQue, p);
 	}
 
-	continueWithCurrent(currentProc->p_s);
+	continueWithCurrent(&(currentProc->p_s));
 	
 }
 
@@ -233,13 +233,13 @@ void Passeren(int *semaddr){
 		scheduler();
 	}
 
-	continueWithCurrent(currentProc->p_s);
+	continueWithCurrent(&(currentProc->p_s));
 
 }
 
 void getCpuTime(){
 	currentProc->p_s.s_v0 = currentProc->p_time;
-	continueWithCurrent(currentProc->p_s);
+	continueWithCurrent(&(currentProc->p_s));
 }
 
 /*This instruction performs a P operation on the nucleus maintained pseudo-clock
@@ -257,7 +257,7 @@ void waitForClock(){
 		scheduler();
 	}
 	softBlkCnt++;
-	continueWithCurrent(currentProc->p_s);
+	continueWithCurrent(&(currentProc->p_s));
 
 }
 
@@ -277,7 +277,7 @@ void waitForIO(int arg1, int arg2, int arg3){
 		scheduler();
 	}
 	softBlkCnt++;
-	continueWithCurrent(currentProc->p_s);
+	continueWithCurrent(&(currentProc->p_s));
 
 
 }
