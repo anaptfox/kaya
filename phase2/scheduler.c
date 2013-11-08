@@ -7,7 +7,7 @@
 
 void scheduler(){
 
-	currentProc = removeProc(&readyQue);
+	currentProc = removeProcQ(&readyQue);
 
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
