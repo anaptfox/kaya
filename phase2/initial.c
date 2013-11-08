@@ -83,7 +83,7 @@ int main(void)
 	
 
 	initPcbs();
-	initASLs();
+	initASL();
 
 	/* iniltialize semaphores to 0*/
 	int j;
