@@ -9,7 +9,7 @@ state_t *sys_old = (state_t *) SYS_OLD;
 state_t *pgm_old = (state_t *) PGMTRAP_OLD;
 state_t *tlb_old = (state_t *) TLB_OLD;
 
-void syshandler(){
+void sysHandler(){
 
 	int kernel_mode;
 
