@@ -109,6 +109,7 @@ int main(void)
 	processCnt = softBlkCnt = 0;
 
 	/* populate this pcb*/
+	debugMikeyg (10, 10, 10);
 	insertProcQ(&readyQue, p);
 	debugMikeyg (10, 10, 10);
 	processCnt++;
