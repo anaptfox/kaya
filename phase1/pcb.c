@@ -13,6 +13,9 @@ void debugB (int a, int b, int c) {
 void debugC (int a, int b, int c) {
   int foo = 42;
 }
+void debugD (int a, int b, int c) {
+  int foo = 42;
+}
 
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
