@@ -48,6 +48,7 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 		(*tp) = p;
 	}/*Case 3: ProcQ has more than one ProcBlk*/
 	else{
+		debugD (10, 10, 10);
 		p->p_next = (*tp)->p_next;
 		debugA (10, 10, 10);
 		p->p_next->p_prev = p;
