@@ -96,7 +96,7 @@ int main(void)
     }
 
 
-	/* Alloc the first pcb*/
+	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
 	if(p == NULL){
 		PANIC();
