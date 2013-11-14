@@ -25,9 +25,6 @@ semd_t *pseudo_clock;
 cpu_t startTOD;
 
 int i;
-void debugMikeyg (int a, int b, int c) {
-  int foo = 42;
-}
 
 /* Copy before into after */
 void moveState(state_t *before, state_t *after){
@@ -47,6 +44,7 @@ extern void test(void);
 int main(void)
 {
 	/* inilize the four new areas */
+
 		/* set up devregarea*/
 		devregarea_t *devregarea;
 
@@ -110,7 +108,6 @@ int main(void)
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
-  debugMikeyg (10, 10, 10);
 	processCnt++;
 	
 	scheduler();
