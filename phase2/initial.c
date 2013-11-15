@@ -104,13 +104,13 @@ int main(void)
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 	p->p_s.s_sp = devregarea->ramsize - PAGESIZE;
 	p->p_s.s_status = p->p_s.s_status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
-	mkEmptyProcQ(&readyQue);
+	mkEmptyProcQ(&(readyQue));
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
 
 	/* populate this pcb*/
 	debugMikeyg (10, 10, 10);
-	insertProcQ(&readyQue, p);
+	insertProcQ(&(readyQue), p);
 	debugMikeyg (10, 10, 10);
 	processCnt++;
 	
