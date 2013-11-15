@@ -4,7 +4,7 @@
 
 static pcb_t *freePcb_tp;
 
-void debugA (int a, int b, int c) {
+void debugA (pcb_t **tp, int b, int c) {
   int foo = 42;
 }
 void debugB (int a, int b, int c) {
@@ -34,6 +34,7 @@ int emptyProcQ (pcb_t *tp){
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
+	debugA (tp, 10, 10);
 	/*Case 1: ProcQ is empty*/
 	if(emptyProcQ((*tp))){
 		(*tp) = p;
@@ -50,11 +51,11 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 	else{
 		debugD (10, 10, 10);
 		p->p_next = (*tp)->p_next;
-		debugA (10, 10, 10);
-		p->p_next->p_prev = p;
 		debugB (10, 10, 10);
+		p->p_next->p_prev = p;
+		debugA (tp, 10, 10);
 		p->p_prev = (*tp);
-		debugC (10, 10, 10);
+		debugA (tp, 10, 10);
 		(*tp)->p_next = p;
 		debugD (10, 10, 10);
 		(*tp) = p;
