@@ -13,7 +13,7 @@ void debugB (int a, int b, int c) {
 void debugC (int a, int b, int c) {
   int foo = 42;
 }
-void debugD (int a, int b, int c) {
+void debugD (pcb_t p, int b, int c) {
   int foo = 42;
 }
 
@@ -55,9 +55,9 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 		p->p_next->p_prev = p;
 		debugA (tp, 10, 10);
 		p->p_prev = (*tp);
-		debugA (tp, 10, 10);
+		debugD ((*tp)->p_next, 10, 10);
 		(*tp)->p_next = p;
-		debugD (10, 10, 10);
+		debugA (tp, 10, 10);
 		(*tp) = p;
 		debugA (10, 10, 10);
 	}
