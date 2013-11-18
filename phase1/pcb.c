@@ -13,7 +13,7 @@ void debugB (int a, int b, int c) {
 void debugC (int a, int b, int c) {
   int foo = 42;
 }
-void debugD (pcb_t p, int b, int c) {
+void debugD (pcb_t *p, int b, int c) {
   int foo = 42;
 }
 
