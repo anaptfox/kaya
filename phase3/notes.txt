@@ -1,0 +1,22 @@
+There will be a seperate kuseg2 pg table for each user process(8 - of em)
+
+A kuse2 proces wil occupy no more than 32 mages
+
+
+stag pg 0x0000000
+
+31
+
+0x8000000
+
+each process will have it's own page table
+
+there will be 1 kuseg3 pg table -> 32 entries
+
+seg tables
+
+Backing store
+
+disk 0 9x32
+
+sector size =
