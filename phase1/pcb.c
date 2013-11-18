@@ -21,6 +21,8 @@ void debugD (pcb_t *p, int b, int c) {
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
 pcb_t *mkEmptyProcQ() {
+	debugB (10, 10, 10);
+	debugB (10, 10, 10);
 	return(NULL);
 }
 
