@@ -94,8 +94,9 @@ int main(void)
                   deviceSemas[i][j] = 0;
         }
     }
-
+  debugMikeyg (10, 10, 10);
 	*readyQue = mkEmptyProcQ();
+	debugMikeyg (10, 10, 10);
 
 	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
