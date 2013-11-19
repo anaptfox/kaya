@@ -8,6 +8,7 @@
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
+	processCnt--;
 
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
@@ -29,7 +30,6 @@ void scheduler(){
 
 	LDIT(5000);
 	STCK(startTOD);
-	debugMikeyg (10, 10, 10);
 	continueWithCurrent(&currentProc->p_s); 
 	
 
