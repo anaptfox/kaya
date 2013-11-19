@@ -34,7 +34,7 @@ void scheduler(){
 
 	LDIT(5000);
 	STCK(startTOD);
-	continueWithCurrent(&(currentProc->p_s); 
+	continueWithCurrent(&(currentProc->p_s)); 
 	
 
 }
