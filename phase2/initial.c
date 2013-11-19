@@ -94,9 +94,8 @@ int main(void)
       deviceSemas[i][j] = 0;
     }
   }
-  debugMikeyg (10, 10, 10);
+
 	readyQue = mkEmptyProcQ();
-	debugMikeyg (10, 10, 10);
 
 	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
@@ -112,11 +111,11 @@ int main(void)
 	processCnt = softBlkCnt = 0;
 
 	/* populate this pcb*/
-	debugMikeyg (10, 10, 10);
 	insertProcQ(&readyQue, p);
 	debugMikeyg (10, 10, 10);
 	processCnt++;
 	
+	debugMikeyg (10, 10, 10);
 	scheduler();
 
 }
