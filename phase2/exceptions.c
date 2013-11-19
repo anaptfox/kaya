@@ -208,7 +208,7 @@ void Verhogen(int *semaddr){
 
 	pcb_t *p;
 
-	*(semaddr)++;
+	*(semaddr) += 1;
 
 	if(*(semaddr) <= 0){
 		p = removeBlocked(semaddr);
@@ -223,7 +223,7 @@ void Verhogen(int *semaddr){
 perform a P operation on a semaphore. */
 void Passeren(int *semaddr){
 
-	*(semaddr)--;
+	*(semaddr) -= 1;
 
 	if(*(semaddr) <= -1){
 		insertBlocked (semaddr , currentProc);

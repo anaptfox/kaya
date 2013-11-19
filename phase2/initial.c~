@@ -25,6 +25,9 @@ semd_t *pseudo_clock;
 cpu_t startTOD;
 
 int i;
+void debugMikeyg (int a, int b, int c) {
+  int foo = 42;
+}
 
 /* Copy before into after */
 void moveState(state_t *before, state_t *after){
@@ -44,7 +47,6 @@ extern void test(void);
 int main(void)
 {
 	/* inilize the four new areas */
-
 		/* set up devregarea*/
 		devregarea_t *devregarea;
 
@@ -88,21 +90,24 @@ int main(void)
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
-        for(j=0; j<DEVICE_LINE; j++){
-                  deviceSemas[i][j] = 0;
-        }
+    for(j=0; j<DEVICE_LINE; j++){
+      deviceSemas[i][j] = 0;
     }
+  }
 
+	readyQue = mkEmptyProcQ();
 
-	/* Alloc the first pcb*/
+	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
+	
 	if(p == NULL){
 		PANIC();
 	}
+
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 	p->p_s.s_sp = devregarea->ramsize - PAGESIZE;
-	p->p_s.s_status = p->p_s.s_status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
-	mkEmptyProcQ(&readyQue);
+	p->p_s.s_status = p->p_s.s_status | 0x0800ff01;
+	
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
 
