@@ -99,6 +99,7 @@ int main(void)
 
 	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
+	
 	if(p == NULL){
 		PANIC();
 	}
@@ -112,10 +113,8 @@ int main(void)
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
-	debugMikeyg (10, 10, 10);
 	processCnt++;
 	
-	debugMikeyg (10, 10, 10);
 	scheduler();
 
 }
