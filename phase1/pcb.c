@@ -23,7 +23,7 @@ Return a pointer to the tail of an empty process queue; i.e. NULL. */
 pcb_t *mkEmptyProcQ() {
 	debugB (10, 10, 10);
 	debugB (10, 10, 10);
-	return NULL;
+	return(NULL);
 }
 
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.

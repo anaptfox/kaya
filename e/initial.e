@@ -11,7 +11,7 @@
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 
-extern pcb_t **readyQue;
+extern pcb_t *readyQue;
 
 extern pcb_t *currentProc;
 
