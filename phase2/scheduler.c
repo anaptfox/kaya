@@ -27,9 +27,9 @@ void scheduler(){
 		}
 	}
 
-	/* DO TIMING STUFF */
 	LDIT(5000);
 	STCK(startTOD);
+	debugMikeyg (10, 10, 10);
 	continueWithCurrent(&currentProc->p_s); 
 	
 
@@ -37,5 +37,6 @@ void scheduler(){
 
 
 void continueWithCurrent(state_t *process){
+	debugMikeyg (10, 10, 10);
 	LDST(process);
 }
