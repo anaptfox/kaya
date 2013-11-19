@@ -5,6 +5,10 @@
 #include "../e/initial.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
+void debugProcess (state_t *p, int b, int c) {
+  int foo = 42;
+}
+
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
@@ -30,7 +34,7 @@ void scheduler(){
 
 	LDIT(5000);
 	STCK(startTOD);
-	continueWithCurrent(&currentProc->p_s); 
+	continueWithCurrent(&(currentProc->p_s); 
 	
 
 }
@@ -38,5 +42,6 @@ void scheduler(){
 
 void continueWithCurrent(state_t *process){
 	debugMikeyg (10, 10, 10);
+	debugProcess(process, 10, 10);
 	LDST(process);
 }
