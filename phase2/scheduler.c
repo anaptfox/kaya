@@ -12,7 +12,7 @@ void debugProcess (state_t *p, int b, int c) {
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
-	processCnt--;
+
 
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
@@ -41,7 +41,6 @@ void scheduler(){
 
 
 void continueWithCurrent(state_t *process){
-	debugMikeyg (10, 10, 10);
 	debugProcess(process, 10, 10);
 	LDST(process);
 }
