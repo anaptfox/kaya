@@ -10,7 +10,7 @@
 
 /* Global var */
 
-pcb_t **readyQue;
+pcb_t *readyQue;
 
 pcb_t *currentProc;
 
@@ -90,12 +90,12 @@ int main(void)
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
-        for(j=0; j<DEVICE_LINE; j++){
-                  deviceSemas[i][j] = 0;
-        }
+    for(j=0; j<DEVICE_LINE; j++){
+      deviceSemas[i][j] = 0;
     }
+  }
   debugMikeyg (10, 10, 10);
-	*readyQue = mkEmptyProcQ();
+	readyQue = mkEmptyProcQ();
 	debugMikeyg (10, 10, 10);
 
 	/* Alloc the first pcb */
@@ -103,16 +103,17 @@ int main(void)
 	if(p == NULL){
 		PANIC();
 	}
+
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 	p->p_s.s_sp = devregarea->ramsize - PAGESIZE;
-	p->p_s.s_status = p->p_s.s_status | 0x0800ff01; /* TODO: interrupts enabled, virtual memory off, processor local timer enables, kernel mode on*/
+	p->p_s.s_status = p->p_s.s_status | 0x0800ff01;
 	
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
 
 	/* populate this pcb*/
 	debugMikeyg (10, 10, 10);
-	insertProcQ(readyQue, p);
+	insertProcQ(&readyQue, p);
 	debugMikeyg (10, 10, 10);
 	processCnt++;
 	
