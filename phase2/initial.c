@@ -18,7 +18,7 @@ int processCnt;
 
 int softBlkCnt;
 
-semd_t *deviceSemas[DEVICE_CNT][DEVICE_LINE];
+int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
 semd_t *pseudo_clock;
 
@@ -91,7 +91,7 @@ int main(void)
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
     for(j=0; j<DEVICE_LINE; j++){
-      deviceSemas[i][j]->s_semAdd = 0;
+      deviceSemas[i][j] = 0;
     }
   }
 
@@ -106,7 +106,7 @@ int main(void)
 
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 	p->p_s.s_sp = (devregarea->ramsize + devregarea->rambase) - PAGESIZE;
-	p->p_s.s_status = p->p_s.s_status | 0x0800ff01;
+	p->p_s.s_status = p->p_s.s_status | 0x0800ff04;
 	
 	currentProc = NULL;
 	processCnt = softBlkCnt = 0;
