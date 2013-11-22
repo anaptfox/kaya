@@ -91,7 +91,7 @@ int main(void)
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
     for(j=0; j<DEVICE_LINE; j++){
-      deviceSemas[i][j] = 0;
+      deviceSemas[i][j]->s_semAdd = 0;
     }
   }
 

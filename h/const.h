@@ -135,4 +135,6 @@
 #define WAITFORCLOCK 7
 #define WAITFORIODEVICE 8
 
+#define PC = 0x8000004
+
 #endif
