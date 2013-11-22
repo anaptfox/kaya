@@ -3,6 +3,7 @@
 #include "../e/pcb.e"
 #include "../e/interrupts.e"
 #include "../e/scheduler.e"
+#include "/usr/local/include/umps2/umps/libumps.e"
 
 
 state_t *sys_old = (state_t *) SYS_OLD;
