@@ -87,6 +87,7 @@ int main(void)
 	initPcbs();
 	initASL();
 
+	debugMikeyg(10,10,10);
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
@@ -94,7 +95,7 @@ int main(void)
     	*(deviceSemas[i][j]->s_semAdd) = 0;
     }
   }
-
+  debugMikeyg(10,10,10);
 	readyQue = mkEmptyProcQ();
 
 	/* Alloc the first pcb */
