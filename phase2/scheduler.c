@@ -26,7 +26,7 @@ void scheduler(){
 			enable interrupts*/
 		    LDIT(100000);
 		    debugProcess(&(currentProc->p_s), 10, 10);
-			setSTATUS(0x08001101);
+				setSTATUS(0x08001101);
 			/*handle interrupt*/
 			WAIT();
 		}
