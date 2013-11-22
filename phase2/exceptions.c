@@ -284,13 +284,13 @@ void waitForIO(int arg1, int arg2, int arg3){
 
 	cpu_t endTOD;
 
-	debugA(arg1, arg2 ,*(deviceSemas[arg2][arg1]->s_semAdd));
-	*(deviceSemas[arg2][arg1]->s_semAdd) -= 1;
+	debugA(arg1, arg2 ,deviceSemas[arg2][arg1]);
+	deviceSemas[arg2][arg1] -= 1;
 	debugA(arg1, arg2 ,deviceSemas[arg2][arg1]->s_semAdd);
 
-	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
+	if(deviceSemas[arg2][arg1] <= -1){
 		debugB(10,10,10);
-		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
+		insertBlocked (deviceSemas[arg2][arg1] , currentProc);
 		STCK(endTOD);
 		debugC(10,10,10);
 		currentProc->p_time = endTOD - startTOD;
