@@ -284,7 +284,7 @@ void waitForIO(int arg1, int arg2, int arg3){
 
 	cpu_t endTOD;
 
-	debugA(arg1, arg2 ,deviceSemas[arg2][arg1]->s_semAdd);
+	debugA(arg1, arg2 ,*(deviceSemas[arg2][arg1]->s_semAdd));
 	*(deviceSemas[arg2][arg1]->s_semAdd) -= 1;
 	debugA(arg1, arg2 ,deviceSemas[arg2][arg1]->s_semAdd);
 
