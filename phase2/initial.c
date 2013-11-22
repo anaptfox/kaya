@@ -90,9 +90,11 @@ int main(void)
 	debugMikeyg(10,10,10);
 	/* iniltialize semaphores to 0*/
 	int j;
+	int *semaddr
 	for(i=0; i<DEVICE_CNT; i++){
     for(j=0; j<DEVICE_LINE; j++){
-    	*(deviceSemas[i][j]->s_semAdd) = 0;
+    	semaddr = deviceSemas[i][j]->s_semAdd;
+    	*(semaddr)= 0;
     }
   }
   debugMikeyg(10,10,10);
