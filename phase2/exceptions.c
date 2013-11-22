@@ -290,7 +290,7 @@ void waitForIO(int arg1, int arg2, int arg3){
 
 	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
 		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
-		STCK(endTOD)
+		STCK(endTOD);
 		currentProc->p_time = endTOD - startTOD;
 		currentProc = NULL;
 		scheduler();
