@@ -288,7 +288,7 @@ void waitForIO(int arg1, int arg2, int arg3){
 
 	if(deviceSemas[arg2][arg1] <= -1){
 		debugB(10,10,10);
-		insertBlocked (deviceSemas[arg2][arg1] , currentProc);
+		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
 		STCK(endTOD);
 		debugC(10,10,10);
 		currentProc->p_time = endTOD - startTOD;
