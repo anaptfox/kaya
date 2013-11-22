@@ -280,8 +280,6 @@ void waitForIO(int arg1, int arg2, int arg3){
 	/*arg1 = line number
 	arg2 = device number
 	arg3 = r/w
-
-
 	*/
 
 	cpu_t endTOD;
@@ -290,12 +288,16 @@ void waitForIO(int arg1, int arg2, int arg3){
 	*(deviceSemas[arg2][arg1]->s_semAdd) -= 1;
 
 	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
+		debugB(10,10,10);
 		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
 		STCK(endTOD);
+		debugC(10,10,10);
 		currentProc->p_time = endTOD - startTOD;
 		currentProc = NULL;
 		scheduler();
+		debugD(10,10,10);
 	}
+	debugA(10,10,10);
 	softBlkCnt++;
 	continueWithCurrent(&(currentProc->p_s));
 
