@@ -19,7 +19,7 @@ extern int processCnt;
 
 extern int softBlkCnt;
 
-extern semd_t *deviceSemas[DEVICE_CNT][DEVICE_LINE];
+extern int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
 extern semd_t *pseudo_clock;
  
