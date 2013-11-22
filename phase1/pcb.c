@@ -4,25 +4,11 @@
 
 static pcb_t *freePcb_tp;
 
-void debugA (pcb_t **tp, int b, int c) {
-  int foo = 42;
-}
-void debugB (int a, int b, int c) {
-  int foo = 42;
-}
-void debugC (int a, int b, int c) {
-  int foo = 42;
-}
-void debugD (pcb_t *p, int b, int c) {
-  int foo = 42;
-}
 
 /* This method is used to initialize a variable to be tail pointer to a
 process queue.
 Return a pointer to the tail of an empty process queue; i.e. NULL. */
 pcb_t *mkEmptyProcQ() {
-	debugB (10, 10, 10);
-	debugB (10, 10, 10);
 	return(NULL);
 }
 
@@ -36,7 +22,6 @@ int emptyProcQ (pcb_t *tp){
 tail-pointer is pointed to by tp. Note the double indirection through
 tp to allow for the possible updating of the tail pointer as well. */
 void insertProcQ(pcb_t **tp, pcb_t *p){
-	debugA (tp, 10, 10);
 	/*Case 1: ProcQ is empty*/
 	if(emptyProcQ((*tp))){
 		(*tp) = p;
@@ -51,19 +36,12 @@ void insertProcQ(pcb_t **tp, pcb_t *p){
 		(*tp) = p;
 	}/*Case 3: ProcQ has more than one ProcBlk*/
 	else{
-		debugD (10, 10, 10);
 		p->p_next = (*tp)->p_next;
-		debugB (10, 10, 10);
 		p->p_next->p_prev = p;
-		debugA (tp, 10, 10);
 		p->p_prev = (*tp);
-		debugD ((*tp)->p_next, 10, 10);
 		(*tp)->p_next = p;
-		debugA (tp, 10, 10);
 		(*tp) = p;
-		debugA (10, 10, 10);
 	}
-	debugA (10, 10, 10);
 }
 
 /* Return a pointer to the ﬁrst ProcBlk from the process queue whose

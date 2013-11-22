@@ -9,6 +9,19 @@ state_t *sys_old = (state_t *) SYS_OLD;
 state_t *pgm_old = (state_t *) PGMTRAP_OLD;
 state_t *tlb_old = (state_t *) TLB_OLD;
 
+void debugA (int a, int b, int c) {
+  int foo = 42;
+}
+void debugB (int a, int b, int c) {
+  int foo = 42;
+}
+void debugC (int a, int b, int c) {
+  int foo = 42;
+}
+void debugD (int a, int b, int c) {
+  int foo = 42;
+}
+
 void sysHandler(){
 
 	int kernel_mode;
@@ -194,11 +207,11 @@ void terminateProcess(pcb_t *p){
  			*(p->p_semAdd)++;
 
  		}else{
- 			softBlkCnt--;
+ 			softBlkCnt -= 1;
  		}	
  	}
  	freePcb(p);
- 	processCnt --;
+ 	processCnt  -= 1;
 
 }
 
@@ -247,7 +260,7 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 void waitForClock(){
 	
-	*(pseudo_clock->s_semAdd)--;
+	*(pseudo_clock->s_semAdd) -= 1;
 
 	if(*(pseudo_clock->s_semAdd) <= -1){
 		insertBlocked (pseudo_clock->s_semAdd , currentProc);
@@ -266,13 +279,19 @@ void waitForIO(int arg1, int arg2, int arg3){
 	/*arg1 = line number
 	arg2 = device number
 	arg3 = r/w
+
+
 	*/
-	*(deviceSemas[arg2][arg1]->s_semAdd)--;
+
+	cpu_t endTOD;
+
+	debugA(10,10,10);
+	*(deviceSemas[arg2][arg1]->s_semAdd) -= 1;
 
 	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
 		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
-		/*DO TIMING STUFF
-		store clock - do substracti - add to field of pcb */
+		STCK(endTOD)
+		currentProc->p_time = endTOD - startTOD;
 		currentProc = NULL;
 		scheduler();
 	}

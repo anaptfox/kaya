@@ -24,8 +24,9 @@ void scheduler(){
 		}else{
 		/*if process count > 0 and the soft-block count > 0 enter a wait state. 
 			enable interrupts*/
-		        LDIT(100000);
-			setTime(0x08001101);
+		    LDIT(100000);
+		    debugProcess(&(currentProc->p_s), 10, 10);
+			setStatus(0x08001101);
 			/*handle interrupt*/
 			WAIT();
 		}
