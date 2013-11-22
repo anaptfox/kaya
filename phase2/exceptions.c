@@ -285,10 +285,10 @@ void waitForIO(int arg1, int arg2, int arg3){
 	cpu_t endTOD;
 
 	debugA(arg1, arg2 ,*(deviceSemas[arg2][arg1]->s_semAdd));
-	*(deviceSemas[arg2][arg1]->s_semAdd) -= 1;
+	deviceSemas[arg2][arg1]->s_semAdd -= 1;
 	debugA(arg1, arg2 ,deviceSemas[arg2][arg1]->s_semAdd);
 
-	if(*(deviceSemas[arg2][arg1]->s_semAdd) <= -1){
+	if(deviceSemas[arg2][arg1]->s_semAdd<= -1){
 		debugB(10,10,10);
 		insertBlocked (deviceSemas[arg2][arg1]->s_semAdd , currentProc);
 		STCK(endTOD);
