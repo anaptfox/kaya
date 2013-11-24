@@ -86,9 +86,9 @@ int main(void)
 
 	initPcbs();
 	initASL();
-
+	debugMikeyg(10,10,10);
 	LDIT(100000);
-
+	debugMikeyg(10,10,10);
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
