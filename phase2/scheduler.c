@@ -42,5 +42,5 @@ void scheduler(){
 
 void continueWithCurrent(state_t *process){
 	debugProcess(process, 10, 10);
-	LDST(*process);
+	LDST(process);
 }
