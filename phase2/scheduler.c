@@ -12,6 +12,12 @@ void debugProcess (state_t *p, int b, int c) {
 void debugE (int a, int b, int c) {
   int foo = 42;
 }
+void debugF (int a, int b, int c) {
+  int foo = 42;
+}
+void debugG (int a, int b, int c) {
+  int foo = 42;
+}
 
 void scheduler(){
 
@@ -21,8 +27,10 @@ void scheduler(){
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
 		if(processCnt == 0){
+			debugF(10,10,10);
 			HALT();
 		}else if(processCnt > 0 && softBlkCnt == 0){
+			debugG(10,10,10);
 		/*Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
 		*/	PANIC();
 		}else{
