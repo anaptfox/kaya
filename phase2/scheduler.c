@@ -23,6 +23,10 @@ void debugWAIT (int a, int b, int c) {
   int foo = 42;
 }
 
+state_t *int_new = (state_t *) INT_NEW;
+state_t *int_old = (state_t *) INT_OLD;
+
+
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
@@ -47,9 +51,11 @@ void scheduler(){
 				/*handle interrupt*/
 				WAIT();
 				debugWAIT(10,10,10);
+				STST(int_old);
+				LDST(int_new);
 		}
 	}
-	debugProcess(&(currentProc->p_s), 10, 10);
+
 	debugG(10,10,10);
 	continueWithCurrent(&(currentProc->p_s)); 
 	
