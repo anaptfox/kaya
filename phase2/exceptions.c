@@ -296,11 +296,11 @@ void waitForIO(int arg1, int arg2, int arg3){
 		debugA(arg1,arg2,10);
 		currentProc = NULL;
 		debugA(arg1,arg2,10);
+		softBlkCnt++;
 		scheduler();
 		debugD(10,10,10);
 	}
 	debugA(10,10,10);
-	softBlkCnt++;
 	continueWithCurrent(&(currentProc->p_s));
 
 
