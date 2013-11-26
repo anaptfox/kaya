@@ -19,6 +19,10 @@ void debugG (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugWAIT (int a, int b, int c) {
+  int foo = 42;
+}
+
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
@@ -27,7 +31,6 @@ void scheduler(){
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
 		if(processCnt == 0){
-			debugF(10,10,10);
 			HALT();
 		}else if(processCnt > 0 && softBlkCnt == 0){
 			debugG(10,10,10);
@@ -43,12 +46,10 @@ void scheduler(){
 				debugE(10,10,10);
 				/*handle interrupt*/
 				WAIT();
+				debugWAIT(10,10,10);
 		}
 	}
 	debugProcess(&(currentProc->p_s), 10, 10);
-	LDIT(5000);
-	debugProcess(&(currentProc->p_s), 10, 10);
-	STCK(startTOD);
 	debugG(10,10,10);
 	continueWithCurrent(&(currentProc->p_s)); 
 	
@@ -57,6 +58,6 @@ void scheduler(){
 
 
 void continueWithCurrent(state_t *process){
-	debugProcess(process, 10, 10);
+	debugF(10,10,10);
 	LDST(process);
 }

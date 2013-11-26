@@ -86,7 +86,7 @@ int main(void)
 
 	initPcbs();
 	initASL();
-	LDIT(5000);
+	LDIT(100000);
 	setTIMER(5000);
 	/* iniltialize semaphores to 0*/
 	int j;

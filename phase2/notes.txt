@@ -103,6 +103,14 @@ Job #1
 			and perform a p - operation
 				decerement the sema4 if less than 0 insertblocked, call scheduler for someone else.
 
+
+	Localtimer
+		copy current state in to the proccescontorlblk 
+
+	interval timer
+	signal everyone whos waiting when the que
+		take everyone off and 
+
 	TlB
 	prgmTrap 
 	interrupt
