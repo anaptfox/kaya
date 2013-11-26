@@ -40,7 +40,7 @@ int deviceIterator(memaddr p){
 void intHandler(){
 
 	int cause = int_old->s_cause;
-		debugCause(cause , 10, 10);
+	debugCause(cause , 10, 10);
 
 	/*Interrupt Handler
 

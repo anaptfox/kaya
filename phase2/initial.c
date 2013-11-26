@@ -87,6 +87,7 @@ int main(void)
 	initPcbs();
 	initASL();
 	LDIT(5000);
+	setTIMER(5000);
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
