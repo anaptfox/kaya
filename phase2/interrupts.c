@@ -19,6 +19,10 @@ state_t *int_old = (state_t *) INT_OLD;
 
 int i;
 
+void debugCause (unsigned int p, int b, int c) {
+  int foo = 42;
+}
+
 /*p is the interrupting Bit*/
 
 int deviceIterator(memaddr p){
@@ -46,7 +50,8 @@ void intHandler(){
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 		*/
-		int cause = int_old->s_cause; 
+		int cause = int_old->s_cause;
+		debugCause(cause , 10, 10);
 
 		/*Pending int line*/
 		int line = deviceIterator(cause);

@@ -76,25 +76,17 @@ int main(void)
 		area->s_status = ALLOFF;
 
 		/* Interrupt*/
-		debugMikeyg(10,10,10);
 		area = (state_t *)INT_NEW;
-		debugMikeyg(10,10,10);
 		moveState(area, (state_t *) INT_NEW);
-		debugMikeyg(10,10,10);
 		area->s_pc = area->s_t9 = (memaddr) intHandler;
-		debugMikeyg(10,10,10);
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
-		debugMikeyg(10,10,10);
 		area->s_status = ALLOFF;
-		debugMikeyg(10,10,10);
 	
 	
 
 	initPcbs();
 	initASL();
-	debugMikeyg(10,10,10);
 	LDIT(100000);
-	debugMikeyg(10,10,10);
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
