@@ -9,11 +9,15 @@ void debugProcess (state_t *p, int b, int c) {
   int foo = 42;
 }
 
+void debugE (int a, int b, int c) {
+  int foo = 42;
+}
+
 void scheduler(){
 
 	currentProc = removeProcQ(&readyQue);
 
-
+	debugProcess(&(currentProc->p_s), 10, 10);
 	if(currentProc == NULL){
 		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
 		if(processCnt == 0){
@@ -24,17 +28,20 @@ void scheduler(){
 		}else{
 		/*if process count > 0 and the soft-block count > 0 enter a wait state. 
 			enable interrupts*/
+				debugE(10,10,10);
 		    LDIT(100000);
-		    debugProcess(&(currentProc->p_s), 10, 10);
+		    debugE(10,10,10);
 				setTIMER(0x08001101);
-				debugProcess(&(currentProc->p_s), 10, 10);
+				debugE(10,10,10);
 				/*handle interrupt*/
 				WAIT();
 		}
 	}
-
+	debugProcess(&(currentProc->p_s), 10, 10);
 	LDIT(5000);
+	debugProcess(&(currentProc->p_s), 10, 10);
 	STCK(startTOD);
+	debugProcess(&(currentProc->p_s), 10, 10);
 	continueWithCurrent(&(currentProc->p_s)); 
 	
 
