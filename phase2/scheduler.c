@@ -27,8 +27,9 @@ void scheduler(){
 		    LDIT(100000);
 		    debugProcess(&(currentProc->p_s), 10, 10);
 				setTIMER(0x08001101);
-			/*handle interrupt*/
-			WAIT();
+				debugProcess(&(currentProc->p_s), 10, 10);
+				/*handle interrupt*/
+				WAIT();
 		}
 	}
 
