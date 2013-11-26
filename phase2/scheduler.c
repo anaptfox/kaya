@@ -49,7 +49,7 @@ void scheduler(){
 	LDIT(5000);
 	debugProcess(&(currentProc->p_s), 10, 10);
 	STCK(startTOD);
-	debugProcess(&(currentProc->p_s), 10, 10);
+	debugG(10,10,10);
 	continueWithCurrent(&(currentProc->p_s)); 
 	
 
