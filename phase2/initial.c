@@ -81,12 +81,12 @@ int main(void)
 		area->s_pc = area->s_t9 = (memaddr) intHandler;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
-	
+
 	
 
 	initPcbs();
 	initASL();
-	LDIT(100000);
+	LDIT(5000);
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i++){
