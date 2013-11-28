@@ -24,7 +24,7 @@ void debugWAIT (int a, int b, int c) {
 }
 
 state_t *int_new = (state_t *) INT_NEW;
-state_t *int_old = (state_t *) INT_OLD;
+state_t *int_old_area = (state_t *) INT_OLD_area;
 
 
 void scheduler(){
@@ -51,7 +51,7 @@ void scheduler(){
 				/*handle interrupt*/
 				WAIT();
 				debugWAIT(10,10,10);
-				STST(int_old);
+				STST(int_old_area);
 				LDST(int_new);
 		}
 	}
