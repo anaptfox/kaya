@@ -50,9 +50,7 @@ void scheduler(){
 				debugE(10,10,10);
 				/*handle interrupt*/
 				WAIT();
-				debugWAIT(10,10,10);
-				STST(int_old_area);
-				LDST(int_new);
+	
 		}
 	}
 

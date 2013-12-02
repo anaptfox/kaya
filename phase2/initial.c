@@ -20,6 +20,8 @@ int softBlkCnt;
 
 int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
+int deviceStatuses[DEVICE_CNT][DEVICE_LINE];
+
 semd_t *pseudo_clock;
 
 cpu_t startTOD;
@@ -46,7 +48,7 @@ extern void test(void);
 
 int main(void)
 {
-	/* inilize the four new areas */
+		/* inilize the four new areas */
 		/* set up devregarea*/
 		devregarea_t *devregarea;
 
@@ -86,8 +88,11 @@ int main(void)
 
 	initPcbs();
 	initASL();
+
 	LDIT(100000);
+
 	setTIMER(5000);
+
 	/* iniltialize semaphores to 0*/
 	int j;
 	for(i=0; i<DEVICE_CNT; i = i + 1){
@@ -114,6 +119,7 @@ int main(void)
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
+
 	processCnt = processCnt + 1;
 	
 	scheduler();

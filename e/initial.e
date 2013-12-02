@@ -21,6 +21,8 @@ extern int softBlkCnt;
 
 extern int deviceSemas[DEVICE_CNT][DEVICE_LINE];
 
+extern int deviceStatuses[DEVICE_CNT][DEVICE_LINE];
+
 extern semd_t *pseudo_clock;
  
 extern cpu_t startTOD;

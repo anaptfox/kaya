@@ -7,13 +7,6 @@
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 #define deviceZero 0x00000001
-#define deviceOne 0x00000002
-#define deviceTwo 0x00000004
-#define deviceThree 0x00000008
-#define deviceFour 0x00000010
-#define deviceFive 0x00000020
-#define deviceSix 0x00000040
-#define deviceSeven 0x00000080
 
 state_t *int_old = (state_t *) INT_OLD;
 
@@ -32,7 +25,7 @@ int deviceIterator(memaddr p){
 	i = 8;
 	while(temp == 0 && i < 15){
 		temp = p & (device << 1);
-		i++;
+		i = i + 1;
 	}
 	return i - 8;	
 }
@@ -42,6 +35,12 @@ void intHandler(){
 	int cause = int_old->s_cause;
 	debugCause(cause , 10, 10);
 
+	if(currentProc = NULL){
+		moveState(int_old, &(currentProc->p_s));
+		debugCause(cause , 10, 10);
+	}
+
+
 	/*Interrupt Handler
 
 	In order to occur two things have to happen
@@ -49,6 +48,9 @@ void intHandler(){
 	Ints enable bit needs to beon*/
 
 	int ints_enabled = (int_old->s_status & IEc & IM);
+
+	debugCause(ints_enabled , 10, 10);
+
 	if(ints_enabled){
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)

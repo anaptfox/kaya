@@ -19,7 +19,7 @@ void debugB (int a, int b, int c) {
 void debugC (int a, int b, int c) {
   int foo = 42;
 }
-void debugD (int a, int b, int c) {
+void debugWAITFORIO (int a, int b, int c) {
   int foo = 42;
 }
 
@@ -30,6 +30,7 @@ void sysHandler(){
 	moveState(sys_old, &(currentProc->p_s));
 
 	currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
+	
 	kernel_mode = (sys_old->s_status) & KUp;
 
 
@@ -237,13 +238,20 @@ void Verhogen(int *semaddr){
 perform a P operation on a semaphore. */
 void Passeren(int *semaddr){
 
+	cpu_t endTOD;
+
 	*(semaddr) -= 1;
 
 	if(*(semaddr) <= -1){
+		
 		insertBlocked (semaddr , currentProc);
-		/*DO TIMING STUFF
-		store clock - do substracti - add to field of pcb */
+		
+		STCK(endTOD);
+	
+		currentProc->p_time = endTOD - startTOD;
+	
 		currentProc = NULL;
+		
 		scheduler();
 	}
 
@@ -275,32 +283,53 @@ void waitForClock(){
 
 }
 
-void waitForIO(int arg1, int arg2, int arg3){
+void waitForIO(int arg1, int arg2, int terminalRead){
 
 	/*arg1 = line number
 	arg2 = device number
 	arg3 = r/w
 	*/
 
+	/* If there is a terminal read increment device number by one to make a terminal transmition*/
+	if(terminalRead){
+		
+		/* do nothing*/
+	
+	}else{
+		
+		arg1 = arg1 + 1;
+		
+		debugWAITFORIO(arg1,10,10);
+	}
+
 	cpu_t endTOD;
-	debugA(10,10,10);
+
 	deviceSemas[arg2][arg1] -= 1;
 
-	debugA(arg1,arg2,10);
-	if(deviceSemas[arg2][arg1] <= -1){
-		debugB(10,10,10);
+	if(deviceSemas[arg2][arg1] < 0){
+
 		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
+
 		STCK(endTOD);
-		debugC(10,10,10);
+
 		currentProc->p_time = endTOD - startTOD;
-		debugA(arg1,arg2,10);
+
 		currentProc = NULL;
-		debugA(arg1,arg2,10);
+		
 		softBlkCnt++;
+		
 		scheduler();
-		debugD(10,10,10);
 	}
-	debugA(10,10,10);
+
+	if(terminalRead){
+		
+		currentProc->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2];
+	
+	}else{
+		
+		currentProc->p_s.s_v0 = deviceStatuses[arg1 - 3 + 1][arg2];
+	}
+	
 	continueWithCurrent(&(currentProc->p_s));
 
 
