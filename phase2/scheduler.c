@@ -30,32 +30,37 @@ state_t *int_old_area = (state_t *) INT_OLD;
 void scheduler(){
 
 	if(currentProc == NULL){
-		/*If the Process Count is zero invoke the HALT ROM service/instruction. */
-		if(processCnt == 0){
-			HALT();
-		}else if(processCnt > 0 && softBlkCnt == 0){
-			debugF(10,10,10);
-		/*Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
-		*/	PANIC();
-		}else{
-		/*if process count > 0 and the soft-block count > 0 enter a wait state. 
-			enable interrupts*/
-				debugE(10,10,10);
-		    LDIT(100000);
-		    debugE(10,10,10);
-				setTIMER(0x08001101);
-				debugE(10,10,10);
-				/*handle interrupt*/
-				WAIT();
-	
+		if(emptyProcQ(&readyQue)){
+			/*If the Process Count is zero invoke the HALT ROM service/instruction. */
+			if(processCnt == 0){
+				HALT();
+			}else if(processCnt > 0 && softBlkCnt == 0){
+				debugF(10,10,10);
+			/*Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
+			*/	
+				PANIC();
+			}else{
+			/*if process count > 0 and the soft-block count > 0 enter a wait state. 
+				enable interrupts*/
+					debugE(10,10,10);
+			    LDIT(100000);
+			    debugE(10,10,10);
+					setTIMER(0x08001101);
+					debugE(10,10,10);
+					/*handle interrupt*/
+					WAIT();
+			
+			}
 		}
+
+		currentProc = removeProcQ(&readyQue);
+
+		debugG(10,10,10);
+
+		continueWithCurrent(&(currentProc->p_s)); 
+
 	}
 
-	currentProc = removeProcQ(&readyQue);
-
-	debugG(10,10,10);
-
-	continueWithCurrent(&(currentProc->p_s)); 
 	
 
 }
