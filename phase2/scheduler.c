@@ -43,7 +43,7 @@ void scheduler(){
 			}else{
 			/*if process count > 0 and the soft-block count > 0 enter a wait state. 
 				enable interrupts*/
-					debugE(10,10,10);
+					debugE(67,10,10);
 			    setTIMER(100000000);
 			    
 					setSTATUS(ALLOFF || IEc || IM);
@@ -51,7 +51,7 @@ void scheduler(){
 					/*handle interrupt*/
 					WAIT();
 
-					debugE(10,10,10);
+					debugE(10,10,42);
 			
 			}
 		}
