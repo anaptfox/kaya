@@ -38,7 +38,7 @@ void moveState(state_t *before, state_t *after){
 	i = 0;
 	while(i < STATEREGNUM + 1) {
 		after->s_reg[i] = before->s_reg[i];
-		i++;
+		i = i + 1;
 	}
 }
 
@@ -90,8 +90,8 @@ int main(void)
 	setTIMER(5000);
 	/* iniltialize semaphores to 0*/
 	int j;
-	for(i=0; i<DEVICE_CNT; i++){
-    for(j=0; j<DEVICE_LINE; j++){
+	for(i=0; i<DEVICE_CNT; i = i + 1){
+    for(j=0; j<DEVICE_LINE; j = j + 1){
       deviceSemas[i][j] = 0;
     }
   }
@@ -114,7 +114,7 @@ int main(void)
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
-	processCnt++;
+	processCnt = processCnt + 1;
 	
 	scheduler();
 
