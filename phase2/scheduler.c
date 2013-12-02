@@ -45,11 +45,13 @@ void scheduler(){
 				enable interrupts*/
 					debugE(10,10,10);
 			    setTIMER(100000000);
-			    debugE(10,10,10);
+			    
 					setSTATUS(ALLOFF || IEc || IM);
-					debugE(10,10,10);
+					
 					/*handle interrupt*/
 					WAIT();
+
+					debugE(10,10,10);
 			
 			}
 		}
