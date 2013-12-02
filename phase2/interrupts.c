@@ -40,6 +40,9 @@ void intHandler(){
 		debugCause(cause , 10, 10);
 	}
 
+	int line = deviceIterator(cause);
+
+	debugCause(line , 10, 10);
 
 	/*Interrupt Handler
 
