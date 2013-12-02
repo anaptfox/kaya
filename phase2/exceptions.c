@@ -309,6 +309,7 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 	debugA(arg1,10,10);
 
 	if(deviceSemas[arg2][arg1] < 0){
+		
 		debugB(arg1,10,10);
 
 		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
@@ -322,10 +323,12 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		softBlkCnt++;
 		
 		scheduler();
+
 		debugB(arg1,10,10);
 	}
 
 	debugA(arg1,10,10);
+
 	if(terminalRead){
 		
 		currentProc->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2];
