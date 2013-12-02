@@ -34,7 +34,7 @@ void scheduler(){
 		if(processCnt == 0){
 			HALT();
 		}else if(processCnt > 0 && softBlkCnt == 0){
-			debugG(10,10,10);
+			debugF(10,10,10);
 		/*Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
 		*/	PANIC();
 		}else{
@@ -54,7 +54,7 @@ void scheduler(){
 	currentProc = removeProcQ(&readyQue);
 
 	debugG(10,10,10);
-	
+
 	continueWithCurrent(&(currentProc->p_s)); 
 	
 
@@ -62,6 +62,5 @@ void scheduler(){
 
 
 void continueWithCurrent(state_t *process){
-	debugF(10,10,10);
 	LDST(process);
 }
