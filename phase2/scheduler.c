@@ -23,7 +23,6 @@ void debugWAIT (int a, int b, int c) {
   int foo = 42;
 }
 
-state_t *int_new = (state_t *) INT_NEW;
 state_t *int_old_area = (state_t *) INT_OLD;
 
 

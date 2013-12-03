@@ -8,6 +8,8 @@
 
 #define deviceZero 0x00000001
 
+state_t *int_new = (state_t *) INT_NEW;
+
 state_t *int_old = (state_t *) INT_OLD;
 
 int i;
@@ -43,12 +45,11 @@ int deviceIterator(memaddr p){
 void intHandler(){
 
 	int cause = int_old->s_cause;
-	debugCause(cause , 10, 10);
 
 	if(currentProc == NULL){
-		debugA(10,10,10);
-		moveState(int_old, &(currentProc->p_s));
-		debugCause(cause , 10, 10);
+
+		moveState(int_new, &(currentProc->p_s));
+
 	}
 	debugA(10,10,10);
 	int line = deviceIterator(cause);
