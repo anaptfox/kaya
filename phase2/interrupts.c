@@ -43,28 +43,33 @@ int findDevice(int lineNumber){
 
 	int lineIndex; 
 
-	lineIndex = lineNumber;
+	lineIndex = lineNumber - 3;
 
 	if(lineNumber == TERMINT){
-		if(terminalRead){
-			
-			lineIndex = lineIndex - 3;
-		
-		}else{
-			
-			lineIndex = lineIndex - 2;
-			
+		/* SEARCH READ */
+		i = 0;
+		while(i < DEVICE_CNT){
+			if (deviceSemas[lineIndex][i] < 0){
+				return i;
+			}
+			i = i + 1;
+		}
+		/* SEARCH TRANSMITTION */
+		i = 0;
+		while(i < DEVICE_CNT){
+			if (deviceSemas[lineIndex + 1][i] < 0){
+				return i;
+			}
+			i = i + 1;
 		}
 	}else{
-		lineIndex = lineIndex - 3;
-	}
-
-	i = 0;
-	while(i < DEVICE_CNT){
-		if (deviceSemas[lineIndex][i] < 0){
-			return i;
+		
+		while(i < DEVICE_CNT){
+			if (deviceSemas[lineIndex][i] < 0){
+				return i;
+			}
+			i = i + 1;
 		}
-		i = i + 1;
 	}
 
 	return NULL;
