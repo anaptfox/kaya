@@ -144,17 +144,14 @@ void intHandler(){
 			unsigned int deviceStatus;
 
 			if(line == TERMINT){
-				debugB(55,55,55);
 
 				if(terminalRead == 1){
-					debugB(77,77,77);
 					/* read the status */
 					deviceStatus = deviceWord->t_recv_status;
 					/* ack the int */
 					deviceWord-> t_recv_command = 1;
 				
 				}else{
-					debugB(777, 999, 123);
 					/* read the status */
 					deviceStatus = deviceWord->t_transm_status;
 					/* ack the int */
@@ -163,7 +160,6 @@ void intHandler(){
 				}
 
 			}else{
-				debugB(88,88,88);
 				/* read the status */
 				deviceStatus = deviceWord->d_status;
 				/* ack the int */
@@ -185,8 +181,6 @@ void intHandler(){
 					lineIndex = lineIndex - 3;
 				
 				}else{
-
-					debugB(999, 999, 123);
 					
 					lineIndex = lineIndex - 2;
 					
@@ -202,34 +196,64 @@ void intHandler(){
 
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
+
 					
 			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
+			if(p == NULL){
+				debugB(999, 999, 123);
 
-			if(line == TERMINT){
+				insertProcQ (&readyQue, p);
 
-				if(terminalRead == 1){
-							
-					p->p_s.s_v0 = deviceStatuses[line - 3][device] = deviceStatus;
-				
-				}else{
+				softBlkCnt = softBlkCnt - 1;
+
+				if(line == TERMINT){
+
+					if(terminalRead == 1){
+								
+						p->p_s.s_v0 = deviceStatus;
 					
-					p->p_s.s_v0 = deviceStatuses[line - 3 + 1][device] = deviceStatus;
+					}else{
+						
+						p->p_s.s_v0 = deviceStatus;
 
+					}
+
+				}else{
+
+					p->p_s.s_v0 = deviceStatus;
+				
 				}
 
-			}else{
+		
 
-				p->p_s.s_v0 = deviceStatuses[line - 3][device] = deviceStatus;
-			
+			}else{
+				debugB(999, 999, 123);
+
+				if(line == TERMINT){
+
+					if(terminalRead == 1){
+								
+						deviceStatuses[line - 3][device] = deviceStatus;
+					
+					}else{
+						
+						deviceStatuses[line - 3 + 1][device] = deviceStatus;
+
+					}
+
+				}else{
+
+					deviceStatuses[line - 3][device] = deviceStatus;
+				
+				}
+
 			}
+
+
 
 		}
 
-	
-		insertProcQ (&readyQue, p);
-
-		softBlkCnt = softBlkCnt - 1;
 		
 		currentProc = NULL;
 
