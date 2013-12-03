@@ -202,17 +202,17 @@ void intHandler(){
 
 				if(terminalRead){
 							
-					p->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2] = deviceStatus;
+					p->p_s.s_v0 = deviceStatuses[line - 3][device] = deviceStatus;
 				
 				}else{
 					
-					p->p_s.s_v0 = deviceStatuses[arg1 - 3 + 1][arg2] = deviceStatus;
+					p->p_s.s_v0 = deviceStatuses[line - 3 + 1][device] = deviceStatus;
 
 				}
 
 			}else{
 
-				p->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2] = deviceStatus;
+				p->p_s.s_v0 = deviceStatuses[line - 3][device] = deviceStatus;
 			
 			}
 
