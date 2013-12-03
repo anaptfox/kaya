@@ -46,12 +46,12 @@ void intHandler(){
 
 	int cause = int_old->s_cause;
 
-	if(currentProc == NULL){
+	if(currentProc != NULL){
 
-		moveState(int_new, &(currentProc->p_s));
+		moveState(int_old, &(currentProc->p_s));
 
 	}
-	debugA(10,10,10);
+	
 	int line = deviceIterator(cause);
 
 	debugCause(line , 10, 10);

@@ -33,21 +33,15 @@ void debugMikeyg (int a, int b, int c) {
 
 /* Copy before into after */
 void moveState(state_t *before, state_t *after){
-	debugMikeyg(5,10,10);
 	after->s_asid = before->s_asid;
-	debugMikeyg(6,10,10);
 	after->s_cause = before->s_cause;
-	debugMikeyg(7,10,10);
 	after->s_status = before->s_status;
-	debugMikeyg(8,10,10);
 	after->s_pc = before->s_pc;
-	debugMikeyg(9,10,10);
 	i = 0;
 	while(i < STATEREGNUM + 1) {
 		after->s_reg[i] = before->s_reg[i];
 		i = i + 1;
 	}
-	debugMikeyg(10,10,10);
 }
 
 extern void test(void);
