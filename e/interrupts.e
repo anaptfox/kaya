@@ -8,7 +8,6 @@
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
-extern int deviceIterator(memaddr p);
 extern void intHandler();
 
 #endif

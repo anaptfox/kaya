@@ -27,7 +27,7 @@ void debugCause (unsigned int p, int b, int c) {
 
 /*p is the interrupting Bit*/
 
-int deviceIterator(memaddr p){
+int findLine(memaddr p){
 	memaddr device = deviceZero;
 	int temp;
 	temp = p & device;
@@ -39,11 +39,29 @@ int deviceIterator(memaddr p){
 	return i - 8;	
 }
 
-int findLine(int deviceNumber){
-	
+int findDevice(int lineNumber){
+
+	int lineIndex; 
+
+	lineIndex = lineNumber;
+
+	if(lineNumber == TERMINT){
+		if(terminalRead){
+			
+			lineIndex = lineIndex - 3;
+		
+		}else{
+			
+			lineIndex = lineIndex - 2;
+			
+		}
+	}else{
+		lineIndex = lineIndex - 3;
+	}
+
 	i = 0;
-	while(i < DEVICE_LINE){
-		if (deviceSemas[deviceNumber][i] < 0){
+	while(i < DEVICE_CNT){
+		if (deviceSemas[lineIndex][i] < 0){
 			return i;
 		}
 		i = i + 1;
@@ -67,11 +85,11 @@ void intHandler(){
 
 	}
 
-	int device = deviceIterator(cause);
+	int line = findLine(cause);
 
-	int line = findLine(device);
+	int device = findDevice(device);
 
-	if(line == NULL){
+	if(device == NULL){
 		PANIC();
 	}
 
@@ -95,7 +113,7 @@ void intHandler(){
 		debugCause(cause , 10, 10);
 
 		/*Pending int line*/
-		int line = deviceIterator(cause);
+		int line = findLine(cause);
 
 							
 		/*find out which device number it is given the line number

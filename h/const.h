@@ -95,8 +95,8 @@
 #define SYS_NEW 0x200003d4
 #define SYS_OLD 0x20000348
 
-#define DEVICE_CNT 6
-#define DEVICE_LINE 8
+#define DEVICE_CNT 8
+#define DEVICE_LINE 6
 
 
 

@@ -281,25 +281,35 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 	*/
 
 	/* If there is a terminal read increment device number by one to make a terminal transmition*/
-	if(terminalRead){
+
+	int lineIndex; 
+
+	lineIndex = arg1;
+
+	if(arg1 == TERMINT){
+		if(terminalRead){
+			
+			lineIndex = lineIndex - 3;
 		
-		/* do nothing*/
-	
+		}else{
+			
+			lineIndex = lineIndex - 2;
+			
+		}
 	}else{
-		
-		arg1 = arg1 + 1;
-		
+		lineIndex = lineIndex - 3;
 	}
+
 
 	cpu_t endTOD;
 
-	deviceSemas[arg2][arg1] -= 1;
+	deviceSemas[lineIndex][arg2] -= 1;
 
 
-	if(deviceSemas[arg2][arg1] < 0){
+	if(deviceSemas[lineIndex][arg2] < 0){
 		
-		debugC(arg2, arg1, 10);
-		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
+		debugC(lineIndex, arg2, 10);
+		insertBlocked (&(deviceSemas[lineIndex][arg2] ), currentProc);
 
 		STCK(endTOD);
 
