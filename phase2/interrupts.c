@@ -48,6 +48,7 @@ int findLine(int deviceNumber){
 		if (deviceSemas[deviceNumber][i] < 0){
 			return i;
 		}
+		i = i + 1;
 	}
 
 	return NULL;
