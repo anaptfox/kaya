@@ -139,20 +139,21 @@ void intHandler(){
 				
 			deviceWord = &(devregarea->devreg[deviceWordIndex]);
 			
-
+			unsigned int deviceStatus;
+			
 			if(line == TERMINT){
 
 				if(terminalRead){
 					
 					/* read the status */
-					unsigned int deviceStatus = deviceWord->t_recv_status;
+					deviceStatus = deviceWord->t_recv_status;
 					/* ack the int */
 					deviceWord-> t_recv_command = 1;
 				
 				}else{
 					
 					/* read the status */
-					unsigned int deviceStatus = deviceWord->t_transm_status;
+					deviceStatus = deviceWord->t_transm_status;
 					/* ack the int */
 					deviceWord-> t_transm_command = 1;
 					
@@ -161,7 +162,7 @@ void intHandler(){
 			}else{
 
 				/* read the status */
-				unsigned int deviceStatus = deviceWord->d_status;
+				deviceStatus = deviceWord->d_status;
 				/* ack the int */
 				deviceWord-> d_command = 1;
 
