@@ -120,6 +120,7 @@ void intHandler(){
 		}
 
 		int line = findLine(cause);
+		debugCause(line , 10, 10);
 
 		if(line == 0 || line == 1){
 
@@ -128,12 +129,11 @@ void intHandler(){
 		}else{
 
 			int device = findDevice(line);
+			debugCause(device , 10, 10);
 
 			if(device == NULL){
 				PANIC();
 			}
-
-			debugCause(device , 10, 10);
 
 
 			int deviceWordIndex = ((((line - 3) * 8) - 8) + device );
@@ -153,7 +153,7 @@ void intHandler(){
 					deviceWord-> t_recv_command = 1;
 				
 				}else{
-					
+					debugB(777, 999, 123);
 					/* read the status */
 					deviceStatus = deviceWord->t_transm_status;
 					/* ack the int */
@@ -184,6 +184,8 @@ void intHandler(){
 					lineIndex = lineIndex - 3;
 				
 				}else{
+
+					debugB(999, 999, 123);
 					
 					lineIndex = lineIndex - 2;
 					
