@@ -35,7 +35,7 @@ void intHandler(){
 	int cause = int_old->s_cause;
 	debugCause(cause , 10, 10);
 
-	if(currentProc = NULL){
+	if(currentProc == NULL){
 		moveState(int_old, &(currentProc->p_s));
 		debugCause(cause , 10, 10);
 	}
