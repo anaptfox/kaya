@@ -87,6 +87,8 @@ void intHandler(){
 
 	device_t *deviceWord;
 
+	pcb_t *p;
+
 
 	/*Interrupt Handler
 
@@ -140,7 +142,7 @@ void intHandler(){
 			deviceWord = &(devregarea->devreg[deviceWordIndex]);
 			
 			unsigned int deviceStatus;
-			
+
 			if(line == TERMINT){
 
 				if(terminalRead){
@@ -196,7 +198,7 @@ void intHandler(){
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
 					
-			pcb_t *p = removeBlocked(deviceSemas[lineIndex][device]);
+			p = removeBlocked(deviceSemas[lineIndex][device]);
 
 
 			if(line == TERMINT){
