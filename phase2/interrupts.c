@@ -12,7 +12,7 @@ state_t *int_new = (state_t *) INT_NEW;
 
 state_t *int_old = (state_t *) INT_OLD;
 
-int terminalRead = NULL;
+int terminalRead = 0;
 
 int i;
 
@@ -52,7 +52,6 @@ int findDevice(int lineNumber){
 		i = 0;
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex][i] < 0){
-				debugB(55, 55, 55);
 				terminalRead = 1;
 				return i;
 			}
@@ -62,7 +61,6 @@ int findDevice(int lineNumber){
 		i = 0;
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex + 1][i] < 0){
-				debugB(66, 66, 66);
 				return i;
 			}
 			i = i + 1;
@@ -146,9 +144,10 @@ void intHandler(){
 			unsigned int deviceStatus;
 
 			if(line == TERMINT){
+				debugB(55,55,55);
 
-				if(terminalRead){
-					
+				if(terminalRead == 1){
+					debugB(77,77,77);
 					/* read the status */
 					deviceStatus = deviceWord->t_recv_status;
 					/* ack the int */
@@ -164,7 +163,7 @@ void intHandler(){
 				}
 
 			}else{
-
+				debugB(88,88,88);
 				/* read the status */
 				deviceStatus = deviceWord->d_status;
 				/* ack the int */
@@ -181,7 +180,7 @@ void intHandler(){
 
 			if(line == TERMINT){
 
-				if(terminalRead){
+				if(terminalRead == 1){
 					
 					lineIndex = lineIndex - 3;
 				
@@ -209,7 +208,7 @@ void intHandler(){
 
 			if(line == TERMINT){
 
-				if(terminalRead){
+				if(terminalRead == 1){
 							
 					p->p_s.s_v0 = deviceStatuses[line - 3][device] = deviceStatus;
 				
@@ -235,7 +234,7 @@ void intHandler(){
 		currentProc = NULL;
 
 		/* Reset terminal read */
-		terminalRead = NULL;
+		terminalRead = 0;
 
 		scheduler();
 		
