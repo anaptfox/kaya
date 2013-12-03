@@ -51,7 +51,7 @@ void intHandler(){
 		moveState(int_old, &(currentProc->p_s));
 
 	}
-	
+
 	int line = deviceIterator(cause);
 
 	debugCause(line , 10, 10);
@@ -62,7 +62,7 @@ void intHandler(){
 	
 	Ints enable bit needs to beon*/
 
-	int ints_enabled = (int_old->s_status & IEc & IM);
+	int ints_enabled = (int_old->s_status & IEp & IM);
 
 	debugCause(ints_enabled , 10, 10);
 
