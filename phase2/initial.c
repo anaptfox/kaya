@@ -20,7 +20,7 @@ int softBlkCnt;
 
 int deviceSemas[DEVICE_LINE][DEVICE_CNT];
 
-int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
+unsigned int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
 
 semd_t *pseudo_clock;
 
