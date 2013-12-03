@@ -10,18 +10,6 @@ state_t *sys_old = (state_t *) SYS_OLD;
 state_t *pgm_old = (state_t *) PGMTRAP_OLD;
 state_t *tlb_old = (state_t *) TLB_OLD;
 
-void debugA (int a, int b, int c) {
-  int foo = 42;
-}
-void debugB (int a, int b, int c) {
-  int foo = 42;
-}
-void debugC (int a, int b, int c) {
-  int foo = 42;
-}
-void debugWAITFORIO (int a, int b, int c) {
-  int foo = 42;
-}
 
 void sysHandler(){
 
@@ -299,18 +287,15 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		
 		arg1 = arg1 + 1;
 		
-		debugWAITFORIO(arg1,10,10);
 	}
 
 	cpu_t endTOD;
 
 	deviceSemas[arg2][arg1] -= 1;
 
-	debugA(arg1,10,10);
 
 	if(deviceSemas[arg2][arg1] < 0){
 		
-		debugB(arg1,10,10);
 
 		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
 
@@ -324,10 +309,8 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		
 		scheduler();
 
-		debugB(arg1,10,10);
 	}
 
-	debugA(arg1,10,10);
 
 	if(terminalRead){
 		
@@ -338,7 +321,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		currentProc->p_s.s_v0 = deviceStatuses[arg1 - 3 + 1][arg2];
 	}
 
-	debugA(arg1,10,10);
 	
 	continueWithCurrent(&(currentProc->p_s));
 

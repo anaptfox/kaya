@@ -12,6 +12,16 @@ state_t *int_old = (state_t *) INT_OLD;
 
 int i;
 
+void debugA (int a, int b, int c) {
+  int foo = 42;
+}
+void debugB (int a, int b, int c) {
+  int foo = 42;
+}
+void debugC (int a, int b, int c) {
+  int foo = 42;
+}
+
 void debugCause (unsigned int p, int b, int c) {
   int foo = 42;
 }
@@ -36,10 +46,11 @@ void intHandler(){
 	debugCause(cause , 10, 10);
 
 	if(currentProc == NULL){
+		debugA(10,10,10);
 		moveState(int_old, &(currentProc->p_s));
 		debugCause(cause , 10, 10);
 	}
-
+	debugA(10,10,10);
 	int line = deviceIterator(cause);
 
 	debugCause(line , 10, 10);
