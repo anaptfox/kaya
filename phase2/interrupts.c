@@ -40,6 +40,7 @@ int deviceIterator(memaddr p){
 }
 
 int findLine(int deviceNumber){
+	
 	i = 0;
 	while(i < DEVICE_LINE){
 		if (deviceSemas[deviceNumber][i] < 0){
