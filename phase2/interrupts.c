@@ -42,6 +42,17 @@ int deviceIterator(memaddr p){
 	return i - 8;	
 }
 
+int findLine(int deviceNumber){
+	i = 0;
+	while(i < DEVICE_LINE){
+		if (deviceSemas[deviceNumber][i] < 0){
+			return i;
+		}
+	}
+
+	return NULL;
+}
+
 void intHandler(){
 
 	int cause = int_old->s_cause;
@@ -52,7 +63,9 @@ void intHandler(){
 
 	}
 
-	int line = deviceIterator(cause);
+	int device = deviceIterator(cause);
+
+	int line = findLine(device);
 
 	debugCause(line , 10, 10);
 
@@ -66,7 +79,7 @@ void intHandler(){
 
 	debugCause(ints_enabled , 10, 10);
 
-	if(ints_enabled){
+	if(1){
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 		*/
