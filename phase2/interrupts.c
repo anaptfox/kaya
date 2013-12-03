@@ -63,7 +63,7 @@ int findDevice(int lineNumber){
 			i = i + 1;
 		}
 	}else{
-		
+
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex][i] < 0){
 				return i;
@@ -92,13 +92,13 @@ void intHandler(){
 
 	int line = findLine(cause);
 
-	int device = findDevice(device);
+	int device = findDevice(line);
 
 	if(device == NULL){
 		PANIC();
 	}
 
-	debugCause(line , 10, 10);
+	debugCause(device , 10, 10);
 
 	/*Interrupt Handler
 
