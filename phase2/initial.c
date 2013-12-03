@@ -95,8 +95,8 @@ int main(void)
 
 	/* iniltialize semaphores to 0*/
 	int j;
-	for(i=0; i<DEVICE_CNT; i = i + 1){
-    for(j=0; j<DEVICE_LINE; j = j + 1){
+	for(i=0; i<DEVICE_LINE; i = i + 1){
+    for(j=0; j<DEVICE_CNT; j = j + 1){
       deviceSemas[i][j] = 0;
     }
   }
