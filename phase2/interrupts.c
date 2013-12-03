@@ -195,10 +195,12 @@ void intHandler(){
 
 			}
 
+			debugB(lineIndex, device, 123);
+
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
 					
-			p = removeBlocked(deviceSemas[lineIndex][device]);
+			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
 
 			if(line == TERMINT){
