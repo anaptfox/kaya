@@ -20,9 +20,6 @@ void debugA (int a, int b, int c) {
 void debugB (int a, int b, int c) {
   int foo = 42;
 }
-void debugC (int a, int b, int c) {
-  int foo = 42;
-}
 
 void debugCause (unsigned int p, int b, int c) {
   int foo = 42;
@@ -72,6 +69,10 @@ void intHandler(){
 	int device = deviceIterator(cause);
 
 	int line = findLine(device);
+
+	if(line == NULL){
+		PANIC();
+	}
 
 	debugCause(line , 10, 10);
 

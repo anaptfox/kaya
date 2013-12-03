@@ -10,7 +10,9 @@ state_t *sys_old = (state_t *) SYS_OLD;
 state_t *pgm_old = (state_t *) PGMTRAP_OLD;
 state_t *tlb_old = (state_t *) TLB_OLD;
 
-
+void debugC (int a, int b, int c) {
+  int foo = 42;
+}
 void sysHandler(){
 
 	int kernel_mode;
@@ -296,7 +298,7 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 	if(deviceSemas[arg2][arg1] < 0){
 		
-
+		debugC(arg2, arg1, 10);
 		insertBlocked (&(deviceSemas[arg2][arg1] ), currentProc);
 
 		STCK(endTOD);
