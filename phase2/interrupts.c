@@ -52,6 +52,7 @@ int findDevice(int lineNumber){
 		i = 0;
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex][i] < 0){
+				debugB(55, 55, 55);
 				terminalRead = 1;
 				return i;
 			}
@@ -61,6 +62,7 @@ int findDevice(int lineNumber){
 		i = 0;
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex + 1][i] < 0){
+				debugB(66, 66, 66);
 				return i;
 			}
 			i = i + 1;
