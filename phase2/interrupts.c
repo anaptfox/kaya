@@ -12,6 +12,8 @@ state_t *int_new = (state_t *) INT_NEW;
 
 state_t *int_old = (state_t *) INT_OLD;
 
+int terminalRead = NULL;
+
 int i;
 
 void debugA (int a, int b, int c) {
@@ -50,6 +52,7 @@ int findDevice(int lineNumber){
 		i = 0;
 		while(i < DEVICE_CNT){
 			if (deviceSemas[lineIndex][i] < 0){
+				terminalRead = 1;
 				return i;
 			}
 			i = i + 1;
@@ -82,23 +85,8 @@ void intHandler(){
 
 	devregarea = (devregarea_t *) 0x10000000;
 
-	int cause = int_old->s_cause;
+	device_t *deviceWord;
 
-	if(currentProc != NULL){
-
-		moveState(int_old, &(currentProc->p_s));
-
-	}
-
-	int line = findLine(cause);
-
-	int device = findDevice(line);
-
-	if(device == NULL){
-		PANIC();
-	}
-
-	debugCause(device , 10, 10);
 
 	/*Interrupt Handler
 
@@ -114,57 +102,131 @@ void intHandler(){
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 		*/
-		int cause = int_old->s_cause;
-		debugCause(cause , 10, 10);
 
-		/*Pending int line*/
-		int line = findLine(cause);
-
-							
 		/*find out which device number it is given the line number
 		in device register area, interrupt device bitmap
 		each one is a word 
 		go to the appropriate word for that line , then use that word to find
 		the lowest ordered bit that's on to find the disk*/
-		device_t *device;
 
-		int device_num;
+		int cause = int_old->s_cause;
 
-		/*get the device register*/
-		if(line == 3) {/*line 3 word 0*/
-			device = (device_t *) 0x1000003C;
-			device_num = 3;
+		if(currentProc != NULL){
+
+			moveState(int_old, &(currentProc->p_s));
+
 		}
-		if(line == 4) { /*line 4 word 1*/
-			device = (device_t *) 0x10000040;
-			device_num = 4;
-		}
-		if(line == 5) { /*line 5 word 2*/
-			device = (device_t *) 0x10000044;
-			device_num = 5;
-		}
-		if(line == 6) { /*line 6 word 3*/
-			device = (device_t *) 0x10000048;
-			device_num = 6;
-		}
-		if(line == 7) { /* line 7 word 4 */
-			device = (device_t *) 0x1000004C;
-			device_num = 7;
-		}
-					
-		
-		/* read the status */
-		memaddr device_status = device->d_status;
-		/* ack the int */
-		device-> d_command = 1;
+
+		int line = findLine(cause);
+
+		if(line == 0 || line == 1){
+
+			/* handle clocks */
+
+		}else{
+
+			int device = findDevice(line);
+
+			if(device == NULL){
+				PANIC();
+			}
+
+			debugCause(device , 10, 10);
+
+
+			int deviceWordIndex = ((((line - 3) * 8) - 8) + device );
+
 				
-		pcb_t *p = removeBlocked(deviceSemas[device_num][line]);
+			deviceWord = &(devregarea->devreg[deviceWordIndex]);
+			
 
-		p->p_s.s_v0 = device_status;
-		
+			if(line == TERMINT){
+
+				if(terminalRead){
+					
+					/* read the status */
+					unsigned int deviceStatus = deviceWord->t_recv_status;
+					/* ack the int */
+					deviceWord-> t_recv_command = 1;
+				
+				}else{
+					
+					/* read the status */
+					unsigned int deviceStatus = deviceWord->t_transm_status;
+					/* ack the int */
+					deviceWord-> t_transm_command = 1;
+					
+				}
+
+			}else{
+
+				/* read the status */
+				unsigned int deviceStatus = deviceWord->d_status;
+				/* ack the int */
+				deviceWord-> d_command = 1;
+
+			}		
+			
+
+
+
+			int lineIndex; 
+
+			lineIndex = line;
+
+			if(line == TERMINT){
+
+				if(terminalRead){
+					
+					lineIndex = lineIndex - 3;
+				
+				}else{
+					
+					lineIndex = lineIndex - 2;
+					
+				}
+
+			}else{
+
+				lineIndex = lineIndex - 3;
+
+			}
+
+			/* Increment sema accociated with device */
+			deviceSemas[lineIndex][device] += 1;
+					
+			pcb_t *p = removeBlocked(deviceSemas[lineIndex][device]);
+
+
+			if(line == TERMINT){
+
+				if(terminalRead){
+							
+					p->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2] = deviceStatus;
+				
+				}else{
+					
+					p->p_s.s_v0 = deviceStatuses[arg1 - 3 + 1][arg2] = deviceStatus;
+
+				}
+
+			}else{
+
+				p->p_s.s_v0 = deviceStatuses[arg1 - 3][arg2] = deviceStatus;
+			
+			}
+
+		}
+
+	
 		insertProcQ (&readyQue, p);
+
+		softBlkCnt = softBlkCnt - 1;
 		
 		currentProc = NULL;
+
+		/* Reset terminal read */
+		terminalRead = NULL;
 
 		scheduler();
 		
