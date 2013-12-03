@@ -55,6 +55,11 @@ int findLine(int deviceNumber){
 
 void intHandler(){
 
+	/* set up devregarea*/
+	devregarea_t *devregarea;
+
+	devregarea = (devregarea_t *) 0x10000000;
+
 	int cause = int_old->s_cause;
 
 	if(currentProc != NULL){
