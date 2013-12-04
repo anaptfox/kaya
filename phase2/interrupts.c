@@ -196,6 +196,7 @@ void intHandler(){
 			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
 			if(p == NULL){
+				debugB(1010101010, device, 123);
 
 				if(line == TERMINT){
 
@@ -217,7 +218,7 @@ void intHandler(){
 
 			}else{
 				insertProcQ (&readyQue, p);
-
+				debugB(1111111111, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;
 
@@ -248,6 +249,7 @@ void intHandler(){
 		}
 
 		currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
+
 		/* Reset terminal read */
 		terminalRead = 0;
 
