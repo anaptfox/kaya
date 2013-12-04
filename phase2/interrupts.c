@@ -218,13 +218,13 @@ void intHandler(){
 
 			}else{
 				insertProcQ (&readyQue, p);
-				debugB(1111111111, device, 123);
+				debugB(1111111111, 12, 123);
 
 				softBlkCnt = softBlkCnt - 1;
-				debugB(1010101010, device, 123);
+				debugB(1010101010, 12, 123);
 
 				if(line == TERMINT){
-					debugB(112131, device, 123);
+					debugB(112131, 23, 123);
 					if(terminalRead == 1){
 								
 						p->p_s.s_v0 = deviceStatus;
@@ -236,7 +236,7 @@ void intHandler(){
 					}
 
 				}else{
-					debugB(111324343, device, 123);
+					debugB(111324343, 23, 123);
 					p->p_s.s_v0 = deviceStatus;
 				
 				}
@@ -248,11 +248,11 @@ void intHandler(){
 
 		}
 
-		debugB(12121, device, 123);
+		debugB(12121, 23, 123);
 
 		currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 
-		debugB(12121, device, 123);
+		debugB(12121, 23, 123);
 
 		/* Reset terminal read */
 		terminalRead = 0;
