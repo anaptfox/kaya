@@ -55,6 +55,8 @@ void scheduler(){
 			}
 		}
 
+		debugG(11,10,10);
+
 		currentProc = removeProcQ(&readyQue);
 
 		debugG(10,10,10);
