@@ -196,15 +196,31 @@ void intHandler(){
 			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
 			if(p == NULL){
-				debugB(1000, 999, 123);
 
+				if(line == TERMINT){
+
+					if(terminalRead == 1){
+								
+						deviceStatuses[line - 3][device] = deviceStatus;
+					
+					}else{
+						
+						deviceStatuses[line - 3 + 1][device] = deviceStatus;
+
+					}
+
+				}else{
+
+					deviceStatuses[line - 3][device] = deviceStatus;
+				
+				}
+
+			}else{
 				insertProcQ (&readyQue, p);
 
-				debugB(777, 999, 123);
 
 				softBlkCnt = softBlkCnt - 1;
 
-				debugB(888, 999, 123);
 
 				if(line == TERMINT){
 
@@ -224,30 +240,6 @@ void intHandler(){
 				
 				}
 
-				debugB(1010, 999, 123);
-
-		
-
-			}else{
-				debugB(999, 999, 123);
-
-				if(line == TERMINT){
-
-					if(terminalRead == 1){
-								
-						deviceStatuses[line - 3][device] = deviceStatus;
-					
-					}else{
-						
-						deviceStatuses[line - 3 + 1][device] = deviceStatus;
-
-					}
-
-				}else{
-
-					deviceStatuses[line - 3][device] = deviceStatus;
-				
-				}
 
 			}
 
