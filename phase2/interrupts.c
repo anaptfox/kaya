@@ -196,7 +196,7 @@ void intHandler(){
 			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
 			if(p == NULL){
-				debugB(999, 999, 123);
+				debugB(1000, 999, 123);
 
 				insertProcQ (&readyQue, p);
 
