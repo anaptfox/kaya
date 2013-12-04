@@ -110,7 +110,7 @@ void intHandler(){
 
 		if(currentProc != NULL){
 
-			moveState(int_old, &(currentProc->p_s));
+			moveState(int_new, &(currentProc->p_s));
 
 		}
 
