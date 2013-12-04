@@ -148,9 +148,6 @@ void intHandler(){
 
 			}		
 
-
-			int deviceWordIndex = ((((line - 3) * 8) - 8) + device );
-
 				
 			deviceWord = &(devregarea->devreg[deviceWordIndex]);
 			
