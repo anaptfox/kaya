@@ -144,13 +144,13 @@ void intHandler(){
 					/* read the status */
 					deviceStatus = deviceWord->t_recv_status;
 					/* ack the int */
-					deviceWord-> t_recv_command = 1;
+					deviceWord-> t_recv_command = ACK;
 				
 				}else{
 					/* read the status */
 					deviceStatus = deviceWord->t_transm_status;
 					/* ack the int */
-					deviceWord-> t_transm_command = 1;
+					deviceWord->t_transm_command = ACK;
 					
 				}
 
@@ -158,7 +158,7 @@ void intHandler(){
 				/* read the status */
 				deviceStatus = deviceWord->d_status;
 				/* ack the int */
-				deviceWord-> d_command = 1;
+				deviceWord-> d_command = ACK;
 
 			}		
 			
