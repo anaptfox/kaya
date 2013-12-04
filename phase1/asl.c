@@ -5,6 +5,10 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
+void debugASL (int a, int b, int c) {
+  int foo = 42;
+}
+
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = FALSE;
@@ -221,8 +225,10 @@ descriptor from the ASL and return it to the semdFree list. */
 pcb_t *removeBlocked(int *semAdd){
 	semd_t *sema = findActive(semAdd);
 	if(sema == NULL){
+		debugASL(10,10,10);
 		return(NULL);
 	}else{
+		debugASL(11,11,11);
 		pcb_t *proc = removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			sema = removeActive(semAdd);
