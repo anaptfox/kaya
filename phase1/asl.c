@@ -225,14 +225,15 @@ descriptor from the ASL and return it to the semdFree list. */
 pcb_t *removeBlocked(int *semAdd){
 	semd_t *sema = findActive(semAdd);
 	if(sema == NULL){
-		debugASL(10,10,10);
 		return(NULL);
 	}else{
-		debugASL(11,11,11);
 		pcb_t *proc = removeProcQ(&(sema->s_procQ));
 		if(emptyProcQ(sema->s_procQ)){
 			sema = removeActive(semAdd);
 			addFree(sema);
+		}
+		if(proc == NULL){
+			debugASL(11,11,11);
 		}
 		return(proc);
 	}
