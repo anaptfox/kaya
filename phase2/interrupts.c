@@ -247,7 +247,7 @@ void intHandler(){
 
 		}
 
-	
+		currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 		/* Reset terminal read */
 		terminalRead = 0;
 
