@@ -130,6 +130,24 @@ void intHandler(){
 				PANIC();
 			}
 
+			int deviceWordIndex;
+
+			if(line == TERMINT){
+
+				if(terminalRead == 1){
+					deviceWordIndex = ((((line - 3) * 8) - 8) + device );
+				
+				}else{
+					debugB(5,5,5);
+					deviceWordIndex = ((((line - 2) * 8) - 8) + device );
+				}
+
+			}else{
+
+					deviceWordIndex = ((((line - 3) * 8) - 8) + device );
+
+			}		
+
 
 			int deviceWordIndex = ((((line - 3) * 8) - 8) + device );
 
@@ -242,9 +260,7 @@ void intHandler(){
 				}
 
 
-			}
-
-
+			} 
 
 		}
 
