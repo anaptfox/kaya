@@ -6,7 +6,7 @@
 #include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
-#define deviceZero 0x00000001
+#define bitZero 0x00000001
 
 state_t *int_new = (state_t *) INT_NEW;
 
@@ -30,7 +30,7 @@ void debugCause (unsigned int p, int b, int c) {
 /*p is the interrupting Bit*/
 
 int findLine(memaddr p){
-	memaddr device = deviceZero;
+	memaddr device = bitZero;
 	int temp;
 	temp = p & device;
 	i = 8;
@@ -42,38 +42,33 @@ int findLine(memaddr p){
 }
 
 int findDevice(int lineNumber){
+	memaddr device = bitZero;
+	memaddr p;
 
-	int lineIndex; 
-
-	lineIndex = lineNumber - 3;
-
-	if(lineNumber == TERMINT){
-		/* SEARCH READ */
-		i = 0;
-		while(i < DEVICE_CNT){
-			if (deviceSemas[lineIndex][i] < 0){
-				terminalRead = 1;
-				return i;
-			}
-			i = i + 1;
-		}
-		/* SEARCH TRANSMITTION */
-		i = 0;
-		while(i < DEVICE_CNT){
-			if (deviceSemas[lineIndex + 1][i] < 0){
-				return i;
-			}
-			i = i + 1;
-		}
-	}else{
-
-		while(i < DEVICE_CNT){
-			if (deviceSemas[lineIndex][i] < 0){
-				return i;
-			}
-			i = i + 1;
-		}
+	if(lineNumber == 3) {/*lineNumber 3 word 0*/
+	 p = 0x1000003C;
 	}
+	if(lineNumber == 4) { /*lineNumber 4 word 1*/
+	 p = 0x10000040;
+	}
+	if(lineNumber == 5) { /*lineNumber 5 word 2*/
+	 p = 0x10000044;
+	}
+	if(lineNumber == 6) { /*lineNumber 6 word 3*/
+	 p = 0x10000048;
+	}
+	if(lineNumber == 7) { /* lineNumber 7 word 4 */
+	 p = 0x1000004C;
+	}
+
+	if((p & DEVICE_ADDRESS_0) == 0) return DEVICE_ADDRESS_0;
+	else if((p & DEVICE_ADDRESS_1) == 0) return DEVICE_ADDRESS_1;
+	else if((p & DEVICE_ADDRESS_2) == 0) return DEVICE_ADDRESS_2;
+	else if((p & DEVICE_ADDRESS_3) == 0) return DEVICE_ADDRESS_3;
+	else if((p & DEVICE_ADDRESS_4) == 0) return DEVICE_ADDRESS_4;
+	else if((p & DEVICE_ADDRESS_5) == 0) return DEVICE_ADDRESS_5;
+	else if((p & DEVICE_ADDRESS_6) == 0) return DEVICE_ADDRESS_6;
+	else if((p & DEVICE_ADDRESS_7) == 0) return DEVICE_ADDRESS_7;
 
 	return NULL;
 }

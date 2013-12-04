@@ -137,4 +137,14 @@
 
 #define PC = 0x8000004
 
+
+#define DEVICE_ADDRESS_0 0x1
+#define DEVICE_ADDRESS_1 0x2
+#define DEVICE_ADDRESS_2 0x4
+#define DEVICE_ADDRESS_3 0x8
+#define DEVICE_ADDRESS_4 0x10
+#define DEVICE_ADDRESS_5 0x20
+#define DEVICE_ADDRESS_6 0x40
+#define DEVICE_ADDRESS_7 0x80
+
 #endif
