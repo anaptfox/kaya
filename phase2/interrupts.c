@@ -200,7 +200,11 @@ void intHandler(){
 
 				insertProcQ (&readyQue, p);
 
+				debugB(777, 999, 123);
+
 				softBlkCnt = softBlkCnt - 1;
+
+				debugB(888, 999, 123);
 
 				if(line == TERMINT){
 
@@ -219,6 +223,8 @@ void intHandler(){
 					p->p_s.s_v0 = deviceStatus;
 				
 				}
+
+				debugB(1010, 999, 123);
 
 		
 
