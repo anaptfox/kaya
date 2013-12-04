@@ -247,9 +247,7 @@ void intHandler(){
 
 		}
 
-		
-		currentProc = NULL;
-
+	
 		/* Reset terminal read */
 		terminalRead = 0;
 
