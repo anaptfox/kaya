@@ -61,14 +61,14 @@ int findDevice(int lineNumber){
 	 p = 0x1000004C;
 	}
 
-	if((p & DEVICE_ADDRESS_0) == 1) return DEVICE_ADDRESS_0;
-	else if((p & DEVICE_ADDRESS_1) == 1) return DEVICE_ADDRESS_1;
-	else if((p & DEVICE_ADDRESS_2) == 1) return DEVICE_ADDRESS_2;
-	else if((p & DEVICE_ADDRESS_3) == 1) return DEVICE_ADDRESS_3;
-	else if((p & DEVICE_ADDRESS_4) == 1) return DEVICE_ADDRESS_4;
-	else if((p & DEVICE_ADDRESS_5) == 1) return DEVICE_ADDRESS_5;
-	else if((p & DEVICE_ADDRESS_6) == 1) return DEVICE_ADDRESS_6;
-	else if((p & DEVICE_ADDRESS_7) == 1) return DEVICE_ADDRESS_7;
+	if((p & DEVICE_ADDRESS_0) == 0) return 0;
+	else if((p & DEVICE_ADDRESS_1) == 0) return 1;
+	else if((p & DEVICE_ADDRESS_2) == 0) return 2;
+	else if((p & DEVICE_ADDRESS_3) == 0) return 3;
+	else if((p & DEVICE_ADDRESS_4) == 0) return 4;
+	else if((p & DEVICE_ADDRESS_5) == 0) return 5;
+	else if((p & DEVICE_ADDRESS_6) == 0) return 6;
+	else if((p & DEVICE_ADDRESS_7) == 0) return 7;
 
 	return NULL;
 }
