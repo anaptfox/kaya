@@ -34,7 +34,7 @@ void scheduler(){
 			/*If the Process Count is zero invoke the HALT ROM service/instruction. */
 			if(processCnt == 0){
 				HALT();
-			}else if(softBlkCnt == 0){
+			}else if(processCnt > 0 && softBlkCnt == 0){
 				debugF(10,10,10);
 			/*Deadlock for Kaya is deﬁned as when the Process Count > 0 and the Soft-block Count is zero. 
 			*/	
