@@ -309,8 +309,8 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 	if(deviceSemas[lineIndex][arg2] < 0){
 		
 		debugC(lineIndex, arg2, 10);
-		
-		insertBlocked (&(deviceSemas[lineIndex][arg2] ), currentProc);
+
+		if(insertBlocked (&(deviceSemas[lineIndex][arg2] ), currentProc)) PANIC();
 
 		STCK(endTOD);
 
