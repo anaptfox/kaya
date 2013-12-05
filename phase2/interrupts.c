@@ -132,13 +132,15 @@ void intHandler(){
 
 			if(line == TERMINT){
 
-				deviceStatus = deviceWord->t_transm_status;
+				deviceStatus = deviceWord->t_recv_status;
 
-				debugB(deviceStatus, 12220, 10);
+				debugB(deviceStatus, 10, 10);
+
+				debugB(212, deviceWord->t_transm_status, 029);
 
 				if(deviceStatus == 1){
 
-					debugB(deviceStatus, 1000000, 10);
+					debugB(303, 10, 10);
 
 					terminalRead = 1;
 
