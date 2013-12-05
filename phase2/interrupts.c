@@ -112,6 +112,19 @@ void intHandler(){
 		debugCause(line , 10, 10);
 
 		if(line == 1 || line == 2){
+
+			if(line == 1){
+
+				debugB(5555, 10, 10);
+
+				moveState(int_old, &(currentProc->p_s));
+
+				setTIMER(5000);
+
+				softBlkCnt = softBlkCnt + 1;
+
+				currentProc = NULL:
+			}
 			
 
 		}else{
@@ -136,24 +149,22 @@ void intHandler(){
 
 				if((deviceWord->t_transm_status & 0xFF) == 5){
 
-					debugB(303, 10, 10);
-
 					/* ack the int */
 					deviceWord->t_transm_command = ACK;
 
-	
 
 				}else{
-					debugB(10, 10, 10);
+
 					terminalRead = 1;
 
 					/* ack the int */
 					deviceWord-> t_recv_command = ACK;
+
 				}
 		
 
 			}else{
-				debugB(2123, 10, 10);
+
 				/* read the status */
 				deviceStatus = deviceWord->d_status;
 				/* ack the int */
