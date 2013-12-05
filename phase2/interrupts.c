@@ -119,7 +119,7 @@ void intHandler(){
 
 				moveState( int_old , &(currentProc->p_s) );
 
-				insertProcQ( & readyQueue ,  currentProc );
+				insertProcQ( & readyQue ,  currentProc );
 
 				setTIMER(5000);
 
