@@ -112,15 +112,7 @@ void intHandler(){
 		debugCause(line , 10, 10);
 
 		if(line == 1 || line == 2){
-			// line one cpu scheduling
-				//state from old int and put it in current proc
-				// take it and put on ready que
-				// ack interupt by puting the timer
-			// scheduler
-			/* handle clocks */
-
-
-			// line
+			
 
 		}else{
 
