@@ -132,7 +132,7 @@ void intHandler(){
 
 			if(line == TERMINT){
 
-				deviceStatus = deviceWord->t_recv_status;
+				deviceStatus = deviceWord->t_transm_status;
 
 				debugB(201, 10, 10);
 
