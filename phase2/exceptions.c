@@ -159,7 +159,7 @@ void createProcess(state_t *state){
 		
 	}else{
 		
-		processCnt++; /* get a pcb, processCnt++ alloc */
+		processCnt = processCnt + 1; /* get a pcb, processCnt++ alloc */
 		
 		
 		moveState((state_t *)state->s_a1, &(newPcb->p_s));/*Copy the state pointed by a1 into the p_s of the new pct
@@ -196,7 +196,7 @@ void terminateProcess(pcb_t *p){
  		p = outBlocked(p);
  		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){
 
- 			*(p->p_semAdd)++;
+ 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
 
  		}else{
  			softBlkCnt -= 1;
@@ -268,7 +268,7 @@ void waitForClock(){
 		currentProc = NULL;
 		scheduler();
 	}
-	softBlkCnt++;
+	softBlkCnt = softBlkCnt + 1;
 	continueWithCurrent(&(currentProc->p_s));
 
 }
@@ -318,7 +318,7 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 		currentProc = NULL;
 		
-		softBlkCnt++;
+		softBlkCnt = softBlkCnt + 1;
 		
 		scheduler();
 
