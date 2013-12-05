@@ -117,13 +117,15 @@ void intHandler(){
 
 				debugB(5555, 10, 10);
 
-				moveState(int_old, &(currentProc->p_s));
+				moveState( int_old , &(currentProc->p_s) );
+
+				insertProcQ( & readyQueue ,  currentProcess );
 
 				setTIMER(5000);
 
 				softBlkCnt = softBlkCnt + 1;
 
-				currentProc = NULL:
+				currentProc = NULL;
 			}
 			
 
