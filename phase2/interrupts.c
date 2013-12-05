@@ -132,25 +132,23 @@ void intHandler(){
 
 			if(line == TERMINT){
 
-				deviceStatus = deviceWord->t_recv_status;
+				deviceStatus = deviceWord->t_transm_status ;
 
-				debugB((deviceStatus & 0xFF), 10, 10);
-
-				debugB(212, (deviceWord->t_transm_status & 0xFF), 888);
-
-				if(deviceStatus == 1){
+				if((deviceWord->t_transm_status & 0xFF) == 5){
 
 					debugB(303, 10, 10);
 
+					/* ack the int */
+					deviceWord->t_transm_command = ACK;
+
+	
+
+				}else{
+					debugB(10, 10, 10);
 					terminalRead = 1;
 
 					/* ack the int */
 					deviceWord-> t_recv_command = ACK;
-
-				}else{
-					debugB(10, 10, 10);
-					/* ack the int */
-					deviceWord->t_transm_command = ACK;
 				}
 		
 
