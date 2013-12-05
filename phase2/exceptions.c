@@ -150,10 +150,6 @@ caller, to be created. a1 should contain the physical address of a processor sta
 area at the time this instruction is executed. */
 void createProcess(state_t *state){
 
-	if(emptyProcQ(readyQue)){
-		PANIC();
-	}
-
 	pcb_t *newPcb;
 
 	if((newPcb = allocPcb()) == NULL){
