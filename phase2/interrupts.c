@@ -12,8 +12,6 @@ state_t *int_new = (state_t *) INT_NEW;
 
 state_t *int_old = (state_t *) INT_OLD;
 
-int terminalRead = 0;
-
 int i;
 
 void debugA (int a, int b, int c) {
@@ -84,17 +82,13 @@ void intHandler(){
 
 	pcb_t *p;
 
+	int terminalRead = 0;
 
 	/*Interrupt Handler
 
 	In order to occur two things have to happen
 	
 	Ints enable bit needs to beon*/
-
-	int ints_enabled = (int_old->s_status & IEp & IM);
-
-	debugCause(ints_enabled , 10, 10);
-
 	if(1){
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
@@ -110,16 +104,23 @@ void intHandler(){
 
 		if(currentProc != NULL){
 
-			moveState(int_new, &(currentProc->p_s));
+			moveState(int_old, &(currentProc->p_s));
 
 		}
 
 		int line = findLine(cause);
 		debugCause(line , 10, 10);
 
-		if(line == 0 || line == 1){
-
+		if(line == 1 || line == 2){
+			// line one cpu scheduling
+				//state from old int and put it in current proc
+				// take it and put on ready que
+				// ack interupt by puting the timer
+			// scheduler
 			/* handle clocks */
+
+
+			// line
 
 		}else{
 
@@ -130,46 +131,37 @@ void intHandler(){
 				PANIC();
 			}
 
-			int deviceWordIndex;
+			int deviceWordIndex = (((line - 3) * 8) + device);
 
-			if(line == TERMINT){
 
-				if(terminalRead == 1){
-					deviceWordIndex = ((((line - 3) * 8) - 8) + device );
-				
-				}else{
-					debugB(5,5,5);
-					deviceWordIndex = ((((line - 2) * 8) - 8) + device );
-				}
-
-			}else{
-
-					deviceWordIndex = ((((line - 3) * 8) - 8) + device );
-
-			}		
-
-				
 			deviceWord = &(devregarea->devreg[deviceWordIndex]);
 			
 			unsigned int deviceStatus;
 
 			if(line == TERMINT){
 
-				if(terminalRead == 1){
-					/* read the status */
-					deviceStatus = deviceWord->t_recv_status;
+				deviceStatus = deviceWord->t_recv_status;
+
+				debugB(201, 10, 10);
+
+				if(deviceStatus == 1){
+
+					debugB(303, 10, 10);
+
+					terminalRead = 1;
+
 					/* ack the int */
 					deviceWord-> t_recv_command = ACK;
-				
+
 				}else{
-					/* read the status */
-					deviceStatus = deviceWord->t_transm_status;
+					debugB(10, 10, 10);
 					/* ack the int */
 					deviceWord->t_transm_command = ACK;
-					
 				}
+		
 
 			}else{
+				debugB(2123, 10, 10);
 				/* read the status */
 				deviceStatus = deviceWord->d_status;
 				/* ack the int */
