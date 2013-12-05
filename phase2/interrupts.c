@@ -136,7 +136,7 @@ void intHandler(){
 
 				debugB(deviceStatus, 10, 10);
 
-				debugB(212, deviceWord->t_transm_status, 029);
+				debugB(212, deviceWord->t_transm_status, 888);
 
 				if(deviceStatus == 1){
 
