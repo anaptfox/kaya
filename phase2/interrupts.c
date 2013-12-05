@@ -138,7 +138,7 @@ void intHandler(){
 
 				if(deviceStatus == 1){
 
-					debugB(303, 10, 10);
+					debugB(deviceStatus, 1000000, 10);
 
 					terminalRead = 1;
 
