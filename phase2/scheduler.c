@@ -29,8 +29,10 @@ state_t *int_old_area = (state_t *) INT_OLD;
 void scheduler(){
 	debugG(12,10,10);
 	if(currentProc == NULL){
+		
 		debugG(13,10,10);
 		if(emptyProcQ(readyQue)){
+
 			debugG(14,10,10);
 			/*If the Process Count is zero invoke the HALT ROM service/instruction. */
 			if(processCnt == 0){

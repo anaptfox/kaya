@@ -261,7 +261,13 @@ void intHandler(){
 		/* Reset terminal read */
 		terminalRead = 0;
 
-		scheduler();
+		if(currentProc != NULL){
+
+			continueWithCurrent(&(currentProc->p_s));
+
+		}else{
+			scheduler();
+		}
 		
 			
 	}

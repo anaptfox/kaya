@@ -85,21 +85,21 @@ void sysHandler(){
 		/* not sys 1-8 */
 		}else{
 			if(currentProc->p_states[2].newState == NULL){
-			/*Kill it */
-			terminateProcess(currentProc);
-			currentProc = NULL;
-			scheduler();
+				/*Kill it */
+				terminateProcess(currentProc);
+				currentProc = NULL;
+				scheduler();
 			}else{
-			/*The processor state is moved from the SYS/Bp Old Area into the processor
-			state area whose address was recorded in the 
-			ProcBlk as the SYS/Bp Old Area Address */
-			moveState(pgm_old, (state_t *) currentProc->p_states[2].oldState);
-			moveState((state_t *) currentProc->p_states[2].newState, &(currentProc->p_s));
-			continueWithCurrent(&(currentProc->p_s));
+				/*The processor state is moved from the SYS/Bp Old Area into the processor
+				state area whose address was recorded in the 
+				ProcBlk as the SYS/Bp Old Area Address */
+				moveState(pgm_old, (state_t *) currentProc->p_states[2].oldState);
+				moveState((state_t *) currentProc->p_states[2].newState, &(currentProc->p_s));
+				continueWithCurrent(&(currentProc->p_s));
 
+			}
 		}
-	}
-		}	
+	}	
 	
                  
 }
