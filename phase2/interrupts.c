@@ -25,6 +25,10 @@ void debugCause (unsigned int p, int b, int c) {
   int foo = 42;
 }
 
+void debugTimer( int p, int b, int c) {
+  int foo = 42;
+}
+
 /*p is the interrupting Bit*/
 
 int findLine(memaddr p){
@@ -115,7 +119,7 @@ void intHandler(){
 
 			if(line == 1){
 
-				debugB(5555, 10, 10);
+				debugTimer(5555, 10, 10);
 
 				moveState( int_old , &(currentProc->p_s) );
 
