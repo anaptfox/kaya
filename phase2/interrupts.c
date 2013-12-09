@@ -117,6 +117,8 @@ void intHandler(){
 
 		if(line == 1 || line == 2){
 
+			debugTimer(6666, 10, 10);
+
 			if(line == 1){
 
 				debugTimer(5555, 10, 10);
