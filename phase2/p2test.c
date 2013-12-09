@@ -218,6 +218,8 @@ void test() {
 	gchild4state.s_pc = gchild4state.s_t9 = (memaddr)p8leaf;
 	gchild4state.s_status = gchild4state.s_status | IEPBITON | CAUSEINTMASK;
 	
+
+	print("p2 was started\n");
 	
 	/* create process p2 */
 	SYSCALL(CREATETHREAD, (int)&p2state,0 , 0);				/* start p2     */
