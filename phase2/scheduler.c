@@ -48,7 +48,7 @@ void scheduler(){
 					debugE(67,10,10);
 			    setTIMER(100000000);
 			    
-					setSTATUS(ALLOFF | IEc | IM);
+					setSTATUS((getSTATUS() | IEc | IM));
 					
 					/*handle interrupt*/
 					WAIT();
