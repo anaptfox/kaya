@@ -216,8 +216,9 @@ void Verhogen(int *semaddr){
 
 	*(semaddr) += 1;
 
-	if(*(semaddr) <= 0){
-		p = removeBlocked(semaddr);
+	p = removeBlocked(semaddr);
+
+	if(p != NULL){
 		insertProcQ (&readyQue, p);
 	}
 
