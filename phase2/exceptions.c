@@ -182,31 +182,34 @@ void createProcess(state_t *state){
 all progeny of this process are terminated as well. Execution of this instruction
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
-	 while(!emptyChild(p)){
-	 		terminateProcess(removeChild(p));
-	 }
- 	if( p == currentProc){
- 		outChild(p);
- 		currentProc = NULL;  
- 	}
+	
  	if (p->p_semAdd == NULL){
  		/* on the ready que */
  		outProcQ(&(readyQue), p);
  	}
  	else{
+ 		debugC(09,p,10);
  		/* on a sema4 */
  		p = outBlocked(p);
- 		debugC(10,10,10);
+ 		debugC(10,p,10);
  		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
- 			debugC(2,10,10);
+ 			debugC(2,p,10);
  			*(p->p_semAdd) = *(p->p_semAdd) + 1;
- 			debugC(3,10,10);
+ 			debugC(3,p,10);
  		}else{
- 			debugC(4,10,10);
+ 			debugC(4,p,10);
  			softBlkCnt -= 1;
  		}	
  		debugC(12,p,10);
 
+ 	}
+
+ 	while(!emptyChild(p)){
+	 		terminateProcess(removeChild(p));
+	}
+ 	if(p == currentProc){
+ 		outChild(p);
+ 		currentProc = NULL;  
  	}
  	debugC(13,10,10);
  	freePcb(p);

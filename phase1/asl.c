@@ -4,7 +4,9 @@
 
 static semd_t *semd_h;
 static semd_t *semdFree_h;
-
+void debugZ (int a, int b, int c) {
+  int foo = 42;
+}
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
@@ -240,15 +242,19 @@ return p. */
 
 pcb_t *outBlocked(pcb_t *p){
 	if(p->p_semAdd == NULL){
+		PANIC();
 	}
 	semd_t *sema = findActive(p->p_semAdd);
 	if(sema == NULL){
+		debugZ(10,10,11);
 		return(NULL);
 	}else{
+		debugZ(12,10,11);
 		if(emptyProcQ(sema->s_procQ)){
 			return(NULL);
 		}
 	}
+	debugZ(14,10,11);
 	return outProcQ(&(sema->s_procQ), p);
 }
 
