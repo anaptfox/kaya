@@ -42,6 +42,8 @@ int findLine(memaddr cause){
 	else if((cause & LINE_ADDRESS_6) != 0) return 6;
 	else if((cause & LINE_ADDRESS_7) != 0) return 7;
 
+	return NULL;
+
 }
 
 int findDevice(int lineNumber){
