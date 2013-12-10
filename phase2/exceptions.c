@@ -182,9 +182,10 @@ void createProcess(state_t *state){
 all progeny of this process are terminated as well. Execution of this instruction
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
-	
+	debugC(7,p,10);
  	if (p->p_semAdd == NULL){
  		/* on the ready que */
+ 		debugC(8,p,10);
  		outProcQ(&(readyQue), p);
  	}
  	else{
