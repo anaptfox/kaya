@@ -157,7 +157,7 @@ void intHandler(){
 
 				if((deviceWord->t_recv_status & 0xFF) == 1){
 
-					debugTimer(5555, deviceWord->t_recv_status, 10);
+					debugTimer(8888, deviceWord->t_recv_status, 10);
 
 					/* ack the int */
 					deviceWord->t_transm_command = ACK;
@@ -165,7 +165,7 @@ void intHandler(){
 
 				}else{
 					debugTimer(5555, deviceWord->t_recv_status, 10);
-					debugTimer(5555, deviceWord->t_transm_status, 10);
+					debugTimer(9999, deviceWord->t_transm_status, 10);
 
 					terminalRead = 1;
 
