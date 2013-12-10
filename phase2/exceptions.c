@@ -265,10 +265,10 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 void waitForClock(){
 	
-	*(pseudo_clock->s_semAdd) -= 1;
+	*(clockSem->s_semAdd) -= 1;
 
-	if(*(pseudo_clock->s_semAdd) <= -1){
-		insertBlocked (pseudo_clock->s_semAdd , currentProc);
+	if(*(clockSem->s_semAdd) <= -1){
+		insertBlocked (clockSem->s_semAdd , currentProc);
 		/*DO TIMING STUFF
 		store clock - do substracti - add to field of pcb */
 		currentProc = NULL;
