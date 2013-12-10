@@ -188,7 +188,7 @@ void terminateProcess(pcb_t *p){
  		outProcQ(&(readyQue), p);
  	}
  	else{
- 		debugC(09,p,10);
+ 		debugC(9,p,10);
  		/* on a sema4 */
  		p = outBlocked(p);
  		debugC(10,p,10);
