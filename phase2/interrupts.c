@@ -155,7 +155,7 @@ void intHandler(){
 
 				deviceStatus = deviceWord->t_transm_status ;
 
-				if((deviceWord->t_transm_status & 0xFF) == 5){
+				if((deviceWord->t_recv_status & 0xFF) == 1){
 
 					/* ack the int */
 					deviceWord->t_transm_command = ACK;
