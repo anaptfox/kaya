@@ -115,7 +115,7 @@ void intHandler(){
 		int line = findLine(cause);
 		debugCause(line , 10, 10);
 
-		if(CAUSE_IP_GET ( cause ,  1 ) || CAUSE_IP_GET ( cause ,  2 )){
+		if(cause || cause){
 
 			debugTimer(6666, 10, 10);
 
