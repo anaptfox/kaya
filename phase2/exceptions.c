@@ -192,18 +192,20 @@ void terminateProcess(pcb_t *p){
  	if (p->p_semAdd == NULL){
  		/* on the ready que */
  		outProcQ(&(readyQue), p);
- 		debugC(10,10,10);
  	}
  	else{
  		/* on a sema4 */
  		p = outBlocked(p);
- 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
-
+ 		debugC(10,10,10);
+ 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
+ 			debugC(2,10,10);
  			*(p->p_semAdd) = *(p->p_semAdd) + 1;
-
+ 			debugC(3,10,10);
  		}else{
+ 			debugC(4,10,10);
  			softBlkCnt -= 1;
  		}	
+ 		debugC(10,10,10);
  	}
  	freePcb(p);
  	processCnt  -= 1;

@@ -2,10 +2,6 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-void debugZ (int a, int b, int c) {
-  int foo = 42;
-}
-
 static pcb_t *freePcb_tp;
 
 
@@ -86,13 +82,11 @@ pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
 pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
-	debugZ(21,10,10);
 	/* Case 1: ProcQ is empty.*/
 	if(emptyProcQ(*tp)){
 		return(NULL);
 	} /* Case 2: ProcQ has only 1 ProcBlk*/
 	else if((*tp)->p_prev == *tp){
-		debugZ(11,10,10);
 		if(*tp == p){
 			pcb_t *outproc = *tp;
 			*tp = mkEmptyProcQ();
@@ -100,10 +94,8 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 		}else{
 			return(NULL);
 		}
-		debugZ(12,10,10);
 	}/* Case 3: ProcQ has more than one ProcBlk*/
 	else{/*Subcase 1: Removing the ProcBlk pointed to by the tail pointer*/
-		debugZ(10,10,10);
 		if(*tp == p){
 			pcb_t *outproc = *tp;
 			(*tp)->p_prev->p_next = (*tp)->p_next;
@@ -126,7 +118,6 @@ pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
 			}
 			return(NULL);
 		}
-		debugZ(14,10,10);
 	}
 	
 }
