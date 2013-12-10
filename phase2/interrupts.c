@@ -31,16 +31,17 @@ void debugTimer( int p, int b, int c) {
 
 /*p is the interrupting Bit*/
 
-int findLine(memaddr p){
-	memaddr device = bitZero;
-	int temp;
-	temp = p & device;
-	i = 8;
-	while(temp == 0 && i < 15){
-		temp = p & (device << 1);
-		i = i + 1;
-	}
-	return i - 8;	
+int findLine(memaddr cause){
+	
+	if((cause & LINE_ADDRESS_0) != 0) return 0;
+	else if((cause & LINE_ADDRESS_1) != 0) return 1;
+	else if((cause & LINE_ADDRESS_2) != 0) return 2;
+	else if((cause & LINE_ADDRESS_3) != 0) return 3;
+	else if((cause & LINE_ADDRESS_4) != 0) return 4;
+	else if((cause & LINE_ADDRESS_5) != 0) return 5;
+	else if((cause & LINE_ADDRESS_6) != 0) return 6;
+	else if((cause & LINE_ADDRESS_7) != 0) return 7;
+
 }
 
 int findDevice(int lineNumber){
