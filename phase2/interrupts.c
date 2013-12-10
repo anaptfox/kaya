@@ -134,6 +134,22 @@ void intHandler(){
 				currentProc = NULL;
 			}else{
 				debugTimer(7777, 10, 10);
+
+				p = removeBlocked( &clockSem);
+
+				if (p == NULL){
+
+					clockSem = clockSem - 1;
+
+				}else{
+
+					insertProcQ (&readyQue, p);
+
+					softBlkCnt = softBlkCnt + 1;
+					
+					clockSem = clockSem + 1;
+
+				}
 			}
 			
 

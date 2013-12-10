@@ -216,7 +216,7 @@ Job #1
 				immediately before the LDST for that process
 				STCK(endTOD)
 				whenever the current process is done with the CPU
-					its turn might be done becuase it used off 5 milliseconds 
+					its turn might be done because it used off 5 milliseconds 
 
 		clockSem = 0
 		This semaphore should have a V-operation performed on it every 100ms

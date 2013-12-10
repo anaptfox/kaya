@@ -74,6 +74,5 @@ void scheduler(){
 
 
 void continueWithCurrent(state_t *process){
-	setTIMER(5000);
 	LDST(process);
 }

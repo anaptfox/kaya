@@ -23,7 +23,7 @@ extern int deviceSemas[DEVICE_LINE][DEVICE_CNT];
 
 extern unsigned int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
 
-extern semd_t *pseudo_clock;
+extern int clockSem;
  
 extern cpu_t startTOD;
 
