@@ -90,7 +90,7 @@ int main(void)
 	initASL();
 
 	LDIT(100000);
-	clockSem = 0
+	clockSem = 0;
 
 	setTIMER(5000);
 
