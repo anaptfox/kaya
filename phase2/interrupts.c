@@ -210,7 +210,7 @@ void intHandler(){
 
 			debugB(lineIndex, device, 123);
 
-			debugTimer(lineIndex, device, line);
+			
 
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
