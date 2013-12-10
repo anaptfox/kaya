@@ -231,8 +231,8 @@ void Verhogen(int *semaddr){
 	p = removeBlocked(semaddr);
 
 	if(p != NULL){
-		insertProcQ (&readyQue, p);
 		p->p_semAdd = NULL;
+		insertProcQ (&readyQue, p);
 	}
 
 	continueWithCurrent(&(currentProc->p_s));

@@ -144,19 +144,14 @@ void intHandler(){
 
 				p = removeBlocked( &clockSem);
 
-				if (p == NULL){
-
-					clockSem = clockSem - 1;
-
-				}else{
-
-					insertProcQ (&readyQue, p);
-
+				while(p != NULL){
+					removeBlocked( &clockSem);
 					softBlkCnt = softBlkCnt + 1;
-
 					clockSem = clockSem + 1;
-
 				}
+				p->p_semAdd = NULL:
+				insertProcQ (&readyQue, p);
+
 				
 			}
 			
@@ -266,8 +261,8 @@ void intHandler(){
 				}
 
 			}else{
-				insertProcQ (&readyQue, p);
 				p->p_semAdd = NULL;
+				insertProcQ (&readyQue, p);
 				debugB(232323, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;
