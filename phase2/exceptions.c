@@ -265,9 +265,9 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 void waitForClock(){
 	
-	*(clockSem) -= 1;
+	clockSem -= 1;
 
-	if(*(clockSem) <= -1){
+	if(clockSem <= -1){
 		insertBlocked (&(clockSem) , currentProc);
 		/*DO TIMING STUFF
 		store clock - do substracti - add to field of pcb */
