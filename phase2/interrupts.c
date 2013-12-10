@@ -164,8 +164,7 @@ void intHandler(){
 
 
 				}else{
-					debugTimer(5555, deviceWord->t_recv_status, 10);
-					debugTimer(9999, deviceWord->t_transm_status, 10);
+			
 
 					terminalRead = 1;
 
@@ -210,6 +209,8 @@ void intHandler(){
 			}
 
 			debugB(lineIndex, device, 123);
+
+			debugTimer(lineIndex, device, line);
 
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
