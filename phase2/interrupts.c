@@ -132,6 +132,8 @@ void intHandler(){
 				softBlkCnt = softBlkCnt + 1;
 
 				currentProc = NULL;
+			}else{
+				debugTimer(7777, 10, 10);
 			}
 			
 
