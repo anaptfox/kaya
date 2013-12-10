@@ -185,12 +185,14 @@ void terminateProcess(pcb_t *p){
 	 while(!emptyChild(p)){
 	 		terminateProcess(removeChild(p));
 	 }
- 	if( p == currentProc)
+ 	if( p == currentProc){
  		outChild(p);
  		currentProc = NULL;  
+ 	}
  	if (p->p_semAdd == NULL){
  		/* on the ready que */
  		outProcQ(&(readyQue), p);
+ 		debugC(10,10,10);
  	}
  	else{
  		/* on a sema4 */
@@ -242,11 +244,9 @@ void Passeren(int *semaddr){
 	
 		currentProc->p_time = endTOD - startTOD;
 
-		debugC(10,10,10);
 	
 		currentProc = NULL;
 
-		debugC(11,10,10);
 		
 		scheduler();
 	}
@@ -314,7 +314,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 	if(deviceSemas[lineIndex][arg2] < 0){
 		
-		debugC(lineIndex, arg2, 10);
 
 		if(insertBlocked (&(deviceSemas[lineIndex][arg2] ), currentProc)) PANIC();
 
