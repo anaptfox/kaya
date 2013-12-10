@@ -241,8 +241,12 @@ void Passeren(int *semaddr){
 		STCK(endTOD);
 	
 		currentProc->p_time = endTOD - startTOD;
+
+		debugC(10,10,10);
 	
 		currentProc = NULL;
+
+		debugC(11,10,10);
 		
 		scheduler();
 	}
