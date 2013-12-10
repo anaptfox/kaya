@@ -118,7 +118,7 @@ void intHandler(){
 		int line = findLine(cause);
 		debugCause(line , 10, 10);
 
-		if(cause || cause){
+		if(line == 1 || line == 2){
 
 			debugTimer(6666, 10, 10);
 
