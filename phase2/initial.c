@@ -22,7 +22,7 @@ int deviceSemas[DEVICE_LINE][DEVICE_CNT];
 
 unsigned int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
 
-int clockSem;
+int *clockSem;
 
 cpu_t startTOD;
 
@@ -90,7 +90,7 @@ int main(void)
 	initASL();
 
 	LDIT(100000);
-	clockSem = 0;
+	*(clockSem) = 0;
 
 	setTIMER(5000);
 
