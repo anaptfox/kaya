@@ -157,11 +157,14 @@ void intHandler(){
 
 				if((deviceWord->t_transm_status & 0xFF) == 5){
 
+
 					/* ack the int */
 					deviceWord->t_transm_command = ACK;
 
 
 				}else{
+
+					debugTimer(5555, deviceWord->t_transm_status, 10);
 
 					terminalRead = 1;
 
