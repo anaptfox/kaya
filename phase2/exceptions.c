@@ -205,10 +205,14 @@ void terminateProcess(pcb_t *p){
  			debugC(4,10,10);
  			softBlkCnt -= 1;
  		}	
- 		debugC(10,10,10);
+ 		debugC(12,p,10);
+
  	}
+ 	debugC(13,10,10);
  	freePcb(p);
+ 	debugC(3313,10,10);
  	processCnt  -= 1;
+ 	debugC(13133,10,10);
 
 }
 
