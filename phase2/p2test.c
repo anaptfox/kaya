@@ -139,9 +139,7 @@ void test() {
 	SYSCALL(VERHOGEN, (int)&testsem, 0, 0);					/* V(testsem)   */
 
 	print("p1 v(testsem)\n");
-
-	print("p1 v(testsem)\n");
-
+	
 	/* set up states of the other processes */
 
 	/* set up p2's state */
@@ -220,7 +218,7 @@ void test() {
 	gchild4state.s_pc = gchild4state.s_t9 = (memaddr)p8leaf;
 	gchild4state.s_status = gchild4state.s_status | IEPBITON | CAUSEINTMASK;
 	
-	
+	print("p1 v(testsem)\n");
 	
 	/* create process p2 */
 	SYSCALL(CREATETHREAD, (int)&p2state,0 , 0);				/* start p2     */
