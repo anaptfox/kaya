@@ -195,7 +195,7 @@ void terminateProcess(pcb_t *p){
  	else{
  		/* on a sema4 */
  		p = outBlocked(p);
- 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_CNT][DEVICE_LINE]))){
+ 		if ((&(p) > &(deviceSemas[0][0])) && (&(p) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
 
  			*(p->p_semAdd) = *(p->p_semAdd) + 1;
 
