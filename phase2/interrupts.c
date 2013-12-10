@@ -239,6 +239,7 @@ void intHandler(){
 			p = removeBlocked(&(deviceSemas[lineIndex][device]));
 
 			if(p == NULL){
+
 				debugB(1010101010, device, 123);
 
 				if(line == TERMINT){
@@ -260,8 +261,11 @@ void intHandler(){
 				}
 
 			}else{
+
 				p->p_semAdd = NULL;
+
 				insertProcQ (&readyQue, p);
+				
 				debugB(232323, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;

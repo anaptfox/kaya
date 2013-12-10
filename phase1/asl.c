@@ -227,6 +227,7 @@ pcb_t *removeBlocked(int *semAdd){
 		return(NULL);
 	}else{
 		pcb_t *proc = removeProcQ(&(sema->s_procQ));
+		proc->p_semAdd = NULL:
 		if(emptyProcQ(sema->s_procQ)){
 			sema = removeActive(semAdd);
 			addFree(sema);
@@ -241,21 +242,21 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
-	if(p->p_semAdd == NULL){
-		PANIC();
-	}
+
 	semd_t *sema = findActive(p->p_semAdd);
 	if(sema == NULL){
-		debugZ(10,10,11);
 		return(NULL);
 	}else{
-		debugZ(12,10,11);
+		pcb_t *proc = outProcQ(&(sema->s_procQ), p);
+		proc->p_semAdd = NULL:
 		if(emptyProcQ(sema->s_procQ)){
-			return(NULL);
+			sema = removeActive(p->p_semAdd);
+			addFree(sema);
 		}
+		return(proc);
 	}
-	debugZ(14,10,11);
-	return outProcQ(&(sema->s_procQ), p);
+
+
 }
 
 /* Return a pointer to the ProcBlk that is at the head of the process queue associated with the semaphore semAdd. Return NULL
