@@ -135,6 +135,8 @@
 #define WAITFORCLOCK 7
 #define WAITFORIODEVICE 8
 
+#define CAUSE_IP_GET(cause, int_no) ((cause) & (1 << ((int_no) + 8)))
+
 #define PC = 0x8000004
 
 
