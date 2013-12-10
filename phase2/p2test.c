@@ -140,6 +140,8 @@ void test() {
 
 	print("p1 v(testsem)\n");
 
+	print("p1 v(testsem)\n");
+
 	/* set up states of the other processes */
 
 	/* set up p2's state */
