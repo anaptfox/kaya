@@ -267,6 +267,7 @@ void intHandler(){
 
 			}else{
 				insertProcQ (&readyQue, p);
+				p->p_semAdd = NULL;
 				debugB(232323, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;
