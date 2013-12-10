@@ -13,6 +13,11 @@ state_t *tlb_old = (state_t *) TLB_OLD;
 void debugC (int a, int b, int c) {
   int foo = 42;
 }
+
+void debugV (int a, int b, int c) {
+  int foo = 42;
+}
+
 void sysHandler(){
 
 	int kernel_mode;
@@ -231,6 +236,7 @@ void Verhogen(int *semaddr){
 	p = removeBlocked(semaddr);
 
 	if(p != NULL){
+		debugV(10,10,0);
 		p->p_semAdd = NULL;
 		insertProcQ (&readyQue, p);
 	}
