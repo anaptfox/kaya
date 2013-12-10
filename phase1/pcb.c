@@ -86,6 +86,7 @@ pointer if necessary. If the desired entry is not in the indicated queue
 (an error condition), return NULL; otherwise, return p. Note that p
 can point to any element of the process queue. */
 pcb_t *outProcQ(pcb_t **tp, pcb_t *p){
+	debugZ(21,10,10);
 	/* Case 1: ProcQ is empty.*/
 	if(emptyProcQ(*tp)){
 		return(NULL);
