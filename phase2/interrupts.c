@@ -145,13 +145,12 @@ void intHandler(){
 				p = removeBlocked( &clockSem);
 
 				while(p != NULL){
-					removeBlocked( &clockSem);
+					insertProcQ (&readyQue, p);
+					p = removeBlocked( &clockSem);
 					softBlkCnt = softBlkCnt + 1;
 					clockSem = clockSem + 1;
 					p->p_semAdd = NULL;
 				}
-				insertProcQ (&readyQue, p);
-
 				
 			}
 			
