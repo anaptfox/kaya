@@ -269,9 +269,13 @@ void intHandler(){
 
 		if(currentProc != NULL){
 
+			debugA(10,22,10);
+
 			continueWithCurrent(&(currentProc->p_s));
 
 		}else{
+
+			debugA(100000,33223,10);
 			scheduler();
 		}
 		
