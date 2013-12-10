@@ -138,6 +138,10 @@ void intHandler(){
 			}else{
 				debugTimer(7777, 10, 10);
 
+				/*Handle Interupt*/
+
+				LDIT(100000);
+
 				p = removeBlocked( &clockSem);
 
 				if (p == NULL){
@@ -153,7 +157,7 @@ void intHandler(){
 					clockSem = clockSem + 1;
 
 				}
-				LDIT(100000);
+				
 			}
 			
 
