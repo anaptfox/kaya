@@ -188,14 +188,25 @@ all progeny of this process are terminated as well. Execution of this instructio
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
 	debugC(7,p,10);
+
+	while(!emptyChild(p)){
+	 		
+	 		terminateProcess(removeChild(p));
+	
+	}
  	
- 	if (p->p_semAdd == NULL){
+ 	if(p == currentProc){
+ 	
+ 		outChild(p);
+ 	
+ 		currentProc = NULL;  
+ 	
+ 	}else if (p->p_semAdd == NULL){
  		/* on the ready que */
  		debugC(8,p,10);
  		
  		outProcQ(&(readyQue), p);
- 	}
- 	else{
+ 	}else{
  		
  		debugC(9,p,10);
  		/* on a sema4 */
@@ -223,19 +234,6 @@ void terminateProcess(pcb_t *p){
 
  	}
 
- 	while(!emptyChild(p)){
-	 		
-	 		terminateProcess(removeChild(p));
-	
-	}
- 	
- 	if(p == currentProc){
- 	
- 		outChild(p);
- 	
- 		currentProc = NULL;  
- 	
- 	}
  	
  	debugC(13,10,10);
  	
