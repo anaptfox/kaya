@@ -266,7 +266,7 @@ semd_t *removeFree(){
 		
 		old->s_procQ = mkEmptyProcQ();
 
-		old->semAdd = NULL;
+		old->s_semAdd = NULL;
 		
 		return(old);
 	
@@ -282,7 +282,7 @@ void addFree(semd_t *newSema){
 	
 		semdFree_h = newSema;
 
-		semdFree_h->s_next = NULL:
+		semdFree_h->s_next = NULL;
 	
 	}else{
 	
