@@ -191,20 +191,14 @@ all progeny of this process are terminated as well. Execution of this instructio
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
 	
-	debugC(7,p,10);
-
 	while(!emptyChild(p)){
 
-			debugC(8,p,10);
-	 		
 	 		terminateProcess(removeChild(p));
 	
 	}
  	
  	if(p == currentProc){
 
- 		debugC(3,p,10);
- 	
  		outChild(p);
  	
  		currentProc = NULL;  
@@ -212,49 +206,31 @@ void terminateProcess(pcb_t *p){
  	}else {
 
  		if (p->p_semAdd == NULL){
+
 	 		/* on the ready que */
-	 		debugC(8,p,10);
-	 		
 	 		outProcQ(&(readyQue), p);
+
 	 	}else{
 	 		
-	 		debugC(9,p,10);
-	 		/* on a sema4 */
 	 		p = outBlocked(p);
 
-	 		debugC(10,p,10);
-	 		
 	 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
-	 		
-	 			debugC(2,p,10);
 	 		
 	 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
 	 		
-	 			debugC(3,p,10);
-	 		
 	 		}else{
-	 		
-	 			debugC(4,p,10);
 	 		
 	 			softBlkCnt -= 1;
 	 		
 	 		}	
 	 		
-	 		debugC(12,p,10);
-
 	 	}
 	}
  	
- 	debugC(13,p,10);
- 	
  	freePcb(p);
- 	
- 	debugC(3313,10,10);
  	
  	processCnt  -= 1;
  	
- 	debugC(13133,10,10);
-
  	scheduler();
 
 }
@@ -297,11 +273,10 @@ void Passeren(int *semaddr){
 
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
-	
 		currentProc = NULL;
 
-		
 		scheduler();
+
 	}
 
 	continueWithCurrent(&(currentProc->p_s));
@@ -326,17 +301,31 @@ void waitForClock(){
 	
 	clockSem -= 1;
 
+	debugC(10,10,10);
+
 	if(clockSem < 0){
 
-		insertBlocked (&(clockSem) , currentProc);
+		debugC(11,10,10);
 
 		STCK(endTOD);
 
+		debugC(12,10,10);
+
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+		debugC(13,10,10);
 
 		softBlkCnt = softBlkCnt + 1;
 
+		debugC(14,10,10);
+
 		currentProc = NULL;
+
+		debugC(15,10,10);
+
+		insertBlocked (&(clockSem) , currentProc);
+
+		debugC(16,10,10);
 
 		scheduler();
 
