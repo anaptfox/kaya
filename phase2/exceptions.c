@@ -191,9 +191,9 @@ void terminateProcess(pcb_t *p){
 	
 	debugC(7,p,10);
 
-	while(emptyChild(p) != NULL){
+	while(!emptyChild(p)){
 
-			debugC(5,p,10);
+			debugC(8,p,10);
 	 		
 	 		terminateProcess(removeChild(p));
 	
