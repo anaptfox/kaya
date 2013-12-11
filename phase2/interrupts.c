@@ -166,7 +166,7 @@ void intHandler(){
 					
 					clockSem = clockSem + 1;
 
-					debugTimer(22222, 10, 10);
+					debugTimer(22222, clockSem, p);
 					
 					p = removeBlocked(&(clockSem));
 
