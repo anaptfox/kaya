@@ -13,6 +13,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = FALSE;
 	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
+	newSema->s_next = NULL;
 
 	/* Empty List Case */
 	if(semd_h == NULL){
