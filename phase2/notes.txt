@@ -249,5 +249,8 @@ Job #1
 	foo - ( devregares_t 0x1)
 			
 
-		
+		874
+		s a b of int
+
+		ldst before stck
 
