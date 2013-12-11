@@ -105,6 +105,8 @@ void intHandler(){
 
 	STCK(startTOD);
 
+	debugA(10 ,10,10);
+
 	/*Interrupt Handler
 
 	In order to occur two things have to happen
