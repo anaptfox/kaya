@@ -157,6 +157,8 @@ void intHandler(){
 				while(p != NULL){
 
 					insertProcQ (&readyQue, p);
+
+					debugTimer(8888, 10, 10);
 					
 					softBlkCnt = softBlkCnt + 1;
 					
