@@ -27,6 +27,8 @@ extern int clockSem;
  
 extern cpu_t startTOD;
 
+extern cpu_t endTOD;
+
 extern void moveState(state_t *before, state_t *after);
 extern int main(void);
 #endif
