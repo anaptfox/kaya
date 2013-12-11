@@ -259,6 +259,7 @@ void terminateProcess(pcb_t *p){
 
 /*When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
 perform a V operation on a semaphore.  */
+
 void Verhogen(int *semaddr){
 
 	pcb_t *p;
@@ -279,6 +280,7 @@ void Verhogen(int *semaddr){
 
 /*When this service (syscall 4) is requested, it is interpreted by the nucleus as a request to
 perform a P operation on a semaphore. */
+
 void Passeren(int *semaddr){
 
 	cpu_t endTOD;
@@ -292,8 +294,10 @@ void Passeren(int *semaddr){
 		currentProc->p_semAdd = semaddr;
 		
 		STCK(endTOD);
-	
-		currentProc->p_time = endTOD - startTOD;
+
+		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+		STCK(startTOD);
 
 	
 		currentProc = NULL;
@@ -306,26 +310,42 @@ void Passeren(int *semaddr){
 
 }
 
+/* Just get cpu time */
+
 void getCpuTime(){
+
 	currentProc->p_s.s_v0 = currentProc->p_time;
+
 	continueWithCurrent(&(currentProc->p_s));
+
 }
 
 /*This instruction performs a P operation on the nucleus maintained pseudo-clock
 timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
+
 void waitForClock(){
 	
 	clockSem -= 1;
 
-	if(clockSem <= -1){
+	if(clockSem < 0){
+
 		insertBlocked (&(clockSem) , currentProc);
-		/*DO TIMING STUFF
-		store clock - do substracti - add to field of pcb */
+
+		STCK(endTOD);
+
+		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+		STCK(startTOD);
+
+		softBlkCnt = softBlkCnt + 1;
+
 		currentProc = NULL;
+
 		scheduler();
+
 	}
-	softBlkCnt = softBlkCnt + 1;
+
 	continueWithCurrent(&(currentProc->p_s));
 
 }
@@ -370,7 +390,9 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 		STCK(endTOD);
 
-		currentProc->p_time = endTOD - startTOD;
+		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+		STCK(startTOD);
 
 		currentProc = NULL;
 		
