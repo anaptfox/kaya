@@ -325,6 +325,8 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 
 void waitForClock(){
+
+	cpu_t endTOD;
 	
 	clockSem -= 1;
 
