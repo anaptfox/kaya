@@ -253,6 +253,8 @@ void terminateProcess(pcb_t *p){
  	
  	debugC(13133,10,10);
 
+ 	scheduler();
+
 }
 
 /*When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
