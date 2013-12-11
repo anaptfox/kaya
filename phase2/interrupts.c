@@ -152,7 +152,7 @@ void intHandler(){
 
 				LDIT(100000);
 
-				p = removeBlocked( &clockSem);
+				p = removeBlocked(&(clockSem));
 
 				while(p != NULL){
 
@@ -168,7 +168,7 @@ void intHandler(){
 
 					debugTimer(22222, 10, 10);
 					
-					p = removeBlocked( &clockSem);
+					p = removeBlocked(&(clockSem));
 
 					debugTimer(33333, 10, 10);
 				
