@@ -179,6 +179,7 @@ void createProcess(state_t *state){
 		currentProc->p_s.s_v0 = 0;
 		
 		continueWithCurrent(&(currentProc->p_s));
+		
 	}
 	
 }
@@ -187,6 +188,7 @@ void createProcess(state_t *state){
 all progeny of this process are terminated as well. Execution of this instruction
 does not complete until all progeny are terminated. */
 void terminateProcess(pcb_t *p){
+	
 	debugC(7,p,10);
 
 	while(!emptyChild(p)){
