@@ -83,11 +83,7 @@ void intHandler(){
 	debugA(10 ,10,10);
 
 	/* set up devregarea*/
-	devregarea_t *devregarea;
-
-	debugA(10 ,10,10);
-	
-	cpu_t endTOD;
+	devregarea_t *devregarea;	
 
 	debugA(10 ,10,10);
 	

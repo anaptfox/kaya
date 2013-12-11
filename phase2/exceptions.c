@@ -283,8 +283,6 @@ perform a P operation on a semaphore. */
 
 void Passeren(int *semaddr){
 
-	cpu_t endTOD;
-
 	*(semaddr) -= 1;
 
 	if(*(semaddr) <= -1){
@@ -325,8 +323,6 @@ timer semaphore. This semaphore is V’ed every 100 milliseconds automatically
 by the nucleus (use local timer) */
 
 void waitForClock(){
-
-	cpu_t endTOD;
 	
 	clockSem -= 1;
 
@@ -379,8 +375,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		lineIndex = lineIndex - 3;
 	}
 
-
-	cpu_t endTOD;
 
 	deviceSemas[lineIndex][arg2] -= 1;
 
