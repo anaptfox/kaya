@@ -1,9 +1,10 @@
 #include "../h/const.h"
 #include "../h/types.h"
 #include "../e/pcb.e"
+#include "../e/interrupts.e"
+#include "../e/scheduler.e"
 #include "../e/initial.e"
 #include "../e/exceptions.e"
-#include "../e/scheduler.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 #define bitZero 0x00000001
@@ -95,7 +96,17 @@ void intHandler(){
 
 	int terminalRead = 0;
 
-	
+	STCK(endTOD);
+
+	debugA(10 ,10,10);
+
+	debugA(currentProc->p_time ,10,10);
+
+	currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+	STCK(startTOD);
+
+	debugA(10 ,10,10);
 
 	/*Interrupt Handler
 
