@@ -81,12 +81,8 @@ int findDevice(int lineNumber){
 
 void intHandler(){
 
-	debugA(10 ,10,10);
-
 	/* set up devregarea*/
 	devregarea_t *devregarea;	
-
-	debugA(10 ,10,10);
 	
 	devregarea = (devregarea_t *) 0x10000000;
 
@@ -100,7 +96,7 @@ void intHandler(){
 
 	debugA(10 ,10,10);
 
-	debugA(currentProc->p_time ,10,10);
+	debugA((int) currentProc->p_time ,10,10);
 
 	currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
