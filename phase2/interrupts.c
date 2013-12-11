@@ -94,8 +94,9 @@ void intHandler(){
 	int terminalRead = 0;
 
 	STCK(endTOD);
+	debugA(10 ,10,10);
 
-	debugA(currentProc->p_time,10,10);
+	debugA(currentProc->p_time ,10,10);
 
 	currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
