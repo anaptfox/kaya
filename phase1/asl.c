@@ -214,7 +214,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 			return TRUE;
 		}
 		/* add to active list*/
-		sema = addToASL(sema, semAdd);
+		sema = addToASL(semd_h, semAdd);
 	}
  	p->p_semAdd = semAdd;
  	insertProcQ(&(sema->s_procQ), p);
