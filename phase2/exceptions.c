@@ -179,7 +179,7 @@ void createProcess(state_t *state){
 		currentProc->p_s.s_v0 = 0;
 		
 		continueWithCurrent(&(currentProc->p_s));
-		
+
 	}
 	
 }
@@ -203,39 +203,41 @@ void terminateProcess(pcb_t *p){
  	
  		currentProc = NULL;  
  	
- 	}else if (p->p_semAdd == NULL){
- 		/* on the ready que */
- 		debugC(8,p,10);
+ 	}else {
  		
- 		outProcQ(&(readyQue), p);
- 	}else{
- 		
- 		debugC(9,p,10);
- 		/* on a sema4 */
- 		p = outBlocked(p);
+ 		if (p->p_semAdd == NULL){
+	 		/* on the ready que */
+	 		debugC(8,p,10);
+	 		
+	 		outProcQ(&(readyQue), p);
+	 	}else{
+	 		
+	 		debugC(9,p,10);
+	 		/* on a sema4 */
+	 		p = outBlocked(p);
 
- 		debugC(10,p,10);
- 		
- 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
- 		
- 			debugC(2,p,10);
- 		
- 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
- 		
- 			debugC(3,p,10);
- 		
- 		}else{
- 		
- 			debugC(4,p,10);
- 		
- 			softBlkCnt -= 1;
- 		
- 		}	
- 		
- 		debugC(12,p,10);
+	 		debugC(10,p,10);
+	 		
+	 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
+	 		
+	 			debugC(2,p,10);
+	 		
+	 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
+	 		
+	 			debugC(3,p,10);
+	 		
+	 		}else{
+	 		
+	 			debugC(4,p,10);
+	 		
+	 			softBlkCnt -= 1;
+	 		
+	 		}	
+	 		
+	 		debugC(12,p,10);
 
- 	}
-
+	 	}
+	}
  	
  	debugC(13,10,10);
  	
