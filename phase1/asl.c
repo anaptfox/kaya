@@ -86,7 +86,7 @@ semd_t *findActive(int *semAdd){
 	/*Case 2: Found semAdd in the head*/
 	debugZ(11,semd_h->s_semAdd,10);
 	if(semd_h->s_semAdd == semAdd){
-		returnsemd_h;
+		return semd_h;
 	}/*Case 3: semAdd is not in head*/
 	else{ 
 	debugZ(12,semd_h->s_next,10);
