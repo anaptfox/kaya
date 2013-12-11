@@ -87,6 +87,7 @@ int main(void)
 	
 
 	initPcbs();
+	
 	initASL();
 
 	LDIT(100000);
@@ -97,10 +98,15 @@ int main(void)
 
 	/* iniltialize semaphores to 0*/
 	int j;
+	
 	for(i=0; i<DEVICE_LINE; i = i + 1){
+  
     for(j=0; j<DEVICE_CNT; j = j + 1){
+  
       deviceSemas[i][j] = 0;
+  
     }
+  
   }
 
 	readyQue = mkEmptyProcQ();
@@ -109,20 +115,28 @@ int main(void)
 	pcb_t *p = allocPcb();
 	
 	if(p == NULL){
+
 		PANIC();
+	
 	}
 
+
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
+
 	p->p_s.s_sp = (devregarea->ramsize + devregarea->rambase) - PAGESIZE;
+	
 	p->p_s.s_status = p->p_s.s_status | 0x0800ff04;
 	
 	currentProc = NULL;
+	
 	processCnt = softBlkCnt = 0;
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
 
 	processCnt = processCnt + 1;
+
+	STCK(startTOD);
 	
 	scheduler();
 

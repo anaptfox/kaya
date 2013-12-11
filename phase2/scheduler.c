@@ -54,12 +54,11 @@ void scheduler(){
 					WAIT();
 			
 			}
+
 		}
 
 
 		currentProc = removeProcQ(&readyQue);
-
-		STCK(startTOD);
 
 		continueWithCurrent(&(currentProc->p_s)); 
 

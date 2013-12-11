@@ -83,6 +83,8 @@ void intHandler(){
 	/* set up devregarea*/
 	devregarea_t *devregarea;
 
+	cpu_t endTOD;
+
 	devregarea = (devregarea_t *) 0x10000000;
 
 	device_t *deviceWord;
@@ -90,6 +92,12 @@ void intHandler(){
 	pcb_t *p;
 
 	int terminalRead = 0;
+
+	STCK(endTOD);
+
+	currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+	STCK(startTOD);
 
 	/*Interrupt Handler
 
@@ -116,6 +124,7 @@ void intHandler(){
 		}
 
 		int line = findLine(cause);
+
 		debugCause(line , 10, 10);
 
 		if(line == 1 || line == 2){
@@ -135,6 +144,7 @@ void intHandler(){
 				softBlkCnt = softBlkCnt + 1;
 
 				currentProc = NULL;
+
 			}else{
 				debugTimer(7777, 10, 10);
 
@@ -265,7 +275,7 @@ void intHandler(){
 				p->p_semAdd = NULL;
 
 				insertProcQ (&readyQue, p);
-				
+
 				debugB(232323, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;
@@ -305,8 +315,12 @@ void intHandler(){
 
 		}else{
 
+			STCK(startTOD);
+
 			debugA(100000,33223,10);
+
 			scheduler();
+
 		}
 		
 			
