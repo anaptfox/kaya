@@ -155,11 +155,17 @@ void intHandler(){
 				p = removeBlocked( &clockSem);
 
 				while(p != NULL){
+
 					insertProcQ (&readyQue, p);
+					
 					p = removeBlocked( &clockSem);
+					
 					softBlkCnt = softBlkCnt + 1;
+					
 					clockSem = clockSem + 1;
+					
 					p->p_semAdd = NULL;
+				
 				}
 				
 			}
@@ -168,6 +174,7 @@ void intHandler(){
 		}else{
 
 			int device = findDevice(line);
+
 			debugCause(device , 10, 10);
 
 			if(device == NULL){
@@ -238,10 +245,6 @@ void intHandler(){
 
 			}
 
-			debugB(lineIndex, device, 123);
-
-			
-
 			/* Increment sema accociated with device */
 			deviceSemas[lineIndex][device] += 1;
 
@@ -250,7 +253,6 @@ void intHandler(){
 
 			if(p == NULL){
 
-				debugB(1010101010, device, 123);
 
 				if(line == TERMINT){
 
@@ -275,8 +277,6 @@ void intHandler(){
 				p->p_semAdd = NULL;
 
 				insertProcQ (&readyQue, p);
-
-				debugB(232323, device, 123);
 
 				softBlkCnt = softBlkCnt - 1;
 
@@ -311,13 +311,9 @@ void intHandler(){
 
 			STCK(startTOD);
 
-			debugA(10,22,10);
-
 			continueWithCurrent(&(currentProc->p_s));
 
 		}else{
-
-			debugA(100000,33223,10);
 
 			scheduler();
 
