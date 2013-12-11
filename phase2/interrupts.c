@@ -164,8 +164,6 @@ void intHandler(){
 					
 					clockSem = clockSem + 1;
 					
-					p->p_semAdd = NULL;
-
 					p = removeBlocked( &clockSem);
 				
 				}
@@ -275,9 +273,6 @@ void intHandler(){
 				}
 
 			}else{
-
-				p->p_semAdd = NULL;
-
 				insertProcQ (&readyQue, p);
 
 				softBlkCnt = softBlkCnt - 1;
