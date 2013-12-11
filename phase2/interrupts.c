@@ -92,16 +92,6 @@ void intHandler(){
 
 	int terminalRead = 0;
 
-	STCK(endTOD);
-
-	debugA(10 ,10,10);
-
-	debugA((int) currentProc->p_time ,10,10);
-
-	currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
-
-	STCK(startTOD);
-
 	debugA(10 ,10,10);
 
 	/*Interrupt Handler
@@ -109,7 +99,7 @@ void intHandler(){
 	In order to occur two things have to happen
 	
 	Ints enable bit needs to beon*/
-	if(1){
+	
 		/*he bit for the corresponding line to be on
 		which device signaled the interrupt. ( there could be multiple but only handle one of higher proity )( handle int. on lowest number line)
 		*/
@@ -125,6 +115,12 @@ void intHandler(){
 		if(currentProc != NULL){
 
 			moveState(int_old, &(currentProc->p_s));
+
+			STCK(endTOD);
+
+			currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
+
+			STCK(startTOD);
 
 		}
 
@@ -314,13 +310,13 @@ void intHandler(){
 
 		if(currentProc != NULL){
 
+			STCK(startTOD);
+
 			debugA(10,22,10);
 
 			continueWithCurrent(&(currentProc->p_s));
 
 		}else{
-
-			STCK(startTOD);
 
 			debugA(100000,33223,10);
 
@@ -329,7 +325,6 @@ void intHandler(){
 		}
 		
 			
-	}
 }
 
 
