@@ -297,8 +297,6 @@ void Passeren(int *semaddr){
 
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
-		STCK(startTOD);
-
 	
 		currentProc = NULL;
 
@@ -335,8 +333,6 @@ void waitForClock(){
 		STCK(endTOD);
 
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
-
-		STCK(startTOD);
 
 		softBlkCnt = softBlkCnt + 1;
 
@@ -389,8 +385,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 		STCK(endTOD);
 
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
-
-		STCK(startTOD);
 
 		currentProc = NULL;
 		

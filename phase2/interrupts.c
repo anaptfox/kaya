@@ -120,7 +120,6 @@ void intHandler(){
 
 			currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
-			STCK(startTOD);
 
 		}
 
