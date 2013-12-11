@@ -136,7 +136,6 @@ int main(void)
 
 	processCnt = processCnt + 1;
 
-	STCK(startTOD);
 	
 	scheduler();
 
