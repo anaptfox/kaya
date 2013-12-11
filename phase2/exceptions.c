@@ -191,13 +191,17 @@ void terminateProcess(pcb_t *p){
 	
 	debugC(7,p,10);
 
-	while(!emptyChild(p)){
+	while(emptyChild(p) != NULL){
+
+			debugC(5,p,10);
 	 		
 	 		terminateProcess(removeChild(p));
 	
 	}
  	
  	if(p == currentProc){
+
+ 		debugC(3,p,10);
  	
  		outChild(p);
  	
