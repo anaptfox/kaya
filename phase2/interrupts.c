@@ -146,7 +146,7 @@ void intHandler(){
 				currentProc = NULL;
 
 			}else{
-				debugTimer(7777, 10, 10);
+				debugTimer(7777, clockSem, 10);
 
 				/*Handle Interupt*/
 
