@@ -57,9 +57,11 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
 	/*Case 1: semd_h is empty*/
+	debugZ(10,10,10);
 	if(semd_h == NULL){
 		return(NULL);
 	}
+	debugZ(11,10,10);
 	/*Case 2: Found semAdd in the head*/
 	if(semd_h->s_semAdd == semAdd){
 		return(semd_h);
@@ -78,6 +80,7 @@ semd_t *findActive(int *semAdd){
 		 or hits the end */
 		while(index->s_next != NULL){
 			if(index->s_next->s_semAdd == semAdd){
+				debugZ(13,10,10);
 				return(index->s_next);
 			}
 			else{
