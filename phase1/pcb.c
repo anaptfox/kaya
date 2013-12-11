@@ -155,7 +155,6 @@ pcb_t *allocPcb(){
 		temp->p_sib = NULL;
 		temp->p_prev_sib = NULL;
 		temp->p_semAdd = NULL;
-		temp->p_time = 0;
 	}
 	return(temp);
 }
