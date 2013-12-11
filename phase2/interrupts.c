@@ -85,8 +85,12 @@ void intHandler(){
 	/* set up devregarea*/
 	devregarea_t *devregarea;
 
+	debugA(10 ,10,10);
+	
 	cpu_t endTOD;
 
+	debugA(10 ,10,10);
+	
 	devregarea = (devregarea_t *) 0x10000000;
 
 	device_t *deviceWord;
