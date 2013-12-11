@@ -161,10 +161,16 @@ void intHandler(){
 					debugTimer(8888, 10, 10);
 					
 					softBlkCnt = softBlkCnt + 1;
+
+					debugTimer(11111, 10, 10);
 					
 					clockSem = clockSem + 1;
+
+					debugTimer(22222, 10, 10);
 					
 					p = removeBlocked( &clockSem);
+
+					debugTimer(33333, 10, 10);
 				
 				}
 				
