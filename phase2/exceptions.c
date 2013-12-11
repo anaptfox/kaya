@@ -204,7 +204,7 @@ void terminateProcess(pcb_t *p){
  		currentProc = NULL;  
  	
  	}else {
- 		
+
  		if (p->p_semAdd == NULL){
 	 		/* on the ready que */
 	 		debugC(8,p,10);
@@ -239,7 +239,7 @@ void terminateProcess(pcb_t *p){
 	 	}
 	}
  	
- 	debugC(13,10,10);
+ 	debugC(13,p,10);
  	
  	freePcb(p);
  	
