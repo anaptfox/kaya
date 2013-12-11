@@ -84,6 +84,7 @@ semd_t *findActive(int *semAdd){
 				return(index->s_next);
 			}
 			else{
+				debugZ(index->s_next->s_semAdd,semAdd,10);
 				index = index->s_next;
 			}
 		}
