@@ -305,6 +305,10 @@ void waitForClock(){
 
 	if(clockSem < 0){
 
+		debugC(15,10,10);
+
+		insertBlocked (&(clockSem) , currentProc);
+
 		debugC(11,10,10);
 
 		STCK(endTOD);
@@ -320,10 +324,6 @@ void waitForClock(){
 		debugC(14,10,10);
 
 		currentProc = NULL;
-
-		debugC(15,10,10);
-
-		insertBlocked (&(clockSem) , currentProc);
 
 		debugC(16,10,10);
 
