@@ -30,28 +30,67 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	}
 
-	/*Check head first */
-	if((*semd_h)->s_semAdd > semAdd){
-	
-		(*semd_h) = newSema;
-	
-		newSema->s_next = index;
-	
-		return newSema;
-	
-	}else if((*semd_h)->s_next == NULL){
-	
-		(*semd_h)->s_next = newSema;
-	
-		return newSema;
-	
+	if((*semd_h)->s_next == NULL){
+
+			/*Check head first */
+		if((*semd_h)->s_semAdd > semAdd){
+		
+			newSema->s_next = (*semd_h);
+
+			(*semd_h)->s_next = NULL;
+			
+			(*semd_h) = newSema;
+		
+			return newSema;
+		
+		}else{
+
+			(*semd_h)->s_next = newSema;
+
+			newSema->s_next = NULL;
+
+			return newSema;
+
+		}
+
+	}else{
+
+
+			/*Check head first */
+		if((*semd_h)->s_semAdd > semAdd){
+		
+			newSema->s_next = (*semd_h);
+			
+			(*semd_h) = newSema;
+		
+			return newSema;
+		
+		}else{
+
+			newSema->s_next = (*semd_h)->s_next;
+
+			(*semd_h)->s_next = newSema;
+			
+			return newSema;
+
+		}
+
 	}
+
 
 	/* Loop through everything but head.*/
 	while(!stop){
-	
+
+		if(index->s_next == NULL){
+
+			index->s_next = newSema;
+
+			newSema->s_next = NULL;
+
+			stop = TRUE:
+
 		/* Reset the index to next. */
-		if(index->s_next->s_semAdd > semAdd){
+		}else if(index->s_next->s_semAdd > semAdd){
 	
 			newSema->s_next = index->s_next;
 	
@@ -60,12 +99,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			stop = TRUE;
 	
 		/* if it is the last in the list*/
-		}else if(index->s_next == NULL){
-
-			index->s_next = newSema;
-	
-			stop = TRUE;
-		/* Reset the index to next. */
 		}else{
 	
 			index = index->s_next;
@@ -138,7 +171,7 @@ semd_t *findActive(int *semAdd){
 				debugZ(index->s_next->s_semAdd,semAdd,10);
 		
 				debugZ(index->s_next,index->s_next->s_next,11);
-				
+
 				index = index->s_next;
 		
 			}
