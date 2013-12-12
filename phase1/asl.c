@@ -308,7 +308,7 @@ void initASL(){
 
 	dummyHead.s_next = &(dummyTail);
 
-	dummyTail.s_semAdd = (MAXPROC * 999999999999);
+	dummyTail.s_semAdd = (999999999999);
 
 	dummyTail.s_next = NULL;
 
