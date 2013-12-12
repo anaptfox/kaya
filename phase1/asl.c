@@ -406,7 +406,7 @@ void initASL(){
 
 	semdTable[0].s_semAdd = 0;
 
-	semdTable[0].s_next = semdTable[1];
+	semdTable[0].s_next = &(semdTable[1]);
 
 	semdTable[MAXPROC+2].s_semAdd = MAXPROC * 99999999;
 
