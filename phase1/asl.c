@@ -414,11 +414,11 @@ void initASL(){
 
 	semdTable[0] = dummyHead;
 
-	semdTable[0]->s_next = semdTable[1];
+	semdTable[0].s_next = semdTable[1];
 
 	semdTable[MAXPROC+2] = dummyTail;
 
-	semdTable[MAXPROC+2]->s_next = NULL;
+	semdTable[MAXPROC+2].s_next = NULL;
 
 	int i = 1;
 	
