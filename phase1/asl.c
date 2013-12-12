@@ -408,9 +408,9 @@ void initASL(){
 
 	semd_t dummyTail;
 
-	dummyHead->s_semAdd = 0;
+	dummyHead.s_semAdd = 0;
 
-	dummyTail->s_semAdd = MAXPROC * 99999999;
+	dummyTail.s_semAdd = MAXPROC * 99999999;
 
 	semdTable[0] = dummyHead;
 
