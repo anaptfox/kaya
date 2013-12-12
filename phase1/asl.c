@@ -8,6 +8,10 @@ void debugZ (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugNULL (int a, int b, int c) {
+  int foo = 42;
+}
+
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
@@ -79,6 +83,7 @@ semd_t *findActive(int *semAdd){
 
 	}
 
+	debugNULL(NULL, NULL, NULL);
 	return NULL;
 
 }
