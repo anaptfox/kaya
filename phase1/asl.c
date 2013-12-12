@@ -316,6 +316,8 @@ void initASL(){
 
 	semd_h->s_next = &(dummyTail);
 
+	debugZ(10,semd_h, 10);
+
 	int i = 0;
 	
 	while(  i < MAXPROC){
@@ -326,7 +328,11 @@ void initASL(){
 	
 	}
 
+	debugZ(10,semd_h, 10);
+
 	semdTable[MAXPROC].s_next = NULL;
+
+	debugZ(10,semd_h, 10);
 	
 	semdFree_h = &semdTable[0];
 	
