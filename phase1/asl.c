@@ -9,6 +9,10 @@ void debugZ (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugASL (int a, int b, int c) {
+  int foo = 42;
+}
+
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
@@ -22,9 +26,13 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	/* Empty List Case */
 	
-	if(*semd_h == NULL){
+	if((*semd_h) == NULL){
+
+		debugASL(0,0,0);
 	
-		*semd_h = newSema;
+		(*semd_h) = newSema;
+
+		(*semd_h)->s_next = NULL;
 	
 		return newSema;
 
@@ -32,8 +40,11 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	if((*semd_h)->s_next == NULL){
 
+		debugASL(1,1,1);
+
 			/*Check head first */
 		if((*semd_h)->s_semAdd > semAdd){
+			debugASL(1,2,1);
 		
 			newSema->s_next = (*semd_h);
 
@@ -44,6 +55,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			return newSema;
 		
 		}else{
+			debugASL(1,3,1);
 
 			(*semd_h)->s_next = newSema;
 
@@ -54,10 +66,11 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		}
 
 	}else{
-
+		debugASL(2,2,2);
 
 			/*Check head first */
 		if((*semd_h)->s_semAdd > semAdd){
+			debugASL(2,3,2);
 		
 			newSema->s_next = (*semd_h);
 			
@@ -66,6 +79,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			return newSema;
 		
 		}else{
+			debugASL(2,4,2);
 
 			newSema->s_next = (*semd_h)->s_next;
 
@@ -80,6 +94,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	/* Loop through everything but head.*/
 	while(!stop){
+
+		debugASL(5,5,5);
 
 		if(index->s_next == NULL){
 
