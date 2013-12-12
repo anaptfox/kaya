@@ -31,7 +31,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	}
 
 	/*Check head first */
-	if(index->s_semAdd > semAdd){
+	if((*semd_h)->s_semAdd > semAdd){
 	
 		(*semd_h) = newSema;
 	
@@ -39,16 +39,14 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 		stop = TRUE;
 	
-	}
-	/*Check Second first */
+	}else if((*semd_h)->s_next == NULL){
 	
-	if(index->s_next == NULL){
-	
-		index->s_next = newSema;
+		(*semd_h)->s_next = newSema;
 	
 		stop = TRUE;
 	
 	}
+	
 	/* Loop through everything but head.*/
 	while(!stop){
 	
