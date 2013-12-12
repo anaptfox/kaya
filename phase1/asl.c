@@ -416,6 +416,8 @@ pcb_t *removeBlocked(int *semAdd){
 
 	if(sema == NULL){
 
+		debugZ(NULL,10,10);
+
 		return(NULL);
 
 	}else{
