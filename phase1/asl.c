@@ -312,9 +312,11 @@ void initASL(){
 
 	semd_h = &(dummyHead);
 
+	debugZ(10,semd_h, 10);
+
 	semd_h->s_next = &(dummyTail);
 
-	int i = 1;
+	int i = 0;
 	
 	while(  i < MAXPROC){
 	
