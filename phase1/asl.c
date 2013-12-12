@@ -78,7 +78,7 @@ semd_t *findActive(int *semAdd){
 				return(index->s_next);
 
 		}else{
-	
+			debugZ(index->s_next,10,9999);
 			index = index->s_next;
 
 		}
@@ -309,7 +309,7 @@ void initASL(){
 	dummyTail.s_semAdd = (MAXPROC * 999999999999);
 
 	dummyTail.s_next = NULL;
-	
+
 	int i = 0;
 	
 	while(  i < MAXPROC){
