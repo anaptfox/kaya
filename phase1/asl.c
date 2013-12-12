@@ -92,9 +92,9 @@ semd_t *findActive(int *semAdd){
 	}
 	/*Case 2: Found semAdd in the head*/
 	
-	debugZ(11,*semd_h->s_semAdd,10);
+	debugZ(11,(*semd_h)->s_semAdd,10);
 	
-	if(*semd_h->s_semAdd == semAdd){
+	if((*semd_h)->s_semAdd == semAdd){
 	
 		return(*semd_h);
 	
@@ -102,17 +102,17 @@ semd_t *findActive(int *semAdd){
 	
 	else{ 
 	
-	debugZ(12,*semd_h->s_next,10);
+	debugZ(12,(*semd_h)->s_next,10);
 		
 		/*Subcase 1: There is no element after head*/
 		
-		if(*semd_h->s_next == NULL){
+		if((*semd_h)->s_next == NULL){
 		
 			return(NULL);
 		
 		}
 		
-		semd_t *index = *semd_h->s_next;
+		semd_t *index = (*semd_h)->s_next;
 		
 		/*Subcase 2: The element after the head has semAdd*/
 		
@@ -182,19 +182,19 @@ semd_t *removeActive(int *semAdd){
 	
 	/*Case 1: semAdd is in head*/
 	
-	if(*semd_h->s_semAdd == semAdd){
+	if((*semd_h)->s_semAdd == semAdd){
 	
 		deletedNode = *semd_h;
 	
 		/*Subcase 1: There is no element after head*/
 	
-		if(*semd_h->s_next == NULL){
+		if((*semd_h)->s_next == NULL){
 	
 			*semd_h = NULL;
 	
 		}else{
 	
-			*semd_h = *semd_h->s_next;
+			*semd_h = (*semd_h)->s_next;
 	
 		}
 	
@@ -206,21 +206,21 @@ semd_t *removeActive(int *semAdd){
 	
 	/*Case 2: semAdd is in element after head*/
 	
-	if(*semd_h->s_next->s_semAdd == semAdd){
+	if((*semd_h)->s_next->s_semAdd == semAdd){
 	
-		deletedNode = *semd_h->s_next;
+		deletedNode = (*semd_h)->s_next;
 	
 		/*Look before you leap approach; since *semd_h is not
 		double linked, we check to see if we are two elements
 		from the end.*/
 	
-		if(*semd_h->s_next->s_next == NULL){
+		if((*semd_h)->s_next->s_next == NULL){
 	
-			*semd_h->s_next = NULL;
+			(*semd_h)->s_next = NULL;
 	
 		}else{
 	
-			*semd_h->s_next = *semd_h->s_next->s_next;
+			(*semd_h)->s_next = (*semd_h)->s_next->s_next;
 	
 		}
 	
