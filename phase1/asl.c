@@ -86,7 +86,7 @@ semd_t *findActive(int *semAdd){
 	/*Case 2: Found semAdd in the head*/
 	debugZ(11,semd_h->s_semAdd,10);
 	if(semd_h->s_semAdd == semAdd){
-		return semd_h;
+		returnsemd_h;
 	}/*Case 3: semAdd is not in head*/
 	else{ 
 	debugZ(12,semd_h->s_next,10);
@@ -134,103 +134,54 @@ semd_t *removeActive(int *semAdd){
 	semd_t *index = semd_h;
 	
 	semd_t *deletedNode;
-
-	/*Case 0: semd_h is empty*/
-	
-	if(semd_h == NULL){
-		
-		PANIC();
-	
-	}
 	
 	/*Case 1: semAdd is in head*/
 	if(semd_h->s_semAdd == semAdd){
-		
 		deletedNode = semd_h;
-		
 		/*Subcase 1: There is no element after head*/
-		
 		if(semd_h->s_next == NULL){
-		
 			semd_h = NULL;
-		
 		}else{
-		
 			semd_h = semd_h->s_next;
-		
 		}
-		
 		deletedNode->s_next= NULL;
-		
 		return deletedNode;
-	
 	}
 	/*Case 2: semAdd is in element after head*/
 	if(semd_h->s_next->s_semAdd == semAdd){
-	
 		deletedNode = semd_h->s_next;
-	
 		/*Look before you leap approach; since semd_h is not
 		double linked, we check to see if we are two elements
 		from the end.*/
-	
 		if(semd_h->s_next->s_next == NULL){
-	
 			semd_h->s_next = NULL;
-	
 		}else{
-	
 			semd_h->s_next = semd_h->s_next->s_next;
-	
 		}
-	
 		deletedNode->s_next= NULL;
-	
 		return deletedNode;
-	
 	}
-	
 	/*Iterate until we aren't on the last element*/
-	
 	while(index->s_next != NULL){
-	
 		/*Iterate through the list; if we find the element,
 		remove it, else go to the next element*/
-	
 			if(index->s_next->s_semAdd == semAdd){
-	
 				if (index->s_next->s_next != NULL){
-	
 					deletedNode = index->s_next;
-	
 					index->s_next = index->s_next->s_next;
-	
 					deletedNode->s_next = NULL;
-	
 					return deletedNode;
-	
 				}else{
-	
 					deletedNode = index->s_next;
-	
 					index->s_next = NULL;
-	
 					deletedNode->s_next = NULL;
-	
 					return deletedNode;
-	
 				}
-	
 			}
-	
 			else{
-	
 				index = index->s_next;
-	
 			}
-	
 		}
-	
 	}
 
 
@@ -243,55 +194,30 @@ int emptyList(semd_t *list){
 /*Removes the top of the Free list*/
 
 semd_t *removeFree(){
-	
 	if(emptyList(semdFree_h)){
-
 		return(NULL);
-	
 	}else{
-		
-		semd_t *old = semdFree_h;
-		
-		if(semdFree_h->s_next == NULL ){
-		
-			semdFree_h = NULL;
-		
+		semd_t *old = (semdFree_h);
+		if((semdFree_h)->s_next == NULL ){
+			(semdFree_h) = NULL;
 		}else{
-		
-			semdFree_h = semdFree_h->s_next;
-		
+			(semdFree_h) = (semdFree_h)->s_next;
 		}
-		
 		old->s_next = NULL;
-		
 		old->s_procQ = mkEmptyProcQ();
-
-		old->s_semAdd = NULL;
-		
 		return(old);
-	
 	}
-
 }
 
 /*Add the top of the Free list*/
 
 void addFree(semd_t *newSema){
-	
 	if(emptyList(semdFree_h)){
-	
 		semdFree_h = newSema;
-
-		semdFree_h->s_next = NULL;
-	
 	}else{
-	
 		newSema->s_next = semdFree_h;
-	
 		semdFree_h = newSema;
-	
 	}
-
 }
 
 
@@ -305,35 +231,19 @@ void addFree(semd_t *newSema){
    return TRUE. In all other cases return FALSE. */
 
 int insertBlocked(int *semAdd, pcb_t *p){
-	
-	debugZ(11111111,semAdd,10);
-	
 	semd_t *sema = findActive(semAdd);
-	
-	debugZ(55555555,sema,10);
-	
 	if(sema == NULL){
 		/*remove from free semd_h*/
-	
 		sema = removeFree();
-	
 		if(sema == NULL ){
-	
 			return TRUE;
-	
 		}
 		/* add to active list*/
-	
 		sema = addToASL(sema, semAdd);
-	
 	}
- 	
  	p->p_semAdd = semAdd;
- 	
  	insertProcQ(&(sema->s_procQ), p);
- 	
  	return FALSE;
-
 }
 
 /* Search the ASL for a descriptor of this semaphore. If none is
@@ -343,9 +253,7 @@ empty (emptyProcQ(s procq) is TRUE), remove the semaphore
 descriptor from the ASL and return it to the semdFree list. */
 
 pcb_t *removeBlocked(int *semAdd){
-	debugZ(22222222,semAdd,10);
 	semd_t *sema = findActive(semAdd);
-	debugZ(444444444,sema,10);
 	if(sema == NULL){
 		return(NULL);
 	}else{
@@ -403,11 +311,11 @@ pcb_t *headBlocked(int *semAdd){
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
-	while(  i < MAXPROC){
+	while(  i < (MAXPROC)){
 		semdTable[i].s_next = &semdTable[i+1];	
 		i++; 
 	}
-	semdTable[MAXPROC].s_next = NULL;
+	semdTable[(MAXPROC)].s_next = NULL;
 	semdFree_h = &semdTable[0];
 	semd_h = NULL;
 }
