@@ -86,8 +86,6 @@ semd_t *removeActive(int *semAdd){
 	
 	semd_t *deletedNode = NULL;
 
-	semd_t *index = semd_h;
-
 	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
 
 		if(index->s_next->s_semAdd == semAdd){
