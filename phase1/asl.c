@@ -11,8 +11,7 @@ void debugZ (int a, int b, int c) {
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = FALSE;
-	semd_t *index = semd_h;
-
+	semd_t *index = (semd_h);
 	newSema->s_semAdd = semAdd;
 	newSema->s_next = NULL;
 
@@ -24,53 +23,33 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	}
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
-
-		semd_h = newSema;
-		
+		(semd_h) = newSema;
 		newSema->s_next = index;
-		
 		stop = TRUE;
-	
 	}
-
 	/*Check Second first */
 	if(index->s_next == NULL){
-		
 		index->s_next = newSema;
-		
 		stop = TRUE;
-	
 	}
-	
 	/* Loop through everything but head.*/
 	while(!stop){
-	
 		/* if semAdd is greater than the current semAdd*/
-	
 		if(index->s_next == NULL){
 
 			index->s_next = newSema;
-	
 			stop = TRUE;
-	
 		/* Reset the index to next. */
-	
 		}else if(index->s_next->s_semAdd > semAdd){
 
 			newSema->s_next = index->s_next;
-		
 			index->s_next = newSema;
-		
 			stop = TRUE;
-		
 		/* if it is the last in the list*/
-		
 		}else{
 	
 			index = index->s_next;
-		
 		}
-	
 	}
 
 	return newSema;
@@ -86,7 +65,7 @@ semd_t *findActive(int *semAdd){
 	/*Case 2: Found semAdd in the head*/
 	debugZ(11,semd_h->s_semAdd,10);
 	if(semd_h->s_semAdd == semAdd){
-		returnsemd_h;
+		return(semd_h);
 	}/*Case 3: semAdd is not in head*/
 	else{ 
 	debugZ(12,semd_h->s_next,10);
@@ -130,11 +109,8 @@ semd_t *findActive(int *semAdd){
 /*Looks through list for semAdd if not found allocNewASL*/
 
 semd_t *removeActive(int *semAdd){
-	
 	semd_t *index = semd_h;
-	
 	semd_t *deletedNode;
-	
 	/*Case 1: semAdd is in head*/
 	if(semd_h->s_semAdd == semAdd){
 		deletedNode = semd_h;
@@ -311,11 +287,11 @@ pcb_t *headBlocked(int *semAdd){
 void initASL(){
 	static semd_t semdTable[MAXPROC];
 	int i = 0;
-	while(  i < (MAXPROC)){
+	while(  i < (MAXPROC-1)){
 		semdTable[i].s_next = &semdTable[i+1];	
 		i++; 
 	}
-	semdTable[(MAXPROC)].s_next = NULL;
+	semdTable[(MAXPROC-1)].s_next = NULL;
 	semdFree_h = &semdTable[0];
 	semd_h = NULL;
 }
