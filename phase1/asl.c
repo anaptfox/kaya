@@ -489,7 +489,7 @@ void initASL(){
 
 	debugZ(10,10,10);
 
-	(*semd_h) = &(head);
+	semd_h = &(head);
 
 	debugZ(10,10,10);
 
