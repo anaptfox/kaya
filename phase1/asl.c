@@ -37,27 +37,21 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 		newSema->s_next = index;
 	
-		stop = TRUE;
+		return newSema;
 	
 	}else if((*semd_h)->s_next == NULL){
 	
 		(*semd_h)->s_next = newSema;
 	
-		stop = TRUE;
+		return newSema;
 	
 	}
-	
+
 	/* Loop through everything but head.*/
 	while(!stop){
 	
-		/* if semAdd is greater than the current semAdd*/
-		if(index->s_next == NULL){
-
-			index->s_next = newSema;
-	
-			stop = TRUE;
 		/* Reset the index to next. */
-		}else if(index->s_next->s_semAdd > semAdd){
+		if(index->s_next->s_semAdd > semAdd){
 	
 			newSema->s_next = index->s_next;
 	
@@ -66,6 +60,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			stop = TRUE;
 	
 		/* if it is the last in the list*/
+		}else if(index->s_next == NULL){
+
+			index->s_next = newSema;
+	
+			stop = TRUE;
+		/* Reset the index to next. */
 		}else{
 	
 			index = index->s_next;
