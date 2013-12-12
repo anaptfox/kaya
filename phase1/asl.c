@@ -73,7 +73,7 @@ semd_t *findActive(int *semAdd){
 
 	}
 
-	return NULL:
+	return NULL;
 
 }
 
