@@ -330,4 +330,10 @@ void initASL(){
 
 	semd_h->s_next = &(dummyTail);
 
+	debugZ(semd_h->s_semAdd,10,12);
+
+	debugZ(semd_h->s_next,10,13);
+
+	debugZ(semd_h->s_next->s_semAdd,semd_h->s_next->s_next,15);
+
 }
