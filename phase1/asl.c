@@ -328,5 +328,6 @@ void initASL(){
 	
 	semdFree_h = &semdTable[0];
 	
+	debugZ(10,semd_h, 10);
 
 }
