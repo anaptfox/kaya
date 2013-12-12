@@ -404,19 +404,11 @@ void initASL(){
 	
 	static semd_t semdTable[MAXPROC+2];
 
-	semd_t dummyHead;
-
-	semd_t dummyTail;
-
-	dummyHead.s_semAdd = 0;
-
-	dummyTail.s_semAdd = MAXPROC * 99999999;
-
-	semdTable[0] = dummyHead;
+	semdTable[0].s_semAdd = 0;
 
 	semdTable[0].s_next = semdTable[1];
 
-	semdTable[MAXPROC+2] = dummyTail;
+	semdTable[MAXPROC+2].s_semAdd = MAXPROC * 99999999;
 
 	semdTable[MAXPROC+2].s_next = NULL;
 
