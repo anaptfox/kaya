@@ -10,57 +10,30 @@ void debugZ (int a, int b, int c) {
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
+	
 	int stop = FALSE;
-
-	semd_t *index = semd_h;
 
 	newSema->s_semAdd = semAdd;
 
 	newSema->s_next = NULL;
 
-	/* Empty List Case */
-	if(semd_h == NULL){
+	/*Check first after dummy */
+	if((semd_h->s_next->s_next == NULL) || (semd_h->s_next->s_semAdd > semAdd)){
 
-		semd_h = newSema;
+		newSema->s_next = semd_h->s_next;
 
+		semd_h->s_next = newSema;
+		
 		return newSema;
-
-	}
-
-	/*Check head first */
-	if(index->s_semAdd > semAdd){
-
-		semd_h = newSema;
-		
-		newSema->s_next = index;
-		
-		stop = TRUE;
 	
 	}
 
-	/*Check Second first */
-	if(index->s_next == NULL){
-		
-		index->s_next = newSema;
-		
-		stop = TRUE;
-	
-	}
+	semd_t *index = semd_h;
 	
 	/* Loop through everything but head.*/
 	while(!stop){
 	
-		/* if semAdd is greater than the current semAdd*/
-	
-		if(index->s_next == NULL){
-
-			index->s_next = newSema;
-	
-			stop = TRUE;
-	
-		/* Reset the index to next. */
-	
-		}else if(index->s_next->s_semAdd > semAdd){
+	 if(index->s_next->s_semAdd > semAdd){
 
 			newSema->s_next = index->s_next;
 		
@@ -83,52 +56,25 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
-	/*Case 1: semd_h is empty*/
-	debugZ(10,semd_h,10);
-	if(semd_h == NULL){
-		return(NULL);
-	}
-	/*Case 2: Found semAdd in the head*/
-	debugZ(11,semd_h->s_semAdd,10);
-	if(semd_h->s_semAdd == semAdd){
-		return semd_h;
-	}/*Case 3: semAdd is not in head*/
-	else{ 
-	debugZ(12,semd_h->s_next,10);
 
-		/*Subcase 1: There is no element after head*/
-		if(semd_h->s_next == NULL){
-			return(NULL);
-		}
-		semd_t *index = semd_h->s_next;
-		/*Subcase 2: The element after the head has semAdd*/
-		if(index->s_semAdd == semAdd){
-				return(index);
-		}
-		/*Loops through list until either semAdd is found,
-		 or hits the end */
-		while(index->s_next != NULL){
-			if(index->s_next->s_semAdd == semAdd){
-				debugZ(13,10,10);
+	semd_t *index = semd_h;
+
+	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
+
+		if(index->s_next->s_semAdd == semAdd){
+			
 				return(index->s_next);
-			}
-			else{
-				debugZ(index->s_next->s_semAdd,semAdd,10);
-				index = index->s_next;
-			}
-		}
-		/*Subcase 3: We are on the last element*/
-		if(index->s_next == NULL){
-			if(index->s_semAdd == semAdd){
-				return(index);
-			}
-			else{
-				return(NULL);
-			}
+
 		}else{
-			return(NULL);
+	
+			index = index->s_next;
+
 		}
+
 	}
+
+	return NULL:
+
 }
 
 
@@ -138,105 +84,35 @@ semd_t *removeActive(int *semAdd){
 	
 	semd_t *index = semd_h;
 	
-	semd_t *deletedNode;
+	semd_t *deletedNode = NULL;
 
-	/*Case 0: semd_h is empty*/
+	semd_t *index = semd_h;
+
+	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
+
+		if(index->s_next->s_semAdd == semAdd){
+			
+				deletedNode = index->s_next;
+
+				break;
+
+		}else{
 	
-	if(semd_h == NULL){
-		
+			index = index->s_next;
+
+		}
+
+	}
+
+	if (deletedNode == NULL){
+
 		PANIC();
-	
+
 	}
-	
-	/*Case 1: semAdd is in head*/
-	if(semd_h->s_semAdd == semAdd){
+
+	index->s_next = deletedNode->s_next;
 		
-		deletedNode = semd_h;
-		
-		/*Subcase 1: There is no element after head*/
-		
-		if(semd_h->s_next == NULL){
-		
-			semd_h = NULL;
-		
-		}else{
-		
-			semd_h = semd_h->s_next;
-		
-		}
-		
-		deletedNode->s_next= NULL;
-		
-		return deletedNode;
-	
-	}
-	/*Case 2: semAdd is in element after head*/
-	if(semd_h->s_next->s_semAdd == semAdd){
-	
-		deletedNode = semd_h->s_next;
-	
-		/*Look before you leap approach; since semd_h is not
-		double linked, we check to see if we are two elements
-		from the end.*/
-	
-		if(semd_h->s_next->s_next == NULL){
-	
-			semd_h->s_next = NULL;
-	
-		}else{
-	
-			semd_h->s_next = semd_h->s_next->s_next;
-	
-		}
-	
-		deletedNode->s_next= NULL;
-	
-		return deletedNode;
-	
-	}
-	
-	/*Iterate until we aren't on the last element*/
-	
-	while(index->s_next != NULL){
-	
-		/*Iterate through the list; if we find the element,
-		remove it, else go to the next element*/
-	
-			if(index->s_next->s_semAdd == semAdd){
-	
-				if (index->s_next->s_next != NULL){
-	
-					deletedNode = index->s_next;
-	
-					index->s_next = index->s_next->s_next;
-	
-					deletedNode->s_next = NULL;
-	
-					return deletedNode;
-	
-				}else{
-	
-					deletedNode = index->s_next;
-	
-					index->s_next = NULL;
-	
-					deletedNode->s_next = NULL;
-	
-					return deletedNode;
-	
-				}
-	
-			}
-	
-			else{
-	
-				index = index->s_next;
-	
-			}
-	
-		}
-	
-	}
+}
 
 
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
@@ -417,7 +293,7 @@ void initASL(){
 
 	dummyHead.s_next = &(dummyTail);
 
-	dummyTail.s_semAdd = (MAXPROC * 99999999);
+	dummyTail.s_semAdd = (MAXPROC * 999999999999);
 
 	dummyTail.s_next = NULL;
 
