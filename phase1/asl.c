@@ -485,6 +485,10 @@ void initASL(){
 
 	semdFree_h = &semdTable[0];
 
+	debugZ(10,10,10);
+
 	(*semd_h) = NULL;
+
+	debugZ(10,10,10);
 
 }
