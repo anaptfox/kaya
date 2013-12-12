@@ -87,7 +87,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			newSema->s_next = NULL;
 
-			stop = TRUE:
+			stop = TRUE;
 
 		/* Reset the index to next. */
 		}else if(index->s_next->s_semAdd > semAdd){
