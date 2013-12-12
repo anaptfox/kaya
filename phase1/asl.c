@@ -61,6 +61,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
 
+	debugZ(10,10,13);
+
 	semd_t *index = semd_h;
 
 	debugZ(index->s_next,10,13);
