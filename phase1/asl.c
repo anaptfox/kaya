@@ -59,7 +59,13 @@ semd_t *findActive(int *semAdd){
 
 	semd_t *index = semd_h;
 
+	debugZ(index->s_next,10,10);
+
+	debugZ(index->s_next->s_semAdd,semAdd,10);
+
 	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
+
+		debugZ(index->s_next->s_semAdd,semAdd,10);
 
 		if(index->s_next->s_semAdd == semAdd){
 			
