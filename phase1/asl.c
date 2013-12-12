@@ -11,17 +11,22 @@ void debugZ (int a, int b, int c) {
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = FALSE;
+
 	semd_t *index = semd_h;
 
 	newSema->s_semAdd = semAdd;
+
 	newSema->s_next = NULL;
 
 	/* Empty List Case */
 	if(semd_h == NULL){
+
 		semd_h = newSema;
+
 		return newSema;
 
 	}
+
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 
@@ -402,28 +407,37 @@ pcb_t *headBlocked(int *semAdd){
 /*Initialize the ASL*/
 void initASL(){
 	
-	static semd_t semdTable[MAXPROC+2];
+	static semd_t semdTable[MAXPROC];
 
-	semdTable[0].s_semAdd = 0;
+	semd_t dummyHead;
 
-	semdTable[0].s_next = &(semdTable[1]);
+	semd_t dummyTail;
 
-	semdTable[MAXPROC+2].s_semAdd = MAXPROC * 99999999;
+	dummyHead.s_semAdd = 0;
 
-	semdTable[MAXPROC+2].s_next = NULL;
+	dummyHead.s_next = &(dummyTail);
+
+	dummyTail.s_semAdd = (MAXPROC * 99999999);
+
+	dummyTail.s_next = NULL;
+
+	semd_h = &(dummyHead);
+
+	semd_h->s_next = &(dummyTail);
 
 	int i = 1;
 	
-	while(  i < MAXPROC+1){
+	while(  i < MAXPROC){
 	
 		semdTable[i].s_next = &semdTable[i+1];	
 	
 		i++; 
 	
 	}
+
+	semdTable[MAXPROC].s_next = NULL;
 	
 	semdFree_h = &semdTable[0];
 	
-	semd_h = NULL;
 
 }
