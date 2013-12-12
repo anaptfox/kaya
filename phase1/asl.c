@@ -71,7 +71,7 @@ semd_t *findActive(int *semAdd){
 
 	debugZ(index->s_next->s_semAdd,semAdd,14);
 
-	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
+	while(index->s_next != NULL || index->s_next->s_semAdd < semAdd ){
 
 		debugZ(index->s_next->s_semAdd,semAdd,15);
 
@@ -103,7 +103,7 @@ semd_t *removeActive(int *semAdd){
 	
 	semd_t *deletedNode = NULL;
 
-	while(index->s_next != NULL || index->s_next->s_semAdd > semAdd ){
+	while(index->s_next != NULL || index->s_next->s_semAdd < semAdd ){
 
 		if(index->s_next->s_semAdd == semAdd){
 			
