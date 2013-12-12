@@ -542,6 +542,12 @@ void initASL(){
 
 	semd_h = &(head);
 
+	if((*semd_h) == NULL){
+
+		debugASL(0,0,0);
+
+	}
+
 	debugZ(10,10,10);
 
 }
