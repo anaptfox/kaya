@@ -2,17 +2,19 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-static semd_t *semd_h;
+static semd_t **semd_h;
 static semd_t *semdFree_h;
+
 void debugZ (int a, int b, int c) {
   int foo = 42;
 }
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
+	
 	int stop = FALSE;
 	
-	semd_t *index = (semd_h);
+	semd_t *index = *semd_h;
 	
 	newSema->s_semAdd = semAdd;
 	
@@ -20,17 +22,18 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	/* Empty List Case */
 	
-	if(semd_h == NULL){
+	if(*semd_h == NULL){
 	
-		semd_h = newSema;
+		*semd_h = newSema;
 	
 		return newSema;
 
 	}
+
 	/*Check head first */
 	if(index->s_semAdd > semAdd){
 	
-		(semd_h) = newSema;
+		(*semd_h) = newSema;
 	
 		newSema->s_next = index;
 	
@@ -80,36 +83,36 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 semd_t *findActive(int *semAdd){
 	
 	/*Case 1: semd_h is empty*/
-	debugZ(10,semd_h,10);
+	debugZ(10,*semd_h,10);
 	
-	if(semd_h == NULL){
+	if(*semd_h == NULL){
 	
 		return(NULL);
 	
 	}
 	/*Case 2: Found semAdd in the head*/
 	
-	debugZ(11,semd_h->s_semAdd,10);
+	debugZ(11,*semd_h->s_semAdd,10);
 	
-	if(semd_h->s_semAdd == semAdd){
+	if(*semd_h->s_semAdd == semAdd){
 	
-		return(semd_h);
+		return(*semd_h);
 	
 	}/*Case 3: semAdd is not in head*/
 	
 	else{ 
 	
-	debugZ(12,semd_h->s_next,10);
+	debugZ(12,*semd_h->s_next,10);
 		
 		/*Subcase 1: There is no element after head*/
 		
-		if(semd_h->s_next == NULL){
+		if(*semd_h->s_next == NULL){
 		
 			return(NULL);
 		
 		}
 		
-		semd_t *index = semd_h->s_next;
+		semd_t *index = *semd_h->s_next;
 		
 		/*Subcase 2: The element after the head has semAdd*/
 		
@@ -173,25 +176,25 @@ semd_t *findActive(int *semAdd){
 
 semd_t *removeActive(int *semAdd){
 	
-	semd_t *index = semd_h;
+	semd_t *index = *semd_h;
 	
 	semd_t *deletedNode;
 	
 	/*Case 1: semAdd is in head*/
 	
-	if(semd_h->s_semAdd == semAdd){
+	if(*semd_h->s_semAdd == semAdd){
 	
-		deletedNode = semd_h;
+		deletedNode = *semd_h;
 	
 		/*Subcase 1: There is no element after head*/
 	
-		if(semd_h->s_next == NULL){
+		if(*semd_h->s_next == NULL){
 	
-			semd_h = NULL;
+			*semd_h = NULL;
 	
 		}else{
 	
-			semd_h = semd_h->s_next;
+			*semd_h = *semd_h->s_next;
 	
 		}
 	
@@ -203,21 +206,21 @@ semd_t *removeActive(int *semAdd){
 	
 	/*Case 2: semAdd is in element after head*/
 	
-	if(semd_h->s_next->s_semAdd == semAdd){
+	if(*semd_h->s_next->s_semAdd == semAdd){
 	
-		deletedNode = semd_h->s_next;
+		deletedNode = *semd_h->s_next;
 	
-		/*Look before you leap approach; since semd_h is not
+		/*Look before you leap approach; since *semd_h is not
 		double linked, we check to see if we are two elements
 		from the end.*/
 	
-		if(semd_h->s_next->s_next == NULL){
+		if(*semd_h->s_next->s_next == NULL){
 	
-			semd_h->s_next = NULL;
+			*semd_h->s_next = NULL;
 	
 		}else{
 	
-			semd_h->s_next = semd_h->s_next->s_next;
+			*semd_h->s_next = *semd_h->s_next->s_next;
 	
 		}
 	
@@ -273,7 +276,9 @@ semd_t *removeActive(int *semAdd){
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
 Return FALSE otherwise. */
 int emptyList(semd_t *list){
+
 	return (list == NULL); 
+
 }
 
 /*Removes the top of the Free list*/
@@ -342,7 +347,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 	if(sema == NULL){
 
-		/*remove from free semd_h*/
+		/*remove from free *semd_h*/
 
 		sema = removeFree();
 
