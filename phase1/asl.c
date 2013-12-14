@@ -116,6 +116,20 @@ semd_t *findActive(int *semAdd){
 
 	semd_t *index = semd_h;
 
+	if(index->s_next == NULL){
+		
+		if(index->s_next->s_semAdd == semAdd){
+		
+			return(index->s_next);
+		
+		}else{
+
+			return(NULL);
+
+		}
+
+	}
+
 	while(index->s_next != NULL){
 
 		debugASL(index->s_next,index->s_next->s_next,semAdd);
