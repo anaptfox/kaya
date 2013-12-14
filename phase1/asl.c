@@ -46,6 +46,9 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		debugHEAD(newSema,newSema->s_next,1);
 
+		debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
+
 		return newSema;
 
 	}
@@ -96,6 +99,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	}
 
+debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	return newSema;
 }
