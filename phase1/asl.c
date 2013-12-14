@@ -420,6 +420,8 @@ void initASL(){
 
 	static semd_t semdTable[MAXPROC];
 
+	semd_t *dummy;
+
 	int i = 0;
 
 	while ( i < MAXPROC){
@@ -433,8 +435,6 @@ void initASL(){
 	semdTable[MAXPROC].s_next = NULL;
 
 	semdFree_h = &semdTable[0];
-
-	semd_t *dummy;
 
 	dummy->s_next = NULL;
 
