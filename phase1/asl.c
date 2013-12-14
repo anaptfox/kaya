@@ -35,7 +35,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	newSema->s_next = NULL;
 
-	debugZ(semd_h->s_next, semd_h->semAdd, semd_h);
+	debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 
 	if(semd_h->s_next == NULL){
