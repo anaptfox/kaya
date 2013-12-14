@@ -277,6 +277,8 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 	semd_t *sema = findActive(semAdd);
 
+	debugZ(sema,10,10);
+
 	if(sema == NULL){
 
 		/*remove from free *semd_h*/
@@ -429,7 +431,7 @@ void initASL(){
 
 	semd_h = &(dummyHead);
 
-	debugASL(semd_h->s_next,semd_h->s_next->s_next,1);
+	debugASL(semd_h->s_next,0,1);
 
 
 }
