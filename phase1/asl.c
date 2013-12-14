@@ -83,6 +83,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			newSema->s_next = NULL;
 
+			debugHEAD(newSema,newSema->s_next,3);
+
 			stop = TRUE;
 
 		/* Reset the index to next. */
@@ -91,6 +93,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			newSema->s_next = index->s_next;
 	
 			index->s_next = newSema;
+
+			debugHEAD(newSema,newSema->s_next,4);
 	
 			stop = TRUE;
 	
@@ -103,7 +107,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	}
 
-	debugHEAD(newSema,newSema->s_next,3);
 
 	return newSema;
 }
