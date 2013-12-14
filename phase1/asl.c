@@ -421,19 +421,21 @@ void initASL(){
 
 	debugASL(1,1,1);
 
-	semd_t *dummyHead;
-
-	dummyHead->s_next = NULL;
+	semd_t dummyHead;
 
 	debugASL(1,1,1);
 
-	dummyHead->s_semAdd = 0;
-
-	dummyHead->s_procQ = mkEmptyProcQ();
+	dummyHead.s_next = NULL;
 
 	debugASL(1,1,1);
 
-	semd_h = dummyHead;
+	dummyHead.s_semAdd = 0;
+
+	dummyHead.s_procQ = mkEmptyProcQ();
+
+	debugASL(1,1,1);
+
+	semd_h = &(dummyHead);
 
 
 }
