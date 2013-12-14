@@ -43,6 +43,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	}
 
+	debugZ(semd_h->s_next, 0, 0);
 
 
 	/* Loop through everything but head.*/
