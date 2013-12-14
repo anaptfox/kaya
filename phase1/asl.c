@@ -266,8 +266,6 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 	semd_t *sema = findActive(semAdd);
 
-	debugZ(sema, 0, 0);
-
 	if(sema == NULL){
 
 		/*remove from free *semd_h*/
