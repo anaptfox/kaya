@@ -109,21 +109,23 @@ semd_t *findActive(int *semAdd){
 
 	semd_t *index = semd_h;
 
+	debugASL(index->s_next,index->s_next->s_next,1);
+
 	while(index->s_next != NULL){
 		
-			if(index->s_next->s_semAdd == semAdd){
-		
-				return(index->s_next);
-		
-			}
-		
-			else{
-		
-				index = index->s_next;
-		
-			}
-		
+		if(index->s_next->s_semAdd == semAdd){
+	
+			return(index->s_next);
+	
 		}
+	
+		else{
+	
+			index = index->s_next;
+	
+		}
+		
+	}
 
 	return(NULL);
 }
@@ -413,27 +415,17 @@ void initASL(){
 
 	}
 
-	debugASL(1,1,1);
-
 	semdTable[MAXPROC].s_next = NULL;
 
 	semdFree_h = &semdTable[0];
 
-	debugASL(1,1,1);
-
 	semd_t dummyHead;
 
-	debugASL(1,1,1);
-
 	dummyHead.s_next = NULL;
-
-	debugASL(1,1,1);
 
 	dummyHead.s_semAdd = 0;
 
 	dummyHead.s_procQ = mkEmptyProcQ();
-
-	debugASL(1,1,1);
 
 	semd_h = &(dummyHead);
 
