@@ -26,6 +26,10 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	int stop = FALSE;
 	
 	semd_t *index = semd_h;
+
+	if(newSema == NULL){
+		PANIC();
+	}
 	
 	newSema->s_semAdd = semAdd;
 	
