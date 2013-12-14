@@ -28,9 +28,10 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	newSema->s_next = NULL;
 
+	debugZ(semd_h->s_next, 0, 0);
+
 
 	if(semd_h->s_next == NULL){
-
 
 		semd_h->s_next = newSema;
 
