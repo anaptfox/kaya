@@ -16,6 +16,9 @@ void debugASL (int a, int b, int c) {
 void debugHEAD (int a, int b, int c) {
   int foo = 42;
 }
+void debugSEMADD (int a, int b, int c) {
+  int foo = 42;
+}
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
@@ -66,7 +69,10 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		/* Reset the index to next. */
 		}else if(index->s_next->s_semAdd > semAdd){
 
-	
+			if(index->s_next == semd_h->s_next){
+				debugSEMADD(index->s_next->s_semAdd,semAdd,4);
+			}
+
 			newSema->s_next = index->s_next;
 	
 			index->s_next = newSema;
