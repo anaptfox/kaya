@@ -62,6 +62,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		/* Reset the index to next. */
 		}else if(index->s_next->s_semAdd > semAdd){
+
+			debugHEAD(index->s_next->s_semAdd,semAdd,44);
 	
 			newSema->s_next = index->s_next;
 	
@@ -69,7 +71,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			debugHEAD(newSema,newSema->s_next,4);
 
-			debugHEAD(index->s_next->s_semAdd,semAdd,44);
+		
 	
 			stop = TRUE;
 	
