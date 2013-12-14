@@ -2,7 +2,7 @@
 #include "../h/types.h"
 #include "../e/pcb.e"
 
-static semd_t **semd_h;
+static semd_t *semd_h;
 static semd_t *semdFree_h;
 
 void debugZ (int a, int b, int c) {
@@ -18,46 +18,33 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	int stop = FALSE;
 	
-	semd_t *index = *semd_h;
+	semd_t *index = semd_h;
 	
 	newSema->s_semAdd = semAdd;
 	
 	newSema->s_next = NULL;
 
-	/* Empty List Case */
-	
-	if((*semd_h) == NULL){
 
-		debugASL(0,0,0);
-	
-		(*semd_h) = newSema;
-
-		(*semd_h)->s_next = NULL;
-	
-		return newSema;
-
-	}
-
-	if((*semd_h)->s_next == NULL){
+	if(semd_h->s_next == NULL){
 
 		debugASL(1,1,1);
 
 			/*Check head first */
-		if((*semd_h)->s_semAdd > semAdd){
+		if(semd_h->s_semAdd > semAdd){
 			debugASL(1,2,1);
 		
-			newSema->s_next = (*semd_h);
+			newSema->s_next = semd_h;
 
-			(*semd_h)->s_next = NULL;
+			semd_h->s_next = NULL;
 			
-			(*semd_h) = newSema;
+			semd_h = newSema;
 		
 			return newSema;
 		
 		}else{
 			debugASL(1,3,1);
 
-			(*semd_h)->s_next = newSema;
+			semd_h->s_next = newSema;
 
 			newSema->s_next = NULL;
 
@@ -69,24 +56,15 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		debugASL(2,2,2);
 
 			/*Check head first */
-		if((*semd_h)->s_semAdd > semAdd){
+		if(semd_h->s_semAdd > semAdd){
 			debugASL(2,3,2);
 		
-			newSema->s_next = (*semd_h);
+			newSema->s_next = semd_h;
 			
-			(*semd_h) = newSema;
+			semd_h = newSema;
 		
 			return newSema;
 		
-		}else{
-			debugASL(2,4,2);
-
-			newSema->s_next = (*semd_h)->s_next;
-
-			(*semd_h)->s_next = newSema;
-			
-			return newSema;
-
 		}
 
 	}
@@ -128,55 +106,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
-	
-	/*Case 1: semd_h is empty*/
-	debugZ(10,*semd_h,10);
-	
-	if(*semd_h == NULL){
-	
-		return(NULL);
-	
-	}
-	/*Case 2: Found semAdd in the head*/
-	
-	debugZ(11,(*semd_h)->s_semAdd,10);
-	
-	if((*semd_h)->s_semAdd == semAdd){
-	
-		return(*semd_h);
-	
-	}/*Case 3: semAdd is not in head*/
-	
-	else{ 
-	
-	debugZ(12,(*semd_h)->s_next,10);
-		
-		/*Subcase 1: There is no element after head*/
-		
-		if((*semd_h)->s_next == NULL){
-		
-			return(NULL);
-		
-		}
-		
-		semd_t *index = (*semd_h)->s_next;
-		
-		/*Subcase 2: The element after the head has semAdd*/
-		
-		if(index->s_semAdd == semAdd){
-		
-				return(index);
-		
-		}
-		
-		/*Loops through list until either semAdd is found,
-		 or hits the end */
-		
-		while(index->s_next != NULL){
+
+	semd_t *index = semd_h;
+
+	while(index->s_next != NULL){
 		
 			if(index->s_next->s_semAdd == semAdd){
-		
-				debugZ(13,10,10);
 		
 				return(index->s_next);
 		
@@ -184,40 +119,13 @@ semd_t *findActive(int *semAdd){
 		
 			else{
 		
-				debugZ(index->s_next->s_semAdd,semAdd,10);
-		
-				debugZ(index->s_next,index->s_next->s_next,11);
-
 				index = index->s_next;
 		
 			}
 		
 		}
-		
-		/*Subcase 3: We are on the last element*/
-		
-		if(index->s_next == NULL){
-		
-			if(index->s_semAdd == semAdd){
-		
-				return(index);
-		
-			}
-		
-			else{
-		
-				return(NULL);
-		
-			}
-		
-		}else{
-		
-			return(NULL);
-		
-		}
-	
-	}
 
+	return(NULL);
 }
 
 
@@ -229,51 +137,22 @@ semd_t *removeActive(int *semAdd){
 	
 	semd_t *deletedNode;
 	
-	/*Case 1: semAdd is in head*/
 	
-	if((*semd_h)->s_semAdd == semAdd){
+	/*Case 1: semAdd is in element after head*/
 	
-		deletedNode = *semd_h;
+	if(semd_h->s_next->s_semAdd == semAdd){
 	
-		/*Subcase 1: There is no element after head*/
+		deletedNode = semd_h->s_next;
 	
-		if((*semd_h)->s_next == NULL){
+		if(semd_h->s_next->s_next == NULL){
 	
-			*semd_h = NULL;
-	
-		}else{
-	
-			*semd_h = (*semd_h)->s_next;
-	
-		}
-	
-		deletedNode->s_next= NULL;
-	
-		return deletedNode;
-	
-	}
-	
-	/*Case 2: semAdd is in element after head*/
-	
-	if((*semd_h)->s_next->s_semAdd == semAdd){
-	
-		deletedNode = (*semd_h)->s_next;
-	
-		/*Look before you leap approach; since *semd_h is not
-		double linked, we check to see if we are two elements
-		from the end.*/
-	
-		if((*semd_h)->s_next->s_next == NULL){
-	
-			(*semd_h)->s_next = NULL;
+			semd_h->s_next = NULL;
 	
 		}else{
 	
-			(*semd_h)->s_next = (*semd_h)->s_next->s_next;
+			semd_h->s_next = semd_h->s_next->s_next;
 	
 		}
-	
-		deletedNode->s_next= NULL;
 	
 		return deletedNode;
 	
@@ -355,6 +234,8 @@ semd_t *removeFree(){
 		old->s_next = NULL;
 	
 		old->s_procQ = mkEmptyProcQ();
+
+		old->s_semAdd = NULL;
 	
 		return(old);
 	
@@ -522,8 +403,6 @@ void initASL(){
 
 	static semd_t semdTable[MAXPROC];
 
-	semd_t *head = NULL;
-
 	int i = 0;
 
 	while(  i < (MAXPROC-1)){
@@ -538,16 +417,15 @@ void initASL(){
 
 	semdFree_h = &semdTable[0];
 
-	debugZ(10,10,10);
+	semd_t *dummyHead;
 
-	semd_h = &(head);
+	dummyHead->s_next = NULL;
 
-	if((*semd_h) == NULL){
+	dummyHead->s_semAdd = 0;
 
-		debugASL(0,0,0);
+	dummyHead->s_procQ = mkEmptyProcQ();
 
-	}
+	semd_h = dummyHead;
 
-	debugZ(10,10,10);
 
 }
