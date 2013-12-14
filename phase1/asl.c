@@ -101,7 +101,7 @@ semd_t *findActive(int *semAdd){
 
 	while(index->s_next != NULL){
 
-		debugASL(index->s_next,index->s_next->s_next,semAdd);
+		/*debugASL(index->s_next,index->s_next->s_next,semAdd);*/
 		
 		if(index->s_next->s_semAdd == semAdd){
 	
