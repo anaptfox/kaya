@@ -405,7 +405,7 @@ void initASL(){
 
 	int i = 0;
 
-	while(  i < MAXPROC){
+	while ( i < MAXPROC){
 
 		semdTable[i].s_next = &semdTable[i+1];	
 
@@ -413,17 +413,25 @@ void initASL(){
 
 	}
 
+	debugASL(1,1,1);
+
 	semdTable[MAXPROC].s_next = NULL;
 
 	semdFree_h = &semdTable[0];
+
+	debugASL(1,1,1);
 
 	semd_t *dummyHead;
 
 	dummyHead->s_next = NULL;
 
+	debugASL(1,1,1);
+
 	dummyHead->s_semAdd = 0;
 
 	dummyHead->s_procQ = mkEmptyProcQ();
+
+	debugASL(1,1,1);
 
 	semd_h = dummyHead;
 
