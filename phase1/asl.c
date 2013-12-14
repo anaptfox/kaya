@@ -32,44 +32,15 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	if(semd_h->s_next == NULL){
 
 
-			/*Check head first */
-		if(semd_h->s_semAdd > semAdd){
-		
-			newSema->s_next = semd_h;
+		semd_h->s_next = newSema;
 
-			semd_h->s_next = NULL;
-			
-			semd_h = newSema;
-		
-		
-		}else{
-
-			semd_h->s_next = newSema;
-
-			newSema->s_next = NULL;
-
-		}
+		newSema->s_next = NULL;
 
 		debugHEAD(newSema,newSema->s_next,1);
 
 		return newSema;
 
 	}
-
-		/*Check head first */
-	if(semd_h->s_semAdd > semAdd){
-	
-		newSema->s_next = semd_h;
-		
-		semd_h = newSema;
-
-		debugHEAD(newSema,newSema->s_next,2);
-
-		return newSema;
-
-	}
-
-	
 
 
 
