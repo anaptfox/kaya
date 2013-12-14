@@ -43,8 +43,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	}
 
-	debugZ(semd_h->s_next, 0, 0);
-
 
 	/* Loop through everything but head.*/
 	while(!stop){
@@ -57,6 +55,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			newSema->s_next = NULL;
 
 			debugHEAD(newSema,newSema->s_next,3);
+			debugHEAD(index->s_next->s_semAdd,semAdd,33);
 
 			stop = TRUE;
 
@@ -68,6 +67,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			index->s_next = newSema;
 
 			debugHEAD(newSema,newSema->s_next,4);
+
+			debugHEAD(index->s_next->s_semAdd,semAdd,44);
 	
 			stop = TRUE;
 	
