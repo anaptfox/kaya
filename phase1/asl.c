@@ -50,12 +50,13 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		if(index->s_next == NULL){
 
+
 			index->s_next = newSema;
 
 			newSema->s_next = NULL;
 
 			debugHEAD(newSema,newSema->s_next,3);
-			debugHEAD(index->s_next->s_semAdd,semAdd,33);
+			
 
 			stop = TRUE;
 
