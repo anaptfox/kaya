@@ -20,6 +20,15 @@ void debugSEMADD (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugS (int a, int b, int c) {
+  int foo = 42;
+}
+
+void debugI (int a, int b, int c) {
+  int foo = 42;
+}
+
+
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
@@ -107,9 +116,13 @@ debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
 
+	debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
 	semd_t *index = semd_h;
 
 	if(semd_h->s_next == NULL){
+
+		debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 		return(NULL);
 
@@ -120,6 +133,8 @@ semd_t *findActive(int *semAdd){
 		debugASL(index->s_next,index->s_next->s_next,semAdd);
 		
 		if(index->s_next->s_semAdd == semAdd){
+
+			debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
 	
 			return(index->s_next);
 	
@@ -132,6 +147,8 @@ semd_t *findActive(int *semAdd){
 		}
 		
 	}
+
+	debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	return(NULL);
 }
@@ -281,13 +298,19 @@ void addFree(semd_t *newSema){
 
 int insertBlocked(int *semAdd, pcb_t *p){
 
+	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
 	semd_t *sema = findActive(semAdd);
+
+	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	if(sema == NULL){
 
 		/*remove from free *semd_h*/
 
 		sema = removeFree();
+
+		debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 		if(sema == NULL ){
 
@@ -297,13 +320,21 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 		/* add to active list*/
 
+		debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
 		sema = addToASL(sema, semAdd);
 
 	}
 
+	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
  	p->p_semAdd = semAdd;
 
+ 	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
+
  	insertProcQ(&(sema->s_procQ), p);
+
+ 	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
  	return FALSE;
 
