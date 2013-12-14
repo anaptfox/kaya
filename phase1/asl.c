@@ -444,7 +444,7 @@ void initASL(){
 
 	semd_h = &(dummyHead);
 
-	debugHEAD(semd_h->s_next,0,1);
+	debugHEAD(semd_h->s_next,0,11);
 
 
 }
