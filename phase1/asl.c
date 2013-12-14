@@ -19,7 +19,6 @@ void debugHEAD (int a, int b, int c) {
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
-	debugHEAD(semd_h->s_next,0,1);
 	
 	int stop = FALSE;
 	
@@ -44,7 +43,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 			
 			semd_h = newSema;
 		
-			return newSema;
 		
 		}else{
 			debugASL(1,3,1);
@@ -53,26 +51,31 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			newSema->s_next = NULL;
 
-			return newSema;
-
 		}
+
+		debugHEAD(newSema,newSema->s_next,1);
+
+		return newSema;
 
 	}else{
 		debugASL(2,2,2);
 
 			/*Check head first */
 		if(semd_h->s_semAdd > semAdd){
-			debugASL(2,3,2);
 		
 			newSema->s_next = semd_h;
 			
 			semd_h = newSema;
-		
-			return newSema;
+	
 		
 		}
 
+		debugHEAD(newSema,newSema->s_next,2);
+
+		return newSema;
+
 	}
+
 
 
 	/* Loop through everything but head.*/
@@ -106,6 +109,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	}
 
+	debugHEAD(newSema,newSema->s_next,3);
+
 	return newSema;
 }
 
@@ -116,7 +121,7 @@ semd_t *findActive(int *semAdd){
 
 	while(index->s_next != NULL){
 
-		debugASL(semd_h->s_next,semd_h->s_next->s_next,2);
+		debugASL(index->s_next,index->s_next->s_next,2);
 		
 		if(index->s_next->s_semAdd == semAdd){
 	
@@ -139,7 +144,6 @@ semd_t *findActive(int *semAdd){
 /*Looks through list for semAdd if not found allocNewASL*/
 
 semd_t *removeActive(int *semAdd){
-	debugHEAD(semd_h->s_next,0,3);
 	
 	semd_t *index = semd_h;
 	
@@ -212,7 +216,6 @@ semd_t *removeActive(int *semAdd){
 /* Return TRUE if the queue whose tail is pointed to by tp is empty.
 Return FALSE otherwise. */
 int emptyList(semd_t *list){
-	debugHEAD(semd_h->s_next,0,4);
 
 	return (list == NULL); 
 
@@ -221,7 +224,6 @@ int emptyList(semd_t *list){
 /*Removes the top of the Free list*/
 
 semd_t *removeFree(){
-	debugHEAD(semd_h->s_next,0,5);
 	
 	if(emptyList(semdFree_h)){
 	
@@ -256,7 +258,6 @@ semd_t *removeFree(){
 /*Add the top of the Free list*/
 
 void addFree(semd_t *newSema){
-	debugHEAD(semd_h->s_next,0,6);
 
 	if(emptyList(semdFree_h)){
 
@@ -283,7 +284,6 @@ void addFree(semd_t *newSema){
    return TRUE. In all other cases return FALSE. */
 
 int insertBlocked(int *semAdd, pcb_t *p){
-	debugHEAD(semd_h->s_next,0,7);
 
 	semd_t *sema = findActive(semAdd);
 
@@ -322,7 +322,6 @@ empty (emptyProcQ(s procq) is TRUE), remove the semaphore
 descriptor from the ASL and return it to the semdFree list. */
 
 pcb_t *removeBlocked(int *semAdd){
-	debugHEAD(semd_h->s_next,0,8);
 
 	semd_t *sema = findActive(semAdd);
 
@@ -362,7 +361,6 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
-	debugHEAD(semd_h->s_next,0,9);
 
 	
 	semd_t *sema = findActive(p->p_semAdd);
@@ -400,7 +398,6 @@ pcb_t *outBlocked(pcb_t *p){
 if semAdd is not found on the ASL or if the process queue associated with semAdd is empty. */
 
 pcb_t *headBlocked(int *semAdd){
-	debugHEAD(semd_h->s_next,0,10);
 	
 	semd_t *sema = findActive(semAdd);
 	
@@ -444,7 +441,6 @@ void initASL(){
 
 	semd_h = dummy;
 
-	debugHEAD(semd_h->s_next,0,11);
 
 
 }
