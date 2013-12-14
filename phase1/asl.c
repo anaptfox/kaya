@@ -50,6 +50,9 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		if(index->s_next == NULL){
 
+			if(index->s_next == semd_h->s_next){
+				PANIC();
+			}
 
 			index->s_next = newSema;
 
