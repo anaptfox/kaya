@@ -54,23 +54,22 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		return newSema;
 
-	}else{
+	}
 
-			/*Check head first */
-		if(semd_h->s_semAdd > semAdd){
-		
-			newSema->s_next = semd_h;
-			
-			semd_h = newSema;
+		/*Check head first */
+	if(semd_h->s_semAdd > semAdd){
 	
+		newSema->s_next = semd_h;
 		
-		}
+		semd_h = newSema;
 
 		debugHEAD(newSema,newSema->s_next,2);
 
 		return newSema;
 
 	}
+
+	
 
 
 
