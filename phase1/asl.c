@@ -133,7 +133,7 @@ semd_t *findActive(int *semAdd){
 
 semd_t *removeActive(int *semAdd){
 	
-	semd_t *index = *semd_h;
+	semd_t *index = semd_h;
 	
 	semd_t *deletedNode;
 	
