@@ -109,7 +109,7 @@ semd_t *findActive(int *semAdd){
 
 	semd_t *index = semd_h;
 
-	debugASL(index->s_next,index->s_next->s_next,1);
+	debugASL(semd_h->s_next,semd_h->s_next->s_next,1);
 
 	while(index->s_next != NULL){
 		
@@ -428,6 +428,8 @@ void initASL(){
 	dummyHead.s_procQ = mkEmptyProcQ();
 
 	semd_h = &(dummyHead);
+
+	debugASL(semd_h->s_next,semd_h->s_next->s_next,1);
 
 
 }
