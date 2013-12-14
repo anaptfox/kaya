@@ -434,15 +434,15 @@ void initASL(){
 
 	semdFree_h = &semdTable[0];
 
-	semd_t *dummyHead;
+	semd_t *dummy;
 
-	dummyHead->s_next = NULL;
+	dummy->s_next = NULL;
 
-	dummyHead->s_semAdd = 0;
+	dummy->s_semAdd = 0;
 
-	dummyHead->s_procQ = mkEmptyProcQ();
+	dummy->s_procQ = mkEmptyProcQ();
 
-	semd_h = dummyHead;
+	semd_h = dummy;
 
 	debugHEAD(semd_h->s_next,0,11);
 
