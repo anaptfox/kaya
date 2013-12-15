@@ -61,11 +61,6 @@ void sysHandler(){
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
-		}else{
-
-			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
-
-			scheduler();
 		}
 	/*if kernel mode */
 	}else{
