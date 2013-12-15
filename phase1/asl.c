@@ -13,7 +13,7 @@ void debugASL (int a, int b, int c) {
   int foo = 42;
 }
 
-void debugHEAD (int a, int b, int c) {
+void debugHEAD (int a, int b, int c, int d) {
   int foo = 42;
 }
 void debugSEMADD (int a, int b, int c) {
@@ -59,7 +59,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		newSema->s_next = NULL;
 
-		debugHEAD(newSema,newSema->s_next,1);
+		debugHEAD(newSema,newSema->s_next,newSema->s_semAdd, 1);
 
 		debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
@@ -85,7 +85,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			newSema->s_next = NULL;
 
-			debugHEAD(newSema,newSema->s_next,3);
+			debugHEAD(newSema,newSema->s_next,newSema->s_semAdd,3);
 			
 
 			stop = TRUE;
@@ -101,7 +101,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 			index->s_next = newSema;
 
-			debugHEAD(newSema,newSema->s_next,4);
+			debugHEAD(newSema,newSema->s_next,newSema->s_semAdd, 4);
 
 		
 	
