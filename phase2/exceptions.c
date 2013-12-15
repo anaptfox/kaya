@@ -102,7 +102,7 @@ void sysHandler(){
 				/*The processor state is moved from the SYS/Bp Old Area into the processor
 				state area whose address was recorded in the 
 				ProcBlk as the SYS/Bp Old Area Address */
-				moveState(pgm_old, (state_t *) currentProc->p_states[2].oldState);
+				moveState(sys_old, (state_t *) currentProc->p_states[2].oldState);
 				moveState((state_t *) currentProc->p_states[2].newState, &(currentProc->p_s));
 				continueWithCurrent(&(currentProc->p_s));
 
@@ -116,21 +116,29 @@ void sysHandler(){
 /*If sys5 returns a 1 in the a0, that is, we get a PgmTrap exception,
  pgmTrapHandler deals with the exception */
 void pgmTrapHandler(){
-
+	debugV(10,10,10);
 	if(currentProc->p_states[1].newState == NULL){
 			/*Kill it */
+			debugV(11,10,10);
 			terminateProcess(currentProc);
+			
 			currentProc = NULL;
+			
 			scheduler();
-		}else{
+
+	}else{
+		debugV(12,10,10);
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
+			
 			moveState(pgm_old, (state_t *) currentProc->p_states[1].oldState);
+			
 			moveState((state_t *) currentProc->p_states[1].newState, &(currentProc->p_s));
+			debugV(14,10,10);
 			continueWithCurrent(&(currentProc->p_s));
 
-		}
+	}
 
 }
 
@@ -147,8 +155,13 @@ void TLBHandler(){
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			state area whose address was recorded in 
 			the ProcBlk as the SYS/Bp Old Area Address */
+			
 			moveState(tlb_old, (state_t *) currentProc->p_states[0].oldState);
+			
 			moveState((state_t *) currentProc->p_states[0].newState, &(currentProc->p_s));
+
+
+			continueWithCurrent(&(currentProc->p_s));
 
 		}
 
