@@ -125,7 +125,7 @@ int main(void)
 
 	p->p_s.s_sp = (devregarea->ramsize + devregarea->rambase) - PAGESIZE;
 
-	p->p_s.s_status = p->p_s.s_status | 0x0800ff04;
+	p->p_s.s_status = ALLOFF | 0x0800ff04;
 
 	currentProc = NULL;
 
