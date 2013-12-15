@@ -267,8 +267,6 @@ semd_t *removeFree(){
 		old->s_next = NULL;
 	
 		old->s_procQ = mkEmptyProcQ();
-
-		old->s_semAdd = NULL;
 	
 		return(old);
 	
