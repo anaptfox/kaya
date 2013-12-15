@@ -37,10 +37,12 @@ void sysHandler(){
 	
 	kernel_mode = (sys_old->s_status) & KUc;
 
-	debugKernal(sys_old->s_status, kernel_mode, 10);
+	
 
 	/*if user mode */
 	if (kernel_mode != 0 ){
+		debugKernal(sys_old->s_status, kernel_mode, 10);
+
 		/*check for sys 1-8 */
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
