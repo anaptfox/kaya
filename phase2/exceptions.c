@@ -57,6 +57,8 @@ void sysHandler(){
 
 			moveState(currentProc->p_states[2].newState, currentProc->p_states[1].newState);
 
+			moveState(currentProc->p_states[2].oldState, currentProc->p_states[1].oldState);
+
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
 			pgm_old->s_cause = pgm_old->s_cause | 0x00000014; /*QUESTION  what is RI?*/
 
