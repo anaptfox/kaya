@@ -303,31 +303,17 @@ void waitForClock(){
 	
 	clockSem -= 1;
 
-	debugC(10,10,10);
-
 	if(clockSem < 0){
-
-		debugC(15,10,10);
 
 		insertBlocked (&(clockSem) , currentProc);
 
-		debugC(11,10,10);
-
 		STCK(endTOD);
-
-		debugC(12,10,10);
 
 		currentProc->p_time = currentProc->p_time + (endTOD - startTOD);
 
-		debugC(13,10,10);
-
 		softBlkCnt = softBlkCnt + 1;
 
-		debugC(14,10,10);
-
 		currentProc = NULL;
-
-		debugC(16,10,10);
 
 		scheduler();
 

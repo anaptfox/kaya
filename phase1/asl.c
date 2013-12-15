@@ -378,7 +378,7 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
-
+	debugS(semd_h->s_next, 10, 10);
 	
 	semd_t *sema = findActive(p->p_semAdd);
 	
@@ -403,6 +403,8 @@ pcb_t *outBlocked(pcb_t *p){
 			addFree(sema);
 	
 		}
+
+		debugS(semd_h->s_next, 10, 10);
 	
 		return(proc);
 	
