@@ -65,8 +65,7 @@ void sysHandler(){
 
 		}else{
 
-			debugUserSys9(sys_old->s_a0 , 10 , 10);
-			continueWithCurrent(&(currentProc->p_s));
+			scheduler();
 		}
 	/*if kernel mode */
 	}else{
