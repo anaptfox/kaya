@@ -452,7 +452,7 @@ void initASL(){
 
 	int i = 0;
 
-	while ( i < MAXPROC){
+	while ( i < (MAXPROC-1)){
 
 		semdTable[i].s_next = &semdTable[i+1];	
 
@@ -460,7 +460,7 @@ void initASL(){
 
 	}
 
-	semdTable[MAXPROC].s_next = NULL;
+	semdTable[(MAXPROC-1)].s_next = NULL;
 
 	semdFree_h = &semdTable[0];
 
