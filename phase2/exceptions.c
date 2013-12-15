@@ -51,12 +51,27 @@ void sysHandler(){
 		/*check for sys 1-8 */
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
+if(currentProc->p_states[2].newState == NULL){
+					/*Kill it */
+				
+					terminateProcess(currentProc);
+					
+					currentProc = NULL;
+					
+					scheduler();
 
-		moveState(sys_old, currentProc->p_states[2].oldState);
+			}else{
+					/*The processor state is moved from the SYS/Bp Old Area into the processor
+					 state area whose address was recorded in the ProcBlk 
+					as the SYS/Bp Old Area Address */
+					
+					moveState(sys_old, currentProc->p_states[2].oldState);
 					
 					moveState(currentProc->p_states[2].newState, &(currentProc->p_s));
 
 					continueWithCurrent(&(currentProc->p_s));
+
+			}
 
 		}
 	/*if kernel mode */
