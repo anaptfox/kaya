@@ -52,7 +52,11 @@ int main(void)
 		/* set up devregarea*/
 		devregarea_t *devregarea;
 
+		debugMikeyg(10,10,10);
+
 		devregarea = (devregarea_t *) 0x10000000;
+
+		debugMikeyg(10,10,10);
 
 		/* SYSCALLS*/
 		state_t *area;
