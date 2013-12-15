@@ -136,6 +136,7 @@ void pgmTrapHandler(){
 			
 			moveState((state_t *) currentProc->p_states[1].newState, &(currentProc->p_s));
 			debugV(14,10,10);
+			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 			continueWithCurrent(&(currentProc->p_s));
 
 	}
