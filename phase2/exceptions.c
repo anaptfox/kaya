@@ -39,7 +39,9 @@ void sysHandler(){
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
-			sys_old->s_cause = 10; /*QUESTION  what is RI?*/
+			pgm_old->s_cause = pgm_old->s_cause | 0x00000014; /*QUESTION  what is RI?*/
+
+			currentProc->p_states[1].newState = &(currentProc->p_s)
 
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			
@@ -111,7 +113,6 @@ void sysHandler(){
 					moveState(sys_old, currentProc->p_states[2].oldState);
 					
 					moveState(currentProc->p_states[2].newState, &(currentProc->p_s));
-					
 
 					continueWithCurrent(&(currentProc->p_s));
 
