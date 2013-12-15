@@ -136,7 +136,7 @@ void pgmTrapHandler(){
 			
 			moveState((state_t *) currentProc->p_states[1].newState, &(currentProc->p_s));
 			debugV(14,10,10);
-			
+
 			continueWithCurrent(&(currentProc->p_s));
 
 	}
@@ -263,7 +263,6 @@ void Verhogen(int *semaddr){
 	p = removeBlocked(semaddr);
 
 	if(p != NULL){
-		debugV(10,10,0);
 		p->p_semAdd = NULL;
 		insertProcQ (&readyQue, p);
 	}
