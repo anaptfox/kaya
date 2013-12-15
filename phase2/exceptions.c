@@ -95,13 +95,13 @@ void sysHandler(){
 		}else{
 			debugC(10,10,10);
 			if(currentProc->p_states[2].newState == NULL){
-			/*Kill it */
-		
-			terminateProcess(currentProc);
-			
-			currentProc = NULL;
-			
-			scheduler();
+					/*Kill it */
+				
+					terminateProcess(currentProc);
+					
+					currentProc = NULL;
+					
+					scheduler();
 
 			}else{
 					/*The processor state is moved from the SYS/Bp Old Area into the processor

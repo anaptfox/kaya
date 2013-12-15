@@ -156,6 +156,12 @@ pcb_t *allocPcb(){
 		temp->p_prev_sib = NULL;
 		temp->p_semAdd = NULL;
 		temp->p_time = 0;
+		temp->p_states[2].newState = NULL;
+		temp->p_states[2].oldState = NULL;
+		temp->p_states[0].newState = NULL;
+		temp->p_states[0].oldState = NULL;
+		temp->p_states[1].newState = NULL;
+		temp->p_states[1].oldState = NULL;
 	}
 	return(temp);
 }

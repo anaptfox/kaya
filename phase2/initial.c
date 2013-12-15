@@ -52,24 +52,16 @@ int main(void)
 		/* set up devregarea*/
 		devregarea_t *devregarea;
 
-		debugMikeyg(10,10,10);
-
 		devregarea = (devregarea_t *) 0x10000000;
-
-		debugMikeyg(10,10,10);
 
 		/* SYSCALLS*/
 		state_t *area;
 		area = (state_t *)SYS_NEW;
 		STST(area);
 
-		debugMikeyg(10,10,10);
-
 		area->s_pc = area->s_t9 = (memaddr) sysHandler;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
-
-		debugMikeyg(10,10,10);
 
 		/* ProgramTrap*/
 		area = (state_t *)PGMTRAP_NEW;
@@ -78,16 +70,12 @@ int main(void)
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 
-		debugMikeyg(10,10,10);
-
 		/* TLB Management*/
 		area = (state_t *)TLB_NEW;
 		moveState(area, (state_t *) TLB_NEW);
 		area->s_pc = area->s_t9 = (memaddr) TLBHandler ;
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
-
-		debugMikeyg(10,10,10);
 
 		/* Interrupt*/
 		area = (state_t *)INT_NEW;
@@ -96,29 +84,17 @@ int main(void)
 		area->s_sp = devregarea->rambase + devregarea->ramsize;
 		area->s_status = ALLOFF;
 
-		debugMikeyg(10,10,10);
-
 	
 
 	initPcbs();
 
-	debugMikeyg(10,10,10);
-	
 	initASL();
-
-	debugMikeyg(10,10,10);
 
 	LDIT(100000);
 
-	debugMikeyg(10,10,10);
-
 	clockSem = 0;
 
-	debugMikeyg(10,10,10);
-
 	setTIMER(5000);
-
-	debugMikeyg(10,10,10);
 
 	/* iniltialize semaphores to 0*/
 	int j;
@@ -133,11 +109,7 @@ int main(void)
   
   }
 
-  debugMikeyg(10,10,10);
-
 	readyQue = mkEmptyProcQ();
-
-	debugMikeyg(10,10,10);
 
 	/* Alloc the first pcb */
 	pcb_t *p = allocPcb();
@@ -148,37 +120,21 @@ int main(void)
 	
 	}
 
-	debugMikeyg(10,10,10);
-
 
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 
-	debugMikeyg(10,10,10);
-
 	p->p_s.s_sp = (devregarea->ramsize + devregarea->rambase) - PAGESIZE;
 
-	debugMikeyg(10,10,10);
-	
 	p->p_s.s_status = p->p_s.s_status | 0x0800ff04;
 
-	debugMikeyg(10,10,10);
-	
 	currentProc = NULL;
 
-	debugMikeyg(10,10,10);
-	
 	processCnt = softBlkCnt = 0;
-
-	debugMikeyg(10,10,10);
 
 	/* populate this pcb*/
 	insertProcQ(&readyQue, p);
 
-	debugMikeyg(10,10,10);
-
 	processCnt = processCnt + 1;
-
-	debugMikeyg(10,10,10);
 
 	
 	scheduler();
