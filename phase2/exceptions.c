@@ -40,7 +40,7 @@ void sysHandler(){
 
 	currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 	
-	kernel_mode = (sys_old->s_status & KUp);
+	kernel_mode = (sys_old->s_status & KUc);
 
 	
 
