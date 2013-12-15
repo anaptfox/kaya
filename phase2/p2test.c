@@ -13,8 +13,6 @@
 
 #include "../h/const.h"
 #include "../h/types.h"
-#include "../e/asl.e"
- #include "../e/pcb.e"
 #include "/usr/local/include/umps2/umps/libumps.e"
 
 typedef unsigned int devregtr;
@@ -232,24 +230,22 @@ void test() {
 	if (p1p2synch == 0)
 		print("error: p1/p2 synchronization bad\n");
 
-	SYSCALL(CREATETHREAD, (int)&p3state, 0, 0);
-					/* start p3     */
-	debugS(semd_h->s_next, 1, 10);
+	SYSCALL(CREATETHREAD, (int)&p3state, 0, 0);				/* start p3     */
 
 	print("p3 is started\n");
-debugS(semd_h->s_next, 2, 10);
+
 	SYSCALL(PASSERN, (int)&endp3, 0, 0);					/* P(endp3)     */
-debugS(semd_h->s_next, 3, 10);
+
 	SYSCALL(CREATETHREAD, (int)&p4state, 0, 0);				/* start p4     */
-debugS(semd_h->s_next, 4, 10);
+
 	SYSCALL(CREATETHREAD, (int)&p5state, 0, 0); 			/* start p5     */
-debugS(semd_h->s_next, 5, 10);
+
 	SYSCALL(CREATETHREAD, (int)&p6state, 0, 0);				/* start p6		*/
-debugS(semd_h->s_next, 6, 10);
+
 	SYSCALL(CREATETHREAD, (int)&p7state, 0, 0);				/* start p7		*/
-debugS(semd_h->s_next, 7, 10);
+
 	SYSCALL(PASSERN, (int)&endp5, 0, 0);					/* P(endp5)		*/
-debugS(semd_h->s_next, 8, 10);
+
 	print("p1 knows p5 ended\n");
 
 	SYSCALL(PASSERN, (int)&blkp4, 0, 0);					/* P(blkp4)		*/
