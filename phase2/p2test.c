@@ -517,9 +517,11 @@ void p5b() {
 	SYSCALL(9, 0, 0, 0);
 	/* the first time through, we are in user mode */
 	/* and the P should generate a program trap */
+	print("p5 pass\n");
 	SYSCALL(PASSERN, (int)&endp4, 0, 0);			/* P(endp4)*/
 
 	/* do some delay to be reasonably sure p4 and its offspring are dead */
+	print("p5 wait\n");
 	time1 = 0;
 	time2 = 0;
 	while (time2 - time1 < (CLOCKINTERVAL >> 1))  {
