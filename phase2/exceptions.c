@@ -26,6 +26,11 @@ void debugKernal (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugUserSys9 (int a, int b, int c) {
+  int foo = 42;
+}
+
+
 
 void sysHandler(){
 
@@ -55,11 +60,11 @@ void sysHandler(){
 
 			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 
-			currentProc->p_states[1].newState = &(currentProc->p_s);
-
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
+		}else{
+			debugUserSys9(sys_old->s_a0 , 10 , 10);
 		}
 	/*if kernel mode */
 	}else{
@@ -186,7 +191,6 @@ void TLBHandler(){
 			moveState(tlb_old, currentProc->p_states[0].oldState);
 			
 			moveState(currentProc->p_states[0].newState, &(currentProc->p_s));
-			
 
 			continueWithCurrent(&(currentProc->p_s));
 
