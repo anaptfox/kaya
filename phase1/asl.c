@@ -4,7 +4,6 @@
 
 static semd_t *semd_h;
 static semd_t *semdFree_h;
-static semd_t *dummy;
 
 void debugZ (int a, int b, int c) {
   int foo = 42;
@@ -437,6 +436,8 @@ void initASL(){
 
 	static semd_t semdTable[MAXPROC];
 
+	static semd_t dummy;
+
 	int i = 0;
 
 	while ( i < (MAXPROC-1)){
@@ -451,13 +452,13 @@ void initASL(){
 
 	semdFree_h = &semdTable[0];
 
-	dummy->s_next = NULL;
+	dummy.s_next = NULL;
 
-	dummy->s_semAdd = 0;
+	dummy.s_semAdd = 0;
 
-	dummy->s_procQ = mkEmptyProcQ();
+	dummy.s_procQ = mkEmptyProcQ();
 
-	semd_h = dummy;
+	semd_h = &(dummy);
 
 
 
