@@ -13,6 +13,8 @@ state_t *int_new = (state_t *) INT_NEW;
 
 state_t *int_old = (state_t *) INT_OLD;
 
+cpu_t endTOD;
+
 int i;
 
 void debugA (int a, int b, int c) {

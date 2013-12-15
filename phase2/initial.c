@@ -26,7 +26,6 @@ int clockSem;
 
 cpu_t startTOD;
 
-
 int i;
 void debugMikeyg (int a, int b, int c) {
   int foo = 42;
