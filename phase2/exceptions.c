@@ -58,12 +58,12 @@ void sysHandler(){
 			
 			moveState(sys_old, pgm_old);
 
-			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
-
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
 		}else{
+
+			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 
 			scheduler();
 		}
