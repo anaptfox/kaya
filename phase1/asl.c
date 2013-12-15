@@ -28,6 +28,9 @@ void debugI (int a, int b, int c) {
   int foo = 42;
 }
 
+void debugPANIC (int a, int b, int c) {
+  int foo = 42;
+}
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
@@ -37,6 +40,9 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	semd_t *index = semd_h;
 
 	if(newSema == NULL){
+
+		debugPANIC(NULL, semd_h->s_semAdd, semd_h);
+
 		PANIC();
 	}
 	
@@ -70,6 +76,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		if(index->s_next == NULL){
 
 			if(index->s_next == semd_h->s_next){
+
+				debugPANIC(NULL, semd_h->s_semAdd, semd_h);
 				PANIC();
 			}
 
