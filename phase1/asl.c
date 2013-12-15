@@ -124,13 +124,9 @@ debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 /*Looks through list for semAdd if not found allocNewASL*/
 semd_t *findActive(int *semAdd){
 
-	debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
-
 	semd_t *index = semd_h;
 
 	if(semd_h->s_next == NULL){
-
-		debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 		return(NULL);
 
@@ -142,8 +138,6 @@ semd_t *findActive(int *semAdd){
 		
 		if(index->s_next->s_semAdd == semAdd){
 
-			debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
-	
 			return(index->s_next);
 	
 		}
@@ -155,8 +149,6 @@ semd_t *findActive(int *semAdd){
 		}
 		
 	}
-
-	debugS(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	return(NULL);
 }
@@ -247,22 +239,30 @@ int emptyList(semd_t *list){
 semd_t *removeFree(){
 	
 	if(emptyList(semdFree_h)){
+
+		debugS(10,11,10);
 	
 		return(NULL);
 	
 	}else{
+
+		debugS(22,11,10);
 	
 		semd_t *old = (semdFree_h);
 	
 		if((semdFree_h)->s_next == NULL ){
+
+			debugS(33,11,10);
 	
 			(semdFree_h) = NULL;
 	
 		}else{
-	
+			debugS(44,11,10);
 			(semdFree_h) = (semdFree_h)->s_next;
 	
 		}
+
+		debugS(55,11,10);
 	
 		old->s_next = NULL;
 	
