@@ -93,6 +93,7 @@ void sysHandler(){
 		    }
 		/* not sys 1-8 */
 		}else{
+			debugC(10,10,10);
 			if(currentProc->p_states[2].newState == NULL){
 			/*Kill it */
 		
