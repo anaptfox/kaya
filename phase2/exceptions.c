@@ -392,10 +392,10 @@ void handleSys5(int state_vector, memaddr old_area, memaddr new_area){
 
 
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
-	pcb_vect p_states = currentProc->p_states[arg1];
+	pcb_vect p_states = currentProc->p_states[state_vector];
 
-	p_states.oldState = arg2;
-	p_states.newState = arg3;
+	p_states.oldState = old_area;
+	p_states.newState = new_area;
 
 
 	continueWithCurrent(&(currentProc->p_s));
