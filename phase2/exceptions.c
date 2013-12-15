@@ -64,7 +64,9 @@ void sysHandler(){
 			pgmTrapHandler();
 
 		}else{
+
 			debugUserSys9(sys_old->s_a0 , 10 , 10);
+			continueWithCurrent(&(currentProc->p_s));
 		}
 	/*if kernel mode */
 	}else{
