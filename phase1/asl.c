@@ -306,19 +306,13 @@ void addFree(semd_t *newSema){
 
 int insertBlocked(int *semAdd, pcb_t *p){
 
-	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
-
 	semd_t *sema = findActive(semAdd);
-
-	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	if(sema == NULL){
 
 		/*remove from free *semd_h*/
 
 		sema = removeFree();
-
-		debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 		if(sema == NULL ){
 
@@ -328,21 +322,13 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 		/* add to active list*/
 
-		debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
-
 		sema = addToASL(sema, semAdd);
 
 	}
 
-	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
-
  	p->p_semAdd = semAdd;
 
- 	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
-
  	insertProcQ(&(sema->s_procQ), p);
-
- 	debugI(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
  	return FALSE;
 
