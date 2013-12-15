@@ -388,7 +388,7 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 }
 
 
-void handleSys5(int arg1, memaddr arg2, memaddr arg3){
+void handleSys5(int state_vector, memaddr old_area, memaddr new_area){
 
 
 	/*save the contents of a2 and a3 (in the invoking process's ProcBlk) */
@@ -398,13 +398,7 @@ void handleSys5(int arg1, memaddr arg2, memaddr arg3){
 	p_states.newState = arg3;
 
 
-	/*the nucleus stores the processor state at the time of the exception in the area
-	pointed to by the address in a2 */
-	arg2 = &(currentProc->p_s);
-
-	/*and loads the new processor state from the area
-	pointed to by the address given in a3 */
-	LDST(&(arg3));
+	continueWithCurrent(&(currentProc->p_s));
 
 
 }

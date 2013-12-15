@@ -18,5 +18,5 @@ extern void Passeren(int *semaddr);
 extern void getCpuTime();
 extern void waitForClock();
 extern void waitForIO(int arg1, int arg2, int terminalRead);
-extern void handleSys5(int arg1, memaddr arg2, memaddr arg3);
+extern void handleSys5(int state_vector, memaddr old_area, memaddr new_area);
 #endif
