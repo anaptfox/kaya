@@ -127,6 +127,8 @@ void sysHandler(){
  pgmTrapHandler deals with the exception */
 void pgmTrapHandler(){
 	if(currentProc->p_states[1].newState == NULL){
+
+		debugV(10,10,10);
 			/*Kill it */
 		
 			terminateProcess(currentProc);
@@ -136,6 +138,8 @@ void pgmTrapHandler(){
 			scheduler();
 
 	}else{
+
+		debugV(110,10,10);
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
