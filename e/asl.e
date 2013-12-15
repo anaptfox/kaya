@@ -19,6 +19,7 @@ extern pcb_t *removeBlocked (int *semAdd);
 extern pcb_t *outBlocked (pcb_t *p);
 extern pcb_t *headBlocked (int *semAdd);
 extern void initASL ();
+extern void debugS (int a, int b, int c);
 
 /***************************************************************/
 
