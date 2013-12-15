@@ -50,6 +50,8 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	newSema->s_next = NULL;
 
+	newSema->s_procQ = mkEmptyProcQ();
+
 	debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 
@@ -240,30 +242,22 @@ semd_t *removeFree(){
 	
 	if(emptyList(semdFree_h)){
 
-		debugS(10,11,10);
-	
 		return(NULL);
 	
 	}else{
 
-		debugS(22,11,10);
+		semd_t *old = semdFree_h;
 	
-		semd_t *old = (semdFree_h);
+		if( semdFree_h->s_next == NULL ){
 	
-		if((semdFree_h)->s_next == NULL ){
-
-			debugS(33,11,10);
-	
-			(semdFree_h) = NULL;
+			semdFree_h = NULL;
 	
 		}else{
-			debugS(44,11,10);
-			(semdFree_h) = (semdFree_h)->s_next;
+
+			semdFree_h = semdFree_h->s_next;
 	
 		}
 
-		debugS(55,11,10);
-	
 		old->s_next = NULL;
 	
 		old->s_procQ = mkEmptyProcQ();
@@ -283,6 +277,12 @@ void addFree(semd_t *newSema){
 	if(emptyList(semdFree_h)){
 
 		semdFree_h = newSema;
+
+		semdFree_h->s_next = NULL;
+	
+		semdFree_h->s_procQ = mkEmptyProcQ();
+
+		semdFree_h->s_semAdd = NULL;
 
 	}else{
 
