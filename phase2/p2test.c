@@ -244,6 +244,8 @@ void test() {
 
 	SYSCALL(CREATETHREAD, (int)&p7state, 0, 0);				/* start p7		*/
 
+print("p1 knows p5 ended\n");
+
 	SYSCALL(PASSERN, (int)&endp5, 0, 0);					/* P(endp5)		*/
 
 	print("p1 knows p5 ended\n");
