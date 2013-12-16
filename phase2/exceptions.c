@@ -40,7 +40,7 @@ void sysHandler(){
 
 	currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 	
-	kernel_mode = (sys_old->s_status & KUo);
+	kernel_mode = (sys_old->s_status & KUp) >> 0x3;
 
 	/*if user mode */
 	if (kernel_mode != 0 ){
@@ -49,15 +49,12 @@ void sysHandler(){
 		/*check for sys 1-8 */
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
 
-			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
-			moveState(sys_old, pgm_old);
-
-			moveState(currentProc->p_states[2].newState, currentProc->p_states[1].newState);
-
-			moveState(currentProc->p_states[2].oldState, currentProc->p_states[1].oldState);
 
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
-			pgm_old->s_cause = pgm_old->s_cause | 0x00000014; /*QUESTION  what is RI?*/
+			sys_old->s_cause = pgm_old->s_cause | 0x00000014; /*QUESTION  what is RI?*/
+
+			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
+			moveState(sys_old, pgm_old);
 
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
