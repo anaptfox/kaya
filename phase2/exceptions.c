@@ -437,6 +437,8 @@ void handleSys5(int state_vector, state_t *old_area, state_t *new_area){
 
 		terminateProcess(currentProc);
 
+		scheduler();
+
 	}else{
 
 		currentProc->p_states[state_vector].oldState = old_area;
