@@ -268,7 +268,7 @@ void terminateProcess(pcb_t *p){
 	 		}else{
 	 			debugV(p,10,2423423);
 	 		
-	 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
+	 			*p->p_semAdd = *p->p_semAdd + 1;
 
 	 			debugV(p,10,50);
 	 		
