@@ -236,20 +236,7 @@ void test() {
 
 	SYSCALL(PASSERN, (int)&endp3, 0, 0);					/* P(endp3)     */
 
-	SYSCALL(CREATETHREAD, (int)&p4state, 0, 0);				/* start p4     */
-
-	SYSCALL(CREATETHREAD, (int)&p5state, 0, 0); 			/* start p5     */
-
-	SYSCALL(CREATETHREAD, (int)&p6state, 0, 0);				/* start p6		*/
-
-	SYSCALL(CREATETHREAD, (int)&p7state, 0, 0);				/* start p7		*/
-
-	SYSCALL(PASSERN, (int)&endp5, 0, 0);					/* P(endp5)		*/
-
-	print("p1 knows p5 ended\n");
-
-	SYSCALL(PASSERN, (int)&blkp4, 0, 0);					/* P(blkp4)		*/
-
+	
 	/* now for a more rigorous check of process termination */
 	for (p8inc=0; p8inc<4; p8inc++) {
 		creation = SYSCALL(CREATETHREAD, (int)&p8rootstate, 0, 0);
