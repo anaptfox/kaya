@@ -40,9 +40,7 @@ void sysHandler(){
 
 	currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
 	
-	kernel_mode = (sys_old->s_status & KUc);
-
-	
+	kernel_mode = (sys_old->s_status & KUo);
 
 	/*if user mode */
 	if (kernel_mode != 0 ){
@@ -50,7 +48,6 @@ void sysHandler(){
 
 		/*check for sys 1-8 */
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
-
 
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			moveState(sys_old, pgm_old);
