@@ -241,31 +241,26 @@ void terminateProcess(pcb_t *p){
  	
  	if(p == currentProc){
 
- 		p = outChild(p);
-
- 		if(p == NULL){
- 			debugV(10,10,10);
- 			currentProc = NULL;
- 			return;
- 		}
+ 		outChild(p);
  	
  		currentProc = NULL;  
  	
  	}else if (p->p_semAdd == NULL){
 
 	 		/* on the ready que */
-	 		p = outProcQ(&(readyQue), p);
+	 		outProcQ(&(readyQue), p);
 
 	}else{
 	 		
-	 		p = outBlocked(p);
+	 		outBlocked(p);
 
 
 	 		if ( (p->p_semAdd > &(deviceSemas[0][0] ) ) && (p->p_semAdd < &( deviceSemas[DEVICE_LINE][DEVICE_CNT] ) ) ){
 	 		
 	 			softBlkCnt = softBlkCnt - 1;
 	 		
-	 		}else{	 		
+	 		}else{	 	
+	 			
 	 			*(p->p_semAdd )= *(p->p_semAdd) + 1;
 	 		
 	 		}	
