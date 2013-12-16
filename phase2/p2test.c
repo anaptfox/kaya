@@ -527,6 +527,7 @@ void p5b() {
 	time1 = 0;
 	time2 = 0;
 	while (time2 - time1 < (CLOCKINTERVAL >> 1))  {
+		print(" to wait\n");
 		STCK(time1);
 		SYSCALL(WAITCLOCK, 0, 0, 0);
 		STCK(time2);
