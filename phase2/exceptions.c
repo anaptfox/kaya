@@ -245,14 +245,12 @@ void terminateProcess(pcb_t *p){
  	
  		currentProc = NULL;  
  	
- 	}else {
-
- 		if (p->p_semAdd == NULL){
+ 	}else if (p->p_semAdd == NULL){
 
 	 		/* on the ready que */
 	 		outProcQ(&(readyQue), p);
 
-	 	}else{
+	}else{
 	 		
 	 		p = outBlocked(p);
 
@@ -277,7 +275,7 @@ void terminateProcess(pcb_t *p){
 
 	 		
 	 	}
-	}
+	
  	
  	freePcb(p);
  	
