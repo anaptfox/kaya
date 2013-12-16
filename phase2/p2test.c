@@ -250,7 +250,7 @@ void test() {
 
 	print("p1 knows p5 ended\n");
 
-	SYSCALL(PASSERN, (int)&blkp4, 0, 0);					/* P(blkp4)		*/
+	/* SYSCALL(PASSERN, (int)&blkp4, 0, 0);					/* P(blkp4)		*/
 
 	/* now for a more rigorous check of process termination */
 	for (p8inc=0; p8inc<4; p8inc++) {
@@ -523,17 +523,14 @@ void p5b() {
 
 	/* do some delay to be reasonably sure p4 and its offspring are dead */
 
-	print("about to wait\n");
+	
 	time1 = 0;
 	time2 = 0;
 	while (time2 - time1 < (CLOCKINTERVAL >> 1))  {
-		print(" to wait\n");
 		STCK(time1);
 		SYSCALL(WAITCLOCK, 0, 0, 0);
 		STCK(time2);
 	}
-
-	print("out to wait\n");
 
 	/* if p4 and offspring are really dead, this will increment blkp4 */
 
