@@ -254,27 +254,16 @@ void terminateProcess(pcb_t *p){
 	 		
 	 		p = outBlocked(p);
 
-	 		debugV(p,10,10);
-
 
 	 		if ( (p->p_semAdd > &(deviceSemas[0][0] ) ) && (p->p_semAdd < &( deviceSemas[DEVICE_LINE][DEVICE_CNT] ) ) ){
-
-	 			debugV(p,10,434234);
 	 		
 	 			softBlkCnt = softBlkCnt - 1;
+	 		
+	 		}else{	 		
 
-	 			debugV(p,10,570);
-	 		
-	 		}else{
-	 			debugV(p,10,2423423);
-	 		
 	 			*(p->p_semAdd )= *(p->p_semAdd) + 1;
-
-	 			debugV(p,10,50);
 	 		
 	 		}	
-
-	 		debugV(p,10,7987);
 
 
 	 		
@@ -443,6 +432,8 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 void handleSys5(int state_vector, state_t *old_area, state_t *new_area){
 
 	if(currentProc->p_states[state_vector].newState != NULL){
+
+		debugV(10,10,10);
 
 		terminateProcess(currentProc);
 
