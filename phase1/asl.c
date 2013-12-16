@@ -4,10 +4,8 @@
 
 static semd_t *semd_h;
 static semd_t *semdFree_h;
-
-	static semd_t semdTable[MAXPROC+1];
-
-	static semd_t dummy;
+static semd_t semdTable[MAXPROC+1];
+static semd_t dummy;
 
 
 int freeCount = 20;
@@ -282,6 +280,10 @@ void addFree(semd_t *newSema){
 	newSema->s_next = semdFree_h->s_next;
 
 	semdFree_h->s_next = newSema;
+
+	if ( semdFree_h->s_next == NULL){
+			debugPANIC(semdFree_h->s_next->s_next,2,2);
+		}
 
 }
 
