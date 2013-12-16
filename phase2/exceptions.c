@@ -102,8 +102,11 @@ void sysHandler(){
 		        default:
 		            PANIC();
 		    }
-		/* not sys 1-8 */
+		/*
+		 not sys 1-8 */
 		}
+
+	}
 		debugC(10,10,10);
 		if(currentProc->p_states[2].newState == NULL){
 				/*Kill it */
@@ -127,7 +130,6 @@ void sysHandler(){
 
 		}
 		
-	}	
 	
                  
 }
