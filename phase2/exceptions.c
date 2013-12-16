@@ -51,7 +51,7 @@ void sysHandler(){
 
 
 			/*setting Cause.ExcCode in the PgmTrap Old Area to RI (Reserved Instruction) */
-			sys_old->s_cause = sys_old->s_cause | 0x00000014; /*QUESTION  what is RI?*/
+			sys_old->s_cause = sys_old->s_cause | (10 << 2); /*QUESTION  what is RI?*/
 
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			moveState(sys_old, pgm_old);
