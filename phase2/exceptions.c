@@ -73,6 +73,7 @@ void sysHandler(){
 		                                
 		        case TERMINATEPROCESS:        
 		            terminateProcess(currentProc);
+		            scheduler();
 		        break;
 		        
 		        case VERHOGEN:
