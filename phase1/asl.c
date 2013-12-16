@@ -240,21 +240,21 @@ int emptyList(semd_t *list){
 
 semd_t *removeFree(){
 	
-	if(emptyList(semdFree_h)){
+	if(semdFree_h->s_next == NULL){
 
 		return(NULL);
 	
 	}else{
 
-		semd_t *old = semdFree_h;
+		semd_t *old = semdFree_h->s_next;
 	
-		if( semdFree_h->s_next == NULL ){
+		if( semdFree_h->s_next->->s_next != NULL ){
 	
-			semdFree_h = NULL;
+			semdFree_h->s_next = semdFree_h->s_next->s_next;
 	
 		}else{
 
-			semdFree_h = semdFree_h->s_next;
+			semdFree_h->s_next = NULL;
 	
 		}
 
@@ -274,21 +274,21 @@ semd_t *removeFree(){
 
 void addFree(semd_t *newSema){
 
-	if(emptyList(semdFree_h)){
+	if(semdFree_h->s_next == NULL){
 
-		semdFree_h = newSema;
+		newSema->s_next = NULL:
 
-		semdFree_h->s_next = NULL;
+		semdFree_h->s_next = newSema;
 	
-		semdFree_h->s_procQ = mkEmptyProcQ();
+		semdFree_h->s_next->s_procQ = mkEmptyProcQ();
 
-		semdFree_h->s_semAdd = NULL;
+		semdFree_h->s_next->s_semAdd = NULL;
 
 	}else{
 
-		newSema->s_next = semdFree_h;
+		newSema->s_next = semdFree_h->s_next;
 
-		semdFree_h = newSema;
+		semdFree_h->s_next = newSema;
 
 	}
 
@@ -309,9 +309,7 @@ int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = findActive(semAdd);
 
 
-	if(semAdd == 0x20009000){
-		debugI(sema, semAdd, 1);
-	}
+	debugI(sema, semAdd, 1);
 
 	if(sema == NULL){
 
@@ -349,9 +347,7 @@ pcb_t *removeBlocked(int *semAdd){
 
 	semd_t *sema = findActive(semAdd);
 
-	if(semAdd == 0x20009000){
-		debugI(sema, semAdd, NULL);
-	}
+	debugI(sema, semAdd, NULL);
 
 
 	if(sema == NULL){
@@ -444,21 +440,25 @@ pcb_t *headBlocked(int *semAdd){
 /*Initialize the ASL*/
 void initASL(){
 
-	static semd_t semdTable[MAXPROC];
+	static semd_t semdTable[MAXPROC+1];
 
 	static semd_t dummy;
 
 	int i = 0;
 
-	while ( i < (MAXPROC-1)){
+	while ( i < (MAXPROC)){
 
-		semdTable[i].s_next = &semdTable[i+1];	
+		semdTable[i].s_next = &semdTable[i+1];
+
+		semdTable[i].s_semAdd = NULL;
+
+		semdTable[i].s_procQ = mkEmptyProcQ();
 
 		i++; 
 
 	}
 
-	semdTable[(MAXPROC-1)].s_next = NULL;
+	semdTable[(MAXPROC)].s_next = NULL;
 
 	semdFree_h = &semdTable[0];
 
