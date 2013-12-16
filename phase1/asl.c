@@ -349,7 +349,10 @@ pcb_t *removeBlocked(int *semAdd){
 
 	semd_t *sema = findActive(semAdd);
 
-	debugI(sema, semAdd, -1);
+	if(semAdd == 0x20009000){
+		debugI(sema, semAdd, NULL);
+	}
+
 
 	if(sema == NULL){
 
