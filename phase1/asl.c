@@ -308,7 +308,10 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 	semd_t *sema = findActive(semAdd);
 
-	debugI(sema, semAdd, 1);
+
+	if(semAdd == 0x20009000){
+		debugI(sema, semAdd, 1);
+	}
 
 	if(sema == NULL){
 
