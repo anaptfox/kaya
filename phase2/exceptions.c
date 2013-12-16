@@ -56,8 +56,6 @@ void sysHandler(){
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			moveState(sys_old, pgm_old);
 
-			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
-
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
@@ -105,30 +103,30 @@ void sysHandler(){
 		            PANIC();
 		    }
 		/* not sys 1-8 */
-		}else{
-			debugC(10,10,10);
-			if(currentProc->p_states[2].newState == NULL){
-					/*Kill it */
-				
-					terminateProcess(currentProc);
-					
-					currentProc = NULL;
-					
-					scheduler();
-
-			}else{
-					/*The processor state is moved from the SYS/Bp Old Area into the processor
-					 state area whose address was recorded in the ProcBlk 
-					as the SYS/Bp Old Area Address */
-					
-					moveState(sys_old, currentProc->p_states[2].oldState);
-					
-					moveState(currentProc->p_states[2].newState, &(currentProc->p_s));
-
-					continueWithCurrent(&(currentProc->p_s));
-
-			}
 		}
+		debugC(10,10,10);
+		if(currentProc->p_states[2].newState == NULL){
+				/*Kill it */
+			
+				terminateProcess(currentProc);
+				
+				currentProc = NULL;
+				
+				scheduler();
+
+		}else{
+				/*The processor state is moved from the SYS/Bp Old Area into the processor
+				 state area whose address was recorded in the ProcBlk 
+				as the SYS/Bp Old Area Address */
+				
+				moveState(sys_old, currentProc->p_states[2].oldState);
+				
+				moveState(currentProc->p_states[2].newState, &(currentProc->p_s));
+
+				continueWithCurrent(&(currentProc->p_s));
+
+		}
+		
 	}	
 	
                  
