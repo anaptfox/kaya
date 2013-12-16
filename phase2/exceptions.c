@@ -378,6 +378,7 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 	lineIndex = arg1;
 
 	if(arg1 == TERMINT){
+
 		if(terminalRead){
 			
 			lineIndex = lineIndex - 3;
@@ -387,8 +388,11 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 			lineIndex = lineIndex - 2;
 			
 		}
+
 	}else{
+		
 		lineIndex = lineIndex - 3;
+	
 	}
 
 
@@ -397,7 +401,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 	if(deviceSemas[lineIndex][arg2] < 0){
 		
-
 		if(insertBlocked (&(deviceSemas[lineIndex][arg2] ), currentProc)) PANIC();
 
 		STCK(endTOD);

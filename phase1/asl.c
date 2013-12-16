@@ -308,6 +308,8 @@ int insertBlocked(int *semAdd, pcb_t *p){
 
 	semd_t *sema = findActive(semAdd);
 
+	debugI(sema, semAdd, 1);
+
 	if(sema == NULL){
 
 		/*remove from free *semd_h*/
@@ -343,6 +345,8 @@ descriptor from the ASL and return it to the semdFree list. */
 pcb_t *removeBlocked(int *semAdd){
 
 	semd_t *sema = findActive(semAdd);
+
+	debugI(sema, semAdd, -1);
 
 	if(sema == NULL){
 
