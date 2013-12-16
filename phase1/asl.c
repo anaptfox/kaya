@@ -282,23 +282,9 @@ void addFree(semd_t *newSema){
 
 	freeCount += 1;
 
-	if(semdFree_h->s_next == NULL){
+	newSema->s_next = semdFree_h->s_next;
 
-		newSema->s_next = NULL;
-
-		semdFree_h->s_next = newSema;
-	
-		semdFree_h->s_next->s_procQ = mkEmptyProcQ();
-
-		semdFree_h->s_next->s_semAdd = NULL;
-
-	}else{
-
-		newSema->s_next = semdFree_h->s_next;
-
-		semdFree_h->s_next = newSema;
-
-	}
+	semdFree_h->s_next = newSema;
 
 }
 
