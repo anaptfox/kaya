@@ -292,6 +292,7 @@ void Verhogen(int *semaddr){
 	if(p != NULL){
 		p->p_semAdd = NULL;
 		insertProcQ (&readyQue, p);
+		softBlkCnt = softBlkCnt - 1;
 	}
 
 	continueWithCurrent(&(currentProc->p_s));
