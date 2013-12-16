@@ -274,8 +274,7 @@ void terminateProcess(pcb_t *p){
  	freePcb(p);
  	
  	processCnt  -= 1;
- 	
- 	scheduler();
+ 
 
 }
 
