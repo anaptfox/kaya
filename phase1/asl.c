@@ -344,12 +344,6 @@ pcb_t *removeBlocked(int *semAdd){
 
 		pcb_t *proc = removeProcQ(&(sema->s_procQ));
 
-		if(proc != NULL){
-
-			proc->p_semAdd = NULL;
-
-		}
-
 		if(emptyProcQ(sema->s_procQ)){
 
 			sema = removeActive(semAdd);
