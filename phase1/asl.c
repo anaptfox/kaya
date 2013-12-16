@@ -255,12 +255,6 @@ semd_t *removeFree(){
 		semd_t *old = semdFree_h->s_next;
 	
 		semdFree_h->s_next = semdFree_h->s_next->s_next;
-
-		old->s_next = NULL;
-	
-		old->s_procQ = mkEmptyProcQ();
-
-		old->s_semAdd = NULL;
 	
 		return(old);
 	
