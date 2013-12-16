@@ -242,6 +242,12 @@ void terminateProcess(pcb_t *p){
  	if(p == currentProc){
 
  		p = outChild(p);
+
+ 		if(p == NULL){
+ 			debugV(10,10,10);
+ 			currentProc = NULL;
+ 			return;
+ 		}
  	
  		currentProc = NULL;  
  	
@@ -254,36 +260,21 @@ void terminateProcess(pcb_t *p){
 	 		
 	 		p = outBlocked(p);
 
-	 		debugV(p,10,10);
-
 
 	 		if ( (p->p_semAdd > &(deviceSemas[0][0] ) ) && (p->p_semAdd < &( deviceSemas[DEVICE_LINE][DEVICE_CNT] ) ) ){
-
-	 			debugV(p,10,434234);
 	 		
 	 			softBlkCnt = softBlkCnt - 1;
-
-	 			debugV(p,10,570);
 	 		
-	 		}else{
-	 			debugV(p,10,2423423);
-	 		
+	 		}else{	 		
 	 			*(p->p_semAdd )= *(p->p_semAdd) + 1;
-
-	 			debugV(p,10,50);
 	 		
 	 		}	
-
-	 		debugV(p,10,7987);
-
 
 	 		
 	 	}
 	
  	
  	freePcb(p);
-
- 	debugV(p,10,70979);
  	
  	processCnt  -= 1;
  
