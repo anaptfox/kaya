@@ -242,6 +242,8 @@ semd_t *removeFree(){
 	
 	if(semdFree_h->s_next == NULL){
 
+		debugPANIC(3,2,1);
+
 		return(NULL);
 	
 	}else{
