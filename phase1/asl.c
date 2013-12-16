@@ -5,7 +5,7 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
-int freeCount;
+int freeCount = 20;
 
 void debugZ (int a, int b, int c) {
   int foo = 42;
