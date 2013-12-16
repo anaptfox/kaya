@@ -433,11 +433,19 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 
 void handleSys5(int state_vector, state_t *old_area, state_t *new_area){
 
-	currentProc->p_states[state_vector].oldState = old_area;
-	
-	currentProc->p_states[state_vector].newState = new_area;
+	if(currentProc->p_states[state_vector].newState != NULL){
 
-	continueWithCurrent(&(currentProc->p_s));
+		terminateProcess(currentProc);
+
+	}else{
+
+		currentProc->p_states[state_vector].oldState = old_area;
+	
+		currentProc->p_states[state_vector].newState = new_area;
+
+		continueWithCurrent(&(currentProc->p_s));
+
+	}
 
 
 }
