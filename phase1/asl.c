@@ -4,9 +4,6 @@
 
 static semd_t *semd_h;
 static semd_t *semdFree_h;
-static semd_t semdTable[MAXPROC+1];
-static semd_t dummy;
-
 
 int freeCount = 20;
 
@@ -245,6 +242,8 @@ int emptyList(semd_t *list){
 
 semd_t *removeFree(){
 	
+	debugS(semdFree_h->s_next,2,1);
+
 	if(semdFree_h->s_next == NULL){
 
 		debugPANIC(3,2,1);
@@ -255,15 +254,13 @@ semd_t *removeFree(){
 
 		freeCount -= 1;
 
+		if ( semdFree_h->s_next == NULL){
+			debugPANIC(semdFree_h->s_next->s_next,2,1);
+		}
 
 		semd_t *old = semdFree_h->s_next;
 	
 		semdFree_h->s_next = semdFree_h->s_next->s_next;
-
-
-		if ( semdFree_h->s_next == NULL){
-			debugPANIC(semdFree_h->s_next->s_next,2,1);
-		}
 	
 		return(old);
 	
@@ -280,10 +277,6 @@ void addFree(semd_t *newSema){
 	newSema->s_next = semdFree_h->s_next;
 
 	semdFree_h->s_next = newSema;
-
-	if ( semdFree_h->s_next == NULL){
-			debugPANIC(semdFree_h->s_next->s_next,2,2);
-		}
 
 }
 
@@ -432,6 +425,10 @@ pcb_t *headBlocked(int *semAdd){
 
 /*Initialize the ASL*/
 void initASL(){
+
+	static semd_t semdTable[MAXPROC+1];
+
+	static semd_t dummy;
 
 	int i = 0;
 
