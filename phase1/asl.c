@@ -252,13 +252,15 @@ semd_t *removeFree(){
 
 		freeCount -= 1;
 
-		if ( semdFree_h->s_next->s_next == NULL){
-			debugPANIC(semdFree_h->s_next->s_next,2,1);
-		}
 
 		semd_t *old = semdFree_h->s_next;
 	
 		semdFree_h->s_next = semdFree_h->s_next->s_next;
+
+
+		if ( semdFree_h->s_next == NULL){
+			debugPANIC(semdFree_h->s_next->s_next,2,1);
+		}
 	
 		return(old);
 	
@@ -433,10 +435,6 @@ void initASL(){
 	while ( i < (MAXPROC)){
 
 		semdTable[i].s_next = &semdTable[i+1];
-
-		semdTable[i].s_semAdd = NULL;
-
-		semdTable[i].s_procQ = mkEmptyProcQ();
 
 		i++; 
 
