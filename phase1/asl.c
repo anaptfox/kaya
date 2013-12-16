@@ -252,6 +252,10 @@ semd_t *removeFree(){
 
 		freeCount -= 1;
 
+		if ( semdFree_h->s_next->s_next == NULL){
+			debugPANIC(semdFree_h->s_next->s_next,2,1);
+		}
+
 		semd_t *old = semdFree_h->s_next;
 	
 		semdFree_h->s_next = semdFree_h->s_next->s_next;
