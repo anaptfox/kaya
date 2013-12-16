@@ -276,7 +276,7 @@ void addFree(semd_t *newSema){
 
 	if(semdFree_h->s_next == NULL){
 
-		newSema->s_next = NULL:
+		newSema->s_next = NULL;
 
 		semdFree_h->s_next = newSema;
 	
