@@ -108,7 +108,6 @@ void sysHandler(){
 		}
 
 	}
-		debugC(10,10,10);
 		if(currentProc->p_states[2].newState == NULL){
 				/*Kill it */
 			
@@ -260,7 +259,7 @@ void terminateProcess(pcb_t *p){
 	 			softBlkCnt = softBlkCnt - 1;
 	 		
 	 		}else{	 	
-	 			
+
 	 			*(p->p_semAdd )= *(p->p_semAdd) + 1;
 	 		
 	 		}	
@@ -270,6 +269,8 @@ void terminateProcess(pcb_t *p){
 	
  	
  	freePcb(p);
+
+ 	debugC(10,10,10);
  	
  	processCnt  -= 1;
  
