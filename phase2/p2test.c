@@ -533,6 +533,8 @@ void p5b() {
 		STCK(time2);
 	}
 
+	print("out to wait\n");
+
 	/* if p4 and offspring are really dead, this will increment blkp4 */
 
 	SYSCALL(VERHOGEN, (int)&blkp4, 0, 0);			/* V(blkp4) */
