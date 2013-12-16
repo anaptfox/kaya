@@ -5,6 +5,11 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
+	static semd_t semdTable[MAXPROC+1];
+
+	static semd_t dummy;
+
+
 int freeCount = 20;
 
 void debugZ (int a, int b, int c) {
@@ -425,10 +430,6 @@ pcb_t *headBlocked(int *semAdd){
 
 /*Initialize the ASL*/
 void initASL(){
-
-	static semd_t semdTable[MAXPROC+1];
-
-	static semd_t dummy;
 
 	int i = 0;
 
