@@ -10,21 +10,21 @@
 
 /* Global var */
 
-static pcb_t *readyQue;
+pcb_t *readyQue;
 
-static pcb_t *currentProc;
+pcb_t *currentProc;
 
-static int processCnt;
+int processCnt;
 
-static int softBlkCnt;
+int softBlkCnt;
 
-static int deviceSemas[DEVICE_LINE][DEVICE_CNT];
+int deviceSemas[DEVICE_LINE][DEVICE_CNT];
 
-static unsigned int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
+unsigned int deviceStatuses[DEVICE_LINE][DEVICE_CNT];
 
-static int clockSem;
+int clockSem;
 
-static cpu_t startTOD;
+cpu_t startTOD;
 
 int i;
 void debugMikeyg (int a, int b, int c) {

@@ -5,6 +5,8 @@
 static semd_t *semd_h;
 static semd_t *semdFree_h;
 
+int freeCount;
+
 void debugZ (int a, int b, int c) {
   int foo = 42;
 }
@@ -248,6 +250,8 @@ semd_t *removeFree(){
 	
 	}else{
 
+		freeCount -= 1;
+
 		semd_t *old = semdFree_h->s_next;
 	
 		if( semdFree_h->s_next->s_next != NULL ){
@@ -275,6 +279,8 @@ semd_t *removeFree(){
 /*Add the top of the Free list*/
 
 void addFree(semd_t *newSema){
+
+	freeCount += 1;
 
 	if(semdFree_h->s_next == NULL){
 
