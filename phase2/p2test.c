@@ -371,7 +371,6 @@ void p3() {
 
 	/* just did a SYS2, so should not get to this point */
 	print("error: p3 didn't terminate\n");
-	
 	PANIC();					/* PANIC            */
 }
 
@@ -523,8 +522,6 @@ void p5b() {
 	SYSCALL(PASSERN, (int)&endp4, 0, 0);			/* P(endp4)*/
 
 	/* do some delay to be reasonably sure p4 and its offspring are dead */
-
-
 	time1 = 0;
 	time2 = 0;
 	while (time2 - time1 < (CLOCKINTERVAL >> 1))  {

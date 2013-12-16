@@ -140,7 +140,6 @@ void sysHandler(){
 void pgmTrapHandler(){
 	if(currentProc->p_states[1].newState == NULL){
 
-		debugV(10,10,10);
 			/*Kill it */
 		
 			terminateProcess(currentProc);
@@ -151,7 +150,6 @@ void pgmTrapHandler(){
 
 	}else{
 
-		debugV(110,10,10);
 			/*The processor state is moved from the SYS/Bp Old Area into the processor
 			 state area whose address was recorded in the ProcBlk 
 			as the SYS/Bp Old Area Address */
@@ -258,6 +256,8 @@ void terminateProcess(pcb_t *p){
 	 		
 	 		p = outBlocked(p);
 
+	 		debugV(p,10,10);
+
 	 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
 	 		
 	 			softBlkCnt -= 1;
@@ -267,6 +267,10 @@ void terminateProcess(pcb_t *p){
 	 			*(p->p_semAdd) = *(p->p_semAdd) + 1;
 	 		
 	 		}	
+
+	 		debugV(p,10,10);
+
+
 	 		
 	 	}
 	}
@@ -275,7 +279,6 @@ void terminateProcess(pcb_t *p){
  	
  	processCnt  -= 1;
  
-
 }
 
 /*When this service (syscall 3) is requested, it is interpreted by the nucleus as a request to
