@@ -60,8 +60,8 @@ void sysHandler(){
 
 			moveState(currentProc->p_states[2].oldState, currentProc->p_states[1].oldState);
 
-
-
+			currentProc->p_s.s_pc = currentProc->p_s.s_pc + 4;
+			
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
