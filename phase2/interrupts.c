@@ -162,7 +162,7 @@ void intHandler(){
 
 					debugTimer(8888, 10, 10);
 					
-					softBlkCnt = softBlkCnt - 1;
+					softBlkCnt = softBlkCnt + 1;
 
 					debugTimer(11111, 10, 10);
 					
