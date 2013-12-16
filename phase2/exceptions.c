@@ -241,14 +241,14 @@ void terminateProcess(pcb_t *p){
  	
  	if(p == currentProc){
 
- 		outChild(p);
+ 		p = outChild(p);
  	
  		currentProc = NULL;  
  	
  	}else if (p->p_semAdd == NULL){
 
 	 		/* on the ready que */
-	 		outProcQ(&(readyQue), p);
+	 		p = outProcQ(&(readyQue), p);
 
 	}else{
 	 		
