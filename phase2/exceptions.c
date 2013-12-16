@@ -56,6 +56,12 @@ void sysHandler(){
 			/*moving the processor state from the SYS/Bp Old Area to the PgmTrap Old Area */
 			moveState(sys_old, pgm_old);
 
+			moveState(currentProc->p_states[2].newState, currentProc->p_states[1].newState);
+
+			moveState(currentProc->p_states[2].oldState, currentProc->p_states[1].oldState);
+
+
+
 			/*and calling Kaya’s PgmTrap exception handler.*/
 			pgmTrapHandler();
 
