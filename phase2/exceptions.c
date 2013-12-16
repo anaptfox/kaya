@@ -258,7 +258,7 @@ void terminateProcess(pcb_t *p){
 
 	 		debugV(p,10,10);
 
-	 		if ((&(p->p_semAdd) > &(deviceSemas[0][0])) && (&(p->p_semAdd) < &(deviceSemas[DEVICE_LINE][DEVICE_CNT]))){
+	 		if ( (p->p_semAdd > &(deviceSemas[0][0] ) ) && (p->p_semAdd < &( deviceSemas[DEVICE_LINE][DEVICE_CNT] ) ) ){
 	 		
 	 			softBlkCnt -= 1;
 
