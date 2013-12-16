@@ -217,25 +217,6 @@ void test() {
 	gchild4state.s_status = gchild4state.s_status | IEPBITON | CAUSEINTMASK;
 
 
-	/* create process p2 */
-	SYSCALL(CREATETHREAD, (int)&p2state,0 , 0);				/* start p2     */
-
-	print("p2 was started\n");
-
-	SYSCALL(VERHOGEN, (int)&startp2, 0, 0);					/* V(startp2)   */
-
-	SYSCALL(PASSERN, (int)&endp2, 0, 0);					/* P(endp2)     */
-
-	/* make sure we really blocked */
-	if (p1p2synch == 0)
-		print("error: p1/p2 synchronization bad\n");
-
-	SYSCALL(CREATETHREAD, (int)&p3state, 0, 0);				/* start p3     */
-
-	print("p3 is started\n");
-
-	SYSCALL(PASSERN, (int)&endp3, 0, 0);					/* P(endp3)     */
-
 	
 	/* now for a more rigorous check of process termination */
 	for (p8inc=0; p8inc<4; p8inc++) {
