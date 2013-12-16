@@ -143,8 +143,6 @@ void intHandler(){
 
 				setTIMER(5000);
 
-				softBlkCnt = softBlkCnt + 1;
-
 				currentProc = NULL;
 
 			}else{
@@ -162,7 +160,7 @@ void intHandler(){
 
 					debugTimer(8888, 10, 10);
 					
-					softBlkCnt = softBlkCnt + 1;
+					softBlkCnt = softBlkCnt - 1;
 
 					debugTimer(11111, 10, 10);
 					
