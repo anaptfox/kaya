@@ -381,12 +381,7 @@ pcb_t *outBlocked(pcb_t *p){
 	}else{
 	
 		pcb_t *proc = outProcQ(&(sema->s_procQ), p);
-	
-		if(proc != NULL){
-	
-			proc->p_semAdd = NULL;
-	
-		}
+
 	
 		if(emptyProcQ(sema->s_procQ)){
 	
