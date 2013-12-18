@@ -14,23 +14,6 @@ state_t *sys_old = (state_t *) SYS_OLD;
 state_t *pgm_old = (state_t *) PGMTRAP_OLD;
 state_t *tlb_old = (state_t *) TLB_OLD;
 
-void debugC (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugV (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugKernal (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugUserSys9 (int a, int b, int c) {
-  int foo = 42;
-}
-
-
 
 void sysHandler(){
 
@@ -44,7 +27,6 @@ void sysHandler(){
 
 	/*if user mode */
 	if (kernel_mode != 0 ){
-		debugKernal(sys_old->s_status, kernel_mode, 10);
 
 		/*check for sys 1-8 */
 		if ((sys_old->s_a0 > 0) && (sys_old->s_a0 <= 8)){
@@ -269,8 +251,6 @@ void terminateProcess(pcb_t *p){
 	
  	
  	freePcb(p);
-
- 	debugC(10,10,10);
  	
  	processCnt  -= 1;
  
@@ -432,8 +412,6 @@ void waitForIO(int arg1, int arg2, int terminalRead){
 void handleSys5(int state_vector, state_t *old_area, state_t *new_area){
 
 	if(currentProc->p_states[state_vector].newState != NULL){
-
-		debugV(222,10,33);
 
 		terminateProcess(currentProc);
 
