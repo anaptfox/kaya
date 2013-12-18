@@ -26,12 +26,8 @@ int clockSem;
 
 cpu_t startTOD;
 
-int i;
-void debugMikeyg (int a, int b, int c) {
-  int foo = 42;
-}
 
-/* Copy before into after */
+/* Copy state from before into after */
 void moveState(state_t *before, state_t *after){
 	after->s_asid = before->s_asid;
 	after->s_cause = before->s_cause;
@@ -97,6 +93,7 @@ int main(void)
 	setTIMER(5000);
 
 	/* iniltialize semaphores to 0*/
+	int i;
 	int j;
 	
 	for(i=0; i<DEVICE_LINE; i = i + 1){
@@ -120,7 +117,7 @@ int main(void)
 	
 	}
 
-
+	/* Initialize first process */
 	p->p_s.s_pc = p->p_s.s_t9 = (memaddr) test;
 
 	p->p_s.s_sp = (devregarea->ramsize + devregarea->rambase) - PAGESIZE;
@@ -136,7 +133,7 @@ int main(void)
 
 	processCnt = processCnt + 1;
 
-	
+	/* start */
 	scheduler();
 
 }
