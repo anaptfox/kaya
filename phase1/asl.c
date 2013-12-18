@@ -7,32 +7,6 @@ static semd_t *semdFree_h;
 
 int freeCount = 20;
 
-void debugZ (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugASL (int a,int d, int b, int c) {
-  int foo = 42;
-}
-
-void debugHEAD (int a, int b, int c, int d) {
-  int foo = 42;
-}
-void debugSEMADD (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugS (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugI (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugPANIC (int a, int b, int c) {
-  int foo = 42;
-}
 
 /* Add items to active semaphore list */
 semd_t *addToASL(semd_t *newSema, int *semAdd){
@@ -43,7 +17,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	if(newSema == NULL){
 
-		debugPANIC(NULL, semd_h->s_semAdd, semd_h);
 
 		PANIC();
 	}
@@ -54,7 +27,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 	newSema->s_procQ = mkEmptyProcQ();
 
-	debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 
 	if(semd_h->s_next == NULL){
@@ -63,9 +35,7 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 		newSema->s_next = NULL;
 
-		debugHEAD(newSema,newSema->s_next,newSema->s_semAdd, 1);
 
-		debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 
 		return newSema;
@@ -81,7 +51,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			if(index->s_next == semd_h->s_next){
 
-				debugPANIC(NULL, semd_h->s_semAdd, semd_h);
 				PANIC();
 			}
 
@@ -89,7 +58,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 
 			newSema->s_next = NULL;
 
-			debugHEAD(newSema,newSema->s_next,newSema->s_semAdd,3);
 			
 
 			stop = TRUE;
@@ -98,14 +66,12 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 		}else if(index->s_next->s_semAdd > semAdd){
 
 			if(index->s_next == semd_h->s_next){
-				debugSEMADD(index->s_next->s_semAdd,semAdd,4);
 			}
 
 			newSema->s_next = index->s_next;
 	
 			index->s_next = newSema;
 
-			debugHEAD(newSema,newSema->s_next,newSema->s_semAdd, 4);
 
 		
 	
@@ -120,7 +86,6 @@ semd_t *addToASL(semd_t *newSema, int *semAdd){
 	
 	}
 
-debugZ(semd_h->s_next, semd_h->s_semAdd, semd_h);
 
 	return newSema;
 }
@@ -138,7 +103,6 @@ semd_t *findActive(int *semAdd){
 
 	while(index->s_next != NULL){
 
-		debugASL(index->s_next,index->s_next->s_semAdd, index->s_next->s_next,semd_h);
 		
 		if(index->s_next->s_semAdd == semAdd){
 
@@ -242,11 +206,9 @@ int emptyList(semd_t *list){
 
 semd_t *removeFree(){
 	
-	debugS(semdFree_h->s_next,2,1);
 
 	if(semdFree_h->s_next == NULL){
 
-		debugPANIC(3,2,1);
 
 		return(NULL);
 	
@@ -255,7 +217,6 @@ semd_t *removeFree(){
 		freeCount -= 1;
 
 		if ( semdFree_h->s_next == NULL){
-			debugPANIC(semdFree_h->s_next->s_next,2,1);
 		}
 
 		semd_t *old = semdFree_h->s_next;
@@ -295,7 +256,6 @@ int insertBlocked(int *semAdd, pcb_t *p){
 	semd_t *sema = findActive(semAdd);
 
 
-	debugI(sema, semAdd, 1);
 
 	if(sema == NULL){
 
@@ -333,7 +293,6 @@ pcb_t *removeBlocked(int *semAdd){
 
 	semd_t *sema = findActive(semAdd);
 
-	debugI(sema, semAdd, NULL);
 
 
 	if(sema == NULL){
@@ -364,7 +323,6 @@ p’s semaphore, which is an error condition, return NULL; otherwise,
 return p. */
 
 pcb_t *outBlocked(pcb_t *p){
-	debugS(semd_h->s_next, 10, 10);
 	
 	semd_t *sema = findActive(p->p_semAdd);
 	
@@ -385,7 +343,6 @@ pcb_t *outBlocked(pcb_t *p){
 	
 		}
 
-		debugS(semd_h->s_next, 10, 10);
 	
 		return(proc);
 	
