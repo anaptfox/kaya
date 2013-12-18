@@ -15,23 +15,6 @@ state_t *int_old = (state_t *) INT_OLD;
 
 cpu_t endTOD;
 
-int i;
-
-void debugA (int a, int b, int c) {
-  int foo = 42;
-}
-void debugB (int a, int b, int c) {
-  int foo = 42;
-}
-
-void debugCause (unsigned int p, int b, int c) {
-  int foo = 42;
-}
-
-void debugTimer( int p, int b, int c) {
-  int foo = 42;
-}
-
 /*p is the interrupting Bit*/
 
 int findLine(memaddr cause){
@@ -94,7 +77,6 @@ void intHandler(){
 
 	int terminalRead = 0;
 
-	debugA(10 ,10,10);
 
 	/*Interrupt Handler
 
@@ -127,15 +109,12 @@ void intHandler(){
 
 		int line = findLine(cause);
 
-		debugCause(line , 10, 10);
 
 		if(line == 1 || line == 2){
 
-			debugTimer(6666, 10, 10);
 
 			if(line == 1){
 
-				debugTimer(5555, 10, 10);
 
 				moveState( int_old , &(currentProc->p_s) );
 
@@ -146,7 +125,6 @@ void intHandler(){
 				currentProc = NULL;
 
 			}else{
-				debugTimer(7777, clockSem, 10);
 
 				/*Handle Interupt*/
 
@@ -158,19 +136,15 @@ void intHandler(){
 
 					insertProcQ (&readyQue, p);
 
-					debugTimer(8888, 10, 10);
 					
 					softBlkCnt = softBlkCnt - 1;
 
-					debugTimer(11111, 10, 10);
 					
 					clockSem = clockSem + 1;
 
-					debugTimer(22222, clockSem, p);
 					
 					p = removeBlocked(&(clockSem));
 
-					debugTimer(33333, 10, 10);
 				
 				}
 				
@@ -181,7 +155,6 @@ void intHandler(){
 
 			int device = findDevice(line);
 
-			debugCause(device , 10, 10);
 
 			if(device == NULL){
 				PANIC();
